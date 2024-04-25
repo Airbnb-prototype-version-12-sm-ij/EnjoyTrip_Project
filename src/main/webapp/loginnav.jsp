@@ -1,7 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"
-         import="com.ssafy.enjoytrip.*" %>
+<%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"
+         import="com.ssafy.enjoytrip.domain.member.entity.MembersEntity" %>
+
+<%@ page import="com.ssafy.enjoytrip.domain.member.entity.MembersEntity" %>
 <%
-    MemberDto loginMember = (MemberDto)request.getSession().getAttribute("memberDto");
+    MembersEntity loginMember = (MembersEntity)request.getSession().getAttribute("memberDto");
 %>
 <!DOCTYPE html>
 <ul class="navbar-nav me-lg-5 d-flexb">
