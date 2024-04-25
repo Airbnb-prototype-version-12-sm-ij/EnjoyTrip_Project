@@ -3,7 +3,7 @@ package com.ssafy.enjoytrip.domain.member.entity;
 import lombok.Data;
 
 @Data
-public class MembersEntity {
+public class MemberEntity {
 	private String userId;
 	private String userName;
 	private String userPassword;
