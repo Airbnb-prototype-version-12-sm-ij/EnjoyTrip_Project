@@ -1,12 +1,13 @@
 <%@ page contentType="text/html; charset=utf-8"
          pageEncoding="utf-8"
-         import="com.ssafy.enjoytrip.*"
+         import="com.ssafy.enjoytrip.domain.attraction.entity.AttractionInfoEntity"
          import="java.util.*"
 %>
+<%@ page import="com.ssafy.enjoytrip.domain.attraction.entity.AttractionInfoEntity" %>
 <!-- controller 도메인 : /trip -->
 <%
     String root = request.getContextPath();
-    List<AttractionDto> attlist = (List<AttractionDto>)request.getAttribute("arrlist");
+    List<AttractionInfoEntity> attractionList = (List<AttractionInfoEntity>)request.getAttribute("arrlist");
 %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
@@ -304,7 +305,7 @@
                         if (loginMember != null) {
                             thisName = loginMember.getUserName();
                             thisId = loginMember.getUserId();
-                            thisPassword = loginMember.getUserPwd();
+                            thisPassword = loginMember.getUserPassword();
                         } else {
                             thisName = "알 수 없음";
                             thisId = "알 수 없음";
@@ -546,32 +547,32 @@
                 </thead>
                 <tbody id="trip-list" style="max-height: 10vh; overflow-y: auto">
                 <%
-                    if (attlist != null) {
-                        for (AttractionDto atd : attlist) {
+                    if (attractionList != null) {
+                        for (AttractionInfoEntity attraction : attractionList) {
                 %>
                 <tr>
                     <%
-                        if (atd.getFirst_img().equals("")) {
+                        if (attraction.getFirstImage().isEmpty()) {
                     %>
-                    <td><img src="<%=root %>/assets/img/no_img.png" width="100px" alt=""></td>
+                    <td><img src="<%=root %>/src/main/webapp/assets/img/no_img.png" width="100px" alt=""></td>
                     <%
                     } else {
                     %>
-                    <td><img src="<%=atd.getFirst_img()%>" width="100px" alt=""></td>
+                    <td><img src="<%=attraction.getFirstImage()%>" width="100px" alt=""></td>
                     <%
                         }
                     %>
-                    <td><%=atd.getTitle() %>
+                    <td><%=attraction.getTitle() %>
                     </td>
-                    <td><%=atd.getAddr1() %> <%=atd.getAddr2() %>
+                    <td><%=attraction.getAddr1() %> <%=attraction.getAddr2() %>
                     </td>
                     <td width="120px">
                         <button class="btn btn-primary map-button"
-                                data-title="<%=atd.getTitle() %>"
-                                data-addr="<%=atd.getAddr1() %> <%=atd.getAddr2() %>"
-                                data-overview="<%=atd.getOverview() %>"
-                                data-latitude="<%=atd.getLatitude() %>"
-                                data-longitude="<%=atd.getLongitude() %>">정보 보기
+                                data-title="<%=attraction.getTitle() %>"
+                                data-addr="<%=attraction.getAddr1() %> <%=attraction.getAddr2() %>"
+                                data-overview="<%=attraction %> 설명 들어가야됨"
+                                data-latitude="<%=attraction.getLatitude() %>"
+                                data-longitude="<%=attraction.getLongitude() %>">정보 보기
                         </button>
                     </td>
                 </tr>
