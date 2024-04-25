@@ -648,7 +648,7 @@
 <script src="../assets/js/mypage.js"></script>
 <script src="../assets/js/membermanagement.js"></script>
 <script src="../assets/js/findpwd.js"></script>
-<script src="../assets/js/api.js"></script>
+<%--<script src="../assets/js/api.js"></script>--%>
 <script src="../assets/js/login.js"></script>
 <script src="../assets/js/signup.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -716,88 +716,88 @@
     }%>
 
     // == 지도 모달 ==
-    // 클릭 이벤트를 감지하여 모달을 열도록 처리
-    document.querySelectorAll(".map-button").forEach(function (button) {
-        button.addEventListener("click", function () {
-            let title = button.getAttribute("data-title");
-            let addr = button.getAttribute("data-addr");
-            let overview = button.getAttribute("data-overview")
-            let latitude = parseFloat(button.getAttribute("data-latitude"));
-            let longitude = parseFloat(button.getAttribute("data-longitude"));
+    /* // 클릭 이벤트를 감지하여 모달을 열도록 처리
+     document.querySelectorAll(".map-button").forEach(function (button) {
+         button.addEventListener("click", function () {
+             let title = button.getAttribute("data-title");
+             let addr = button.getAttribute("data-addr");
+             let overview = button.getAttribute("data-overview")
+             let latitude = parseFloat(button.getAttribute("data-latitude"));
+             let longitude = parseFloat(button.getAttribute("data-longitude"));
 
-            // 해당 위치로 지도 이동
-            let moveLatLon = new kakao.maps.LatLng(latitude, longitude);
-            map.panTo(moveLatLon); // 지도를 해당 위치로 이동
+             // 해당 위치로 지도 이동
+             let moveLatLon = new kakao.maps.LatLng(latitude, longitude);
+             map.panTo(moveLatLon); // 지도를 해당 위치로 이동
 
-            // 기존 마커 제거
-            if (marker) marker.setMap(null);
+             // 기존 마커 제거
+             if (marker) marker.setMap(null);
 
-            // 새로운 마커 생성
-            let marker = new kakao.maps.Marker({
-                position: moveLatLon,
-                map: map,
-            });
+             // 새로운 마커 생성
+             let marker = new kakao.maps.Marker({
+                 position: moveLatLon,
+                 map: map,
+             });
 
-            // 모달의 footer에 정보 추가
-            document.getElementById("map-modalfooter").innerHTML =
-                "<strong>관광지 이름:</strong>" + title + "<br>" + "<strong>주소:</strong>" + addr + "<br>" + "<strong>설명:</strong>" + overview;
+             // 모달의 footer에 정보 추가
+             document.getElementById("map-modalfooter").innerHTML =
+                 "<strong>관광지 이름:</strong>" + title + "<br>" + "<strong>주소:</strong>" + addr + "<br>" + "<strong>설명:</strong>" + overview;
 
-            $("#mapModal").modal("show"); // 모달 표시
+             $("#mapModal").modal("show"); // 모달 표시
 
-            // 모달이 열릴 때 resize 이벤트가 발생하도록 함수를 호출하는 코드 추가
-            $("#mapModal").on("shown.bs.modal", function () {
-                resizeMap();
-            });
+             // 모달이 열릴 때 resize 이벤트가 발생하도록 함수를 호출하는 코드 추가
+             $("#mapModal").on("shown.bs.modal", function () {
+                 resizeMap();
+             });
 
-            function resizeMap() {
-                var mapContainer = document.getElementById("map");
-                mapContainer.style.width = "100%";
-                mapContainer.style.height = "400px";
-                // 모달이 열릴 때 지도의 크기가 모달에 맞게 조정되도록 map.relayout() 함수 호출
-                map.relayout();
-                map.setCenter(moveLatLon);
-            }
+             function resizeMap() {
+                 var mapContainer = document.getElementById("map");
+                 mapContainer.style.width = "100%";
+                 mapContainer.style.height = "400px";
+                 // 모달이 열릴 때 지도의 크기가 모달에 맞게 조정되도록 map.relayout() 함수 호출
+                 map.relayout();
+                 map.setCenter(moveLatLon);
+             }
 
-            function relayout() {
-                // 모달이 열릴 때도 relayout 함수 호출
-                resizeMap();
-                // 기존의 relayout 함수 내용 추가
-                map.relayout();
-            }
+             function relayout() {
+                 // 모달이 열릴 때도 relayout 함수 호출
+                 resizeMap();
+                 // 기존의 relayout 함수 내용 추가
+                 map.relayout();
+             }
 
-            // 모달이 닫힐 때 resize 이벤트가 발생하도록 함수를 호출하는 코드 추가
-            $("#mapModal").on("hidden.bs.modal", function () {
-                resizeMap();
-            });
-        });
-    });
+             // 모달이 닫힐 때 resize 이벤트가 발생하도록 함수를 호출하는 코드 추가
+             $("#mapModal").on("hidden.bs.modal", function () {
+                 resizeMap();
+             });
+         });
+     });
 
-    //--------------------------------------------------------
-    // 카카오 map key c9c4977a5d4ddc19f25aa9b22c1e264a
-    var container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
+     //--------------------------------------------------------
+     // 카카오 map key c9c4977a5d4ddc19f25aa9b22c1e264a
+     var container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
 
-    resizeMap(container);
-    var options = {
-        //지도를 생성할 때 필요한 기본 옵션
-        center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표. 위도(latitude), 경도(longitude) 순
-        level: 3, //지도의 레벨(확대, 축소 정도)
-    };
+     resizeMap(container);
+     var options = {
+         //지도를 생성할 때 필요한 기본 옵션
+         center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표. 위도(latitude), 경도(longitude) 순
+         level: 3, //지도의 레벨(확대, 축소 정도)
+     };
 
-    var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+     var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
 
-    function resizeMap() {
-        var mapContainer = document.getElementById("map");
-        mapContainer.style.width = "100%";
-        mapContainer.style.height = "400px";
-    }
+     function resizeMap() {
+         var mapContainer = document.getElementById("map");
+         mapContainer.style.width = "100%";
+         mapContainer.style.height = "400px";
+     }
 
-    function relayout() {
-        // 지도를 표시하는 div 크기를 변경한 이후 지도가 정상적으로 표출되지 않을 수도 있습니다
-        // 크기를 변경한 이후에는 반드시  map.relayout 함수를 호출해야 합니다
-        // window의 resize 이벤트에 의한 크기변경은 map.relayout 함수가 자동으로 호출됩니다
-        map.relayout();
-    }
-
+     function relayout() {
+         // 지도를 표시하는 div 크기를 변경한 이후 지도가 정상적으로 표출되지 않을 수도 있습니다
+         // 크기를 변경한 이후에는 반드시  map.relayout 함수를 호출해야 합니다
+         // window의 resize 이벤트에 의한 크기변경은 map.relayout 함수가 자동으로 호출됩니다
+         map.relayout();
+     }
+ */
     // == 비밀번호 찾기 모달 기능 ==
     document.getElementById("findpwd").addEventListener("click", function (e) {
         e.preventDefault();
@@ -837,14 +837,16 @@
         });
     }
 
-    // == 검색==
+    // ==== 검색 ====
     document.getElementById("btn-search").addEventListener("click", () => {
 
         let sidoCode = document.getElementById("search-sido").value;
         let contentTypeId = document.getElementById("search-content-id").value;
         let keyword = document.getElementById("search-keyword").value;
 
-        location.href = "<%=root%>/trip?action=search&sidoCode=" + sidoCode + "&contentTypeId=" + contentTypeId + "&keyword=" + keyword;
+        console.log(sidoCode, contentTypeId, keyword);
+
+        location.href = "<%=root%>/attraction/search?sidoCode=" + sidoCode + "&contentTypeId=" + contentTypeId + "&keyword=" + keyword;
     });
 
     // == 마이페이지 비밀번호 바꾸기 기능 ==

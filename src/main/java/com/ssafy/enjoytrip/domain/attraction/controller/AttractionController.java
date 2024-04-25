@@ -28,17 +28,30 @@ public class AttractionController {
 	@GetMapping("/search")
 	public ResponseEntity<List<AttractionEntity>> searchAttractions(
 		@ModelAttribute AttractionDto.SearchAttraction searchAttraction) throws SQLException {
-		List<AttractionEntity> attractionList = attractionService.loadAttraction(searchAttraction);
+		List<AttractionEntity> attractionList = null;
+		try {
+			attractionList = attractionService.loadAttraction(searchAttraction);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 		return ResponseEntity.ok(attractionList);
 	}
 
 	@GetMapping("/{content_id}")
 	public AttractionEntity getAttraction(@PathVariable Integer content_id) throws SQLException {
-		return attractionService.pickAttraction(content_id);
+		try {
+			return attractionService.pickAttraction(content_id);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	@GetMapping("/gugun/{sido}")
 	public List<AttractionDto> getGugun(@PathVariable Integer sido) throws SQLException {
-		return attractionService.getGugun(sido);
+		try {
+			return attractionService.getGugun(sido);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 }
