@@ -8,8 +8,8 @@
         SELECT *
         FROM attraction_info ai
                  INNER JOIN attraction_description ades ON ai.content_id = ades.content_id
-        WHERE content_type_id = #{type_code}
-          AND sido_code = #{sido_code}
+        WHERE content_type_id = #{typeCode}
+          AND sido_code = #{sidoCode}
           AND title LIKE CONCAT('%', #{title}, '%')
     </select>
 
@@ -17,7 +17,7 @@
         SELECT *
         FROM attraction_info ai
                  INNER JOIN attraction_description ades ON ai.content_id = ades.content_id
-        WHERE ai.content_id = #{content_id}
+        WHERE ai.content_id = #{contentId}
     </select>
 
     <select id="getGugun">

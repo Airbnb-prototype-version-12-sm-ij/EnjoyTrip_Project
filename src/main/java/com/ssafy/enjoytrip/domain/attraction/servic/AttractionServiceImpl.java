@@ -1,6 +1,5 @@
 package com.ssafy.enjoytrip.domain.attraction.servic;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -18,17 +17,17 @@ public class AttractionServiceImpl implements AttractionService {
 	private final AttractionMapper attractionMapper;
 
 	@Override
-	public List<AttractionEntity> loadAttraction(AttractionDto.SearchAttraction searchAttraction) throws SQLException {
+	public List<AttractionEntity> loadAttraction(AttractionDto.SearchAttraction searchAttraction) throws Exception {
 		return attractionMapper.loadAttraction(searchAttraction);
 	}
 
 	@Override
-	public AttractionEntity pickAttraction(Integer content_id) throws SQLException {
+	public AttractionEntity pickAttraction(Integer content_id) throws Exception {
 		return attractionMapper.pickAttraction(content_id);
 	}
 
 	@Override
-	public List<AttractionDto> getGugun(Integer sido) throws SQLException {
+	public List<AttractionDto> getGugun(Integer sido) throws Exception {
 		return attractionMapper.getGugun(sido);
 	}
 }

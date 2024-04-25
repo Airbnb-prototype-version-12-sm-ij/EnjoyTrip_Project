@@ -15,8 +15,8 @@ public interface AttractionMapper {
 	List<AttractionEntity> loadAttraction(AttractionDto.SearchAttraction searchAttraction) throws SQLException;
 
 	// 정보 보기 누르면 해당 관광지의 content_id 받아서 해당 관광지의 모든 정보 받아오기
-	AttractionEntity pickAttraction(Integer content_id) throws SQLException;
+	AttractionEntity pickAttraction(int content_id) throws SQLException;
 
 	// 시도코드 받아서 구군코드 구하기
-	List<AttractionDto> getGugun(Integer sido) throws SQLException;
+	List<AttractionDto> getGugun(int sido) throws SQLException;
 }

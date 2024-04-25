@@ -7,7 +7,7 @@
 
     <insert id="addMember">
         insert into members (user_id, user_name, user_password, grade)
-        values (#{user_id}, #{user_name}, #{user_password}, #{grade})
+        values (#{user_id}, #{userName}, #{userPassword}, #{grade})
     </insert>
 
     <select id="loadMember">

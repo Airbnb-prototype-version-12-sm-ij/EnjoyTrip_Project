@@ -1,6 +1,5 @@
 package com.ssafy.enjoytrip.domain.attraction.controller;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,17 +23,33 @@ public class AttractionController {
 	private final AttractionService attractionService;
 
 	@GetMapping("/")
-	public List<AttractionEntity> loadAttraction(AttractionDto.SearchAttraction searchAttraction) throws SQLException {
-		return attractionService.loadAttraction(searchAttraction);
+	public List<AttractionEntity> loadAttraction(AttractionDto.SearchAttraction searchAttraction) {
+
+		try {
+			return attractionService.loadAttraction(searchAttraction);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	@GetMapping("/{content_id}")
-	public AttractionEntity pickAttraction(@PathVariable Integer content_id) throws SQLException {
-		return attractionService.pickAttraction(content_id);
+	public AttractionEntity pickAttraction(@PathVariable Integer content_id) {
+
+		try {
+			return attractionService.pickAttraction(content_id);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+
 	}
 
 	@GetMapping("/gugun/{sido}")
-	public List<AttractionDto> getGugun(@PathVariable Integer sido) throws SQLException {
-		return attractionService.getGugun(sido);
+	public List<AttractionDto> getGugun(@PathVariable Integer sido) {
+
+		try {
+			return attractionService.getGugun(sido);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 }
