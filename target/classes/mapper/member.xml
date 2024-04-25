@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.ssafy.enjoytrip.domain.member.mapper.MemberMapper">
+
+    <insert id="addMember">
+        insert into members (user_id, user_name, user_password, grade)
+        values (#{user_id}, #{user_name}, #{user_password}, #{grade})
+    </insert>
+
+    <select id="loadMember">
+        select *
+        from members
+    </select>
+
+    <!-- 회원 정보 수정 -->
+    <update id="modifyMember">
+        UPDATE members
+        SET user_name     = #{info.userName},
+            user_password = #{info.userPassword}
+        WHERE user_id = #{info.userId}
+    </update>
+
+    <!-- 회원 탈퇴 -->
+    <delete id="deleteMember">
+        DELETE
+        FROM members
+        WHERE user_id = #{userId}
+    </delete>
+
+    <!-- 특정 회원 정보 -->
+    <select id="pickMember" resultType="com.ssafy.enjoytrip.domain.member.dto.MemberDto.Info">
+        SELECT *
+        FROM members
+        WHERE user_id = #{userId}
+    </select>
+
+
+</mapper>
