@@ -1,13 +1,12 @@
 <%@ page contentType="text/html; charset=utf-8"
          pageEncoding="utf-8"
-         import="com.ssafy.enjoytrip.domain.attraction.entity.AttractionInfoEntity"
+         import="com.ssafy.enjoytrip.domain.attraction.entity.AttractionEntity"
          import="java.util.*"
 %>
-<%@ page import="com.ssafy.enjoytrip.domain.attraction.entity.AttractionInfoEntity" %>
 <!-- controller 도메인 : /trip -->
 <%
     String root = request.getContextPath();
-    List<AttractionInfoEntity> attractionList = (List<AttractionInfoEntity>)request.getAttribute("arrlist");
+    List<AttractionEntity> attractionList = (List<AttractionEntity>)request.getAttribute("arrlist");
 %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
@@ -548,7 +547,7 @@
                 <tbody id="trip-list" style="max-height: 10vh; overflow-y: auto">
                 <%
                     if (attractionList != null) {
-                        for (AttractionInfoEntity attraction : attractionList) {
+                        for (AttractionEntity attraction : attractionList) {
                 %>
                 <tr>
                     <%
