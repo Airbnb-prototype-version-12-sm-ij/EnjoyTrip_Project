@@ -1,6 +1,5 @@
 package com.ssafy.enjoytrip.domain.attraction.controller;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -27,7 +26,7 @@ public class AttractionController {
 
 	@GetMapping("/search")
 	public ResponseEntity<List<AttractionEntity>> searchAttractions(
-		@ModelAttribute AttractionDto.SearchAttraction searchAttraction) throws SQLException {
+		@ModelAttribute AttractionDto.SearchAttraction searchAttraction) {
 		List<AttractionEntity> attractionList = null;
 		try {
 			attractionList = attractionService.loadAttraction(searchAttraction);
@@ -38,7 +37,7 @@ public class AttractionController {
 	}
 
 	@GetMapping("/{content_id}")
-	public AttractionEntity getAttraction(@PathVariable Integer content_id) throws SQLException {
+	public AttractionEntity getAttraction(@PathVariable Integer content_id) {
 		try {
 			return attractionService.pickAttraction(content_id);
 		} catch (Exception e) {
@@ -47,7 +46,7 @@ public class AttractionController {
 	}
 
 	@GetMapping("/gugun/{sido}")
-	public List<AttractionDto> getGugun(@PathVariable Integer sido) throws SQLException {
+	public List<AttractionDto> getGugun(@PathVariable Integer sido) {
 		try {
 			return attractionService.getGugun(sido);
 		} catch (Exception e) {
