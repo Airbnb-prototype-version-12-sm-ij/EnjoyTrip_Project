@@ -3,6 +3,5 @@
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/src/resource/enjoytrip.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/resource/trip_schema.sql" dialect="MySQL" />
-    <file url="file://$PROJECT_DIR$/src/resource/tripy_data.sql" dialect="MySQL" />
   </component>
 </project>
