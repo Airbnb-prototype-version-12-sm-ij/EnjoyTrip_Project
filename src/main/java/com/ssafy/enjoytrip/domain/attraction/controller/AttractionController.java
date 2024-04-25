@@ -1,3 +1,4 @@
+
 package com.ssafy.enjoytrip.domain.attraction.controller;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.enjoytrip.domain.attraction.dto.AttractionDto;
+import com.ssafy.enjoytrip.domain.attraction.dto.AttractionDto.SearchAttraction;
 import com.ssafy.enjoytrip.domain.attraction.entity.AttractionEntity;
 import com.ssafy.enjoytrip.domain.attraction.servic.AttractionService;
 
@@ -25,8 +27,7 @@ public class AttractionController {
 	private final AttractionService attractionService;
 
 	@GetMapping("/search")
-	public ResponseEntity<List<AttractionEntity>> searchAttractions(
-		@ModelAttribute AttractionDto.SearchAttraction searchAttraction) {
+	public ResponseEntity<?> searchAttractions(@ModelAttribute SearchAttraction searchAttraction) {
 		List<AttractionEntity> attractionList = null;
 		try {
 			attractionList = attractionService.loadAttraction(searchAttraction);

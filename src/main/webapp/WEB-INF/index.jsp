@@ -545,6 +545,7 @@
                 </tr>
                 </thead>
                 <tbody id="trip-list" style="max-height: 10vh; overflow-y: auto">
+                <%--<%
                 <%
                     if (attractionList != null) {
                         for (AttractionEntity attraction : attractionList) {
@@ -569,16 +570,15 @@
                         <button class="btn btn-primary map-button"
                                 data-title="<%=attraction.getTitle() %>"
                                 data-addr="<%=attraction.getAddr1() %> <%=attraction.getAddr2() %>"
-                                data-overview="<%=attraction %> 설명 들어가야됨"
+                                data-overview="<%=attraction.getOrverview() %>"
                                 data-latitude="<%=attraction.getLatitude() %>"
                                 data-longitude="<%=attraction.getLongitude() %>">정보 보기
                         </button>
                     </td>
                 </tr>
-                <%
-                        }
+                }
                     }
-                %>
+                %>--%>
                 </tbody>
             </table>
         </div>
@@ -839,15 +839,66 @@
 
     // ==== 검색 ====
     document.getElementById("btn-search").addEventListener("click", () => {
-
         let sidoCode = document.getElementById("search-sido").value;
         let contentTypeId = document.getElementById("search-content-id").value;
         let keyword = document.getElementById("search-keyword").value;
 
         console.log(sidoCode, contentTypeId, keyword);
 
-        location.href = "<%=root%>/attraction/search?sidoCode=" + sidoCode + "&contentTypeId=" + contentTypeId + "&keyword=" + keyword;
+        // AJAX 요청 보내기
+        let xhr = new XMLHttpRequest();
+        xhr.open("GET", "<%=root%>/attractions/search?sidoCode=" + sidoCode + "&typeCode=" + contentTypeId + "&title=" + keyword, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                // 서버에서 데이터를 받았을 때의 처리
+                const attractionList = JSON.parse(xhr.responseText);
+                // 받은 데이터를 활용하여 테이블 업데이트
+                console.log(attractionList);
+                updateTable(attractionList);
+
+            }
+        };
+        xhr.send();
     });
+
+    function updateTable(attractionList) {
+        const tableBody = document.getElementById('trip-list');
+        tableBody.innerHTML = ''; // 기존의 내용을 비워줌
+        attractionList.forEach(attraction => {
+            const row = document.createElement('tr');
+            const imgCell = document.createElement('td');
+            const titleCell = document.createElement('td');
+            const addrCell = document.createElement('td');
+            const locationCell = document.createElement('td');
+            const img = document.createElement('img');
+            img.src = attraction.firstImage || '<%=root %>/src/main/webapp/assets/img/no_img.png';
+            img.style = "width: 100px";
+            img.alt = '';
+            imgCell.appendChild(img);
+
+            titleCell.textContent = attraction.title;
+
+            addrCell.textContent = `${attraction.addr1} ${attraction.addr2}`;
+
+            const button = document.createElement('button');
+            button.className = 'btn btn-primary map-button';
+            button.dataset.title = attraction.title;
+            button.dataset.addr = `${attraction.addr1} ${attraction.addr2}`;
+            button.dataset.overview = attraction.overview || '';
+            button.dataset.latitude = attraction.latitude;
+            button.dataset.longitude = attraction.longitude;
+            button.textContent = '정보 보기';
+            locationCell.appendChild(button);
+
+            row.appendChild(imgCell);
+            row.appendChild(titleCell);
+            row.appendChild(addrCell);
+            row.appendChild(locationCell);
+
+            tableBody.appendChild(row);
+        });
+    }
+
 
     // == 마이페이지 비밀번호 바꾸기 기능 ==
     // 현재 새 비밀번호-새 비밀번호 확인 정책 검사가 제대로 되지 않는 문제가 있음...
