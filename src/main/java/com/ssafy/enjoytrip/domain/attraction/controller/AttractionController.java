@@ -29,6 +29,7 @@ public class AttractionController {
 	@GetMapping("/search")
 	public ResponseEntity<?> searchAttractions(@ModelAttribute SearchAttraction searchAttraction) {
 		List<AttractionEntity> attractionList = null;
+
 		try {
 			attractionList = attractionService.loadAttraction(searchAttraction);
 		} catch (Exception e) {

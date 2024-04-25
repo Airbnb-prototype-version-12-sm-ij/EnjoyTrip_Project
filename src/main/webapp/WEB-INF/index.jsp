@@ -142,7 +142,7 @@
         }
 
         #map-modalfooter {
-            max-height: calc(40vh - 300px); /* 모달 창 높이에서 헤더와 푸터 높이를 제외한 값 */
+            max-height: calc(70vh - 300px); /* 모달 창 높이에서 헤더와 푸터 높이를 제외한 값 */
             overflow-y: auto;
         }
     </style>
@@ -371,7 +371,7 @@
                 ></button>
             </div>
             <div class="modal-body">
-                <div id="map-container" style="height: 450px">
+                <div id="map-container" style="height: 650px">
                     <div id="map" style="height: 400px"></div>
                     <div id="map-modalfooter" class="pt-2"></div>
                 </div>
@@ -545,40 +545,7 @@
                 </tr>
                 </thead>
                 <tbody id="trip-list" style="max-height: 10vh; overflow-y: auto">
-                <%--<%
-                <%
-                    if (attractionList != null) {
-                        for (AttractionEntity attraction : attractionList) {
-                %>
-                <tr>
-                    <%
-                        if (attraction.getFirstImage().isEmpty()) {
-                    %>
-                    <td><img src="<%=root %>/src/main/webapp/assets/img/no_img.png" width="100px" alt=""></td>
-                    <%
-                    } else {
-                    %>
-                    <td><img src="<%=attraction.getFirstImage()%>" width="100px" alt=""></td>
-                    <%
-                        }
-                    %>
-                    <td><%=attraction.getTitle() %>
-                    </td>
-                    <td><%=attraction.getAddr1() %> <%=attraction.getAddr2() %>
-                    </td>
-                    <td width="120px">
-                        <button class="btn btn-primary map-button"
-                                data-title="<%=attraction.getTitle() %>"
-                                data-addr="<%=attraction.getAddr1() %> <%=attraction.getAddr2() %>"
-                                data-overview="<%=attraction.getOrverview() %>"
-                                data-latitude="<%=attraction.getLatitude() %>"
-                                data-longitude="<%=attraction.getLongitude() %>">정보 보기
-                        </button>
-                    </td>
-                </tr>
-                }
-                    }
-                %>--%>
+
                 </tbody>
             </table>
         </div>
@@ -715,89 +682,7 @@
     <% }
     }%>
 
-    // == 지도 모달 ==
-    /* // 클릭 이벤트를 감지하여 모달을 열도록 처리
-     document.querySelectorAll(".map-button").forEach(function (button) {
-         button.addEventListener("click", function () {
-             let title = button.getAttribute("data-title");
-             let addr = button.getAttribute("data-addr");
-             let overview = button.getAttribute("data-overview")
-             let latitude = parseFloat(button.getAttribute("data-latitude"));
-             let longitude = parseFloat(button.getAttribute("data-longitude"));
 
-             // 해당 위치로 지도 이동
-             let moveLatLon = new kakao.maps.LatLng(latitude, longitude);
-             map.panTo(moveLatLon); // 지도를 해당 위치로 이동
-
-             // 기존 마커 제거
-             if (marker) marker.setMap(null);
-
-             // 새로운 마커 생성
-             let marker = new kakao.maps.Marker({
-                 position: moveLatLon,
-                 map: map,
-             });
-
-             // 모달의 footer에 정보 추가
-             document.getElementById("map-modalfooter").innerHTML =
-                 "<strong>관광지 이름:</strong>" + title + "<br>" + "<strong>주소:</strong>" + addr + "<br>" + "<strong>설명:</strong>" + overview;
-
-             $("#mapModal").modal("show"); // 모달 표시
-
-             // 모달이 열릴 때 resize 이벤트가 발생하도록 함수를 호출하는 코드 추가
-             $("#mapModal").on("shown.bs.modal", function () {
-                 resizeMap();
-             });
-
-             function resizeMap() {
-                 var mapContainer = document.getElementById("map");
-                 mapContainer.style.width = "100%";
-                 mapContainer.style.height = "400px";
-                 // 모달이 열릴 때 지도의 크기가 모달에 맞게 조정되도록 map.relayout() 함수 호출
-                 map.relayout();
-                 map.setCenter(moveLatLon);
-             }
-
-             function relayout() {
-                 // 모달이 열릴 때도 relayout 함수 호출
-                 resizeMap();
-                 // 기존의 relayout 함수 내용 추가
-                 map.relayout();
-             }
-
-             // 모달이 닫힐 때 resize 이벤트가 발생하도록 함수를 호출하는 코드 추가
-             $("#mapModal").on("hidden.bs.modal", function () {
-                 resizeMap();
-             });
-         });
-     });
-
-     //--------------------------------------------------------
-     // 카카오 map key c9c4977a5d4ddc19f25aa9b22c1e264a
-     var container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
-
-     resizeMap(container);
-     var options = {
-         //지도를 생성할 때 필요한 기본 옵션
-         center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표. 위도(latitude), 경도(longitude) 순
-         level: 3, //지도의 레벨(확대, 축소 정도)
-     };
-
-     var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-
-     function resizeMap() {
-         var mapContainer = document.getElementById("map");
-         mapContainer.style.width = "100%";
-         mapContainer.style.height = "400px";
-     }
-
-     function relayout() {
-         // 지도를 표시하는 div 크기를 변경한 이후 지도가 정상적으로 표출되지 않을 수도 있습니다
-         // 크기를 변경한 이후에는 반드시  map.relayout 함수를 호출해야 합니다
-         // window의 resize 이벤트에 의한 크기변경은 map.relayout 함수가 자동으로 호출됩니다
-         map.relayout();
-     }
- */
     // == 비밀번호 찾기 모달 기능 ==
     document.getElementById("findpwd").addEventListener("click", function (e) {
         e.preventDefault();
@@ -843,7 +728,6 @@
         let contentTypeId = document.getElementById("search-content-id").value;
         let keyword = document.getElementById("search-keyword").value;
 
-        console.log(sidoCode, contentTypeId, keyword);
 
         // AJAX 요청 보내기
         let xhr = new XMLHttpRequest();
@@ -853,7 +737,6 @@
                 // 서버에서 데이터를 받았을 때의 처리
                 const attractionList = JSON.parse(xhr.responseText);
                 // 받은 데이터를 활용하여 테이블 업데이트
-                console.log(attractionList);
                 updateTable(attractionList);
 
             }
@@ -861,6 +744,7 @@
         xhr.send();
     });
 
+    // ====== 관광지 리스트 출력 함수 ======
     function updateTable(attractionList) {
         const tableBody = document.getElementById('trip-list');
         tableBody.innerHTML = ''; // 기존의 내용을 비워줌
@@ -871,11 +755,10 @@
             const addrCell = document.createElement('td');
             const locationCell = document.createElement('td');
             const img = document.createElement('img');
-            img.src = attraction.firstImage || '<%=root %>/src/main/webapp/assets/img/no_img.png';
+            img.src = attraction.firstImage || 'assets/img/no_img.png';
             img.style = "width: 100px";
             img.alt = '';
             imgCell.appendChild(img);
-
             titleCell.textContent = attraction.title;
 
             addrCell.textContent = `${attraction.addr1} ${attraction.addr2}`;
@@ -883,11 +766,15 @@
             const button = document.createElement('button');
             button.className = 'btn btn-primary map-button';
             button.dataset.title = attraction.title;
-            button.dataset.addr = `${attraction.addr1} ${attraction.addr2}`;
+            button.dataset.addr1 = attraction.addr1;
+            button.dataset.addr2 = attraction.addr2;
             button.dataset.overview = attraction.overview || '';
             button.dataset.latitude = attraction.latitude;
             button.dataset.longitude = attraction.longitude;
             button.textContent = '정보 보기';
+            button.addEventListener('click', function () {
+                handleMapButtonClick(attraction);
+            });
             locationCell.appendChild(button);
 
             row.appendChild(imgCell);
@@ -898,6 +785,71 @@
             tableBody.appendChild(row);
         });
     }
+
+
+    // ====== 지도 모달 ======
+    function handleMapButtonClick(attraction) {
+        let title = attraction.title;
+        let addr1 = attraction.addr1;
+        let addr2 = attraction.addr2;
+        let overview = attraction.overview;
+        let latitude = parseFloat(attraction.latitude);
+        let longitude = parseFloat(attraction.longitude);
+
+        // 해당 위치로 지도 이동
+        let moveLatLon = new kakao.maps.LatLng(latitude, longitude);
+        var container = document.getElementById('map');
+        var options = {
+            center: new kakao.maps.LatLng(33.450701, 126.570667),
+            level: 3
+        };
+        var map = new kakao.maps.Map(container, options);
+
+        map.panTo(moveLatLon); // 지도를 해당 위치로 이동
+
+
+        // 기존 마커 제거
+        /*if (marker) marker.setMap(null);*/
+
+        // 새로운 마커 생성
+        let marker = new kakao.maps.Marker({
+            position: moveLatLon,
+            map: map,
+        });
+
+        // 모달의 footer에 정보 추가
+        document.getElementById("map-modalfooter").innerHTML =
+            "<strong>관광지 이름:</strong>" + title + "<br>" + "<strong>주소:</strong>" + addr1 + addr2 + "<br>" + "<strong>설명:</strong>" + overview;
+
+        $("#mapModal").modal("show"); // 모달 표시
+
+        // 모달이 열릴 때 resize 이벤트가 발생하도록 함수를 호출하는 코드 추가
+        $("#mapModal").on("shown.bs.modal", function () {
+            resizeMap();
+        });
+
+        function resizeMap() {
+            var mapContainer = document.getElementById("map");
+            mapContainer.style.width = "100%";
+            mapContainer.style.height = "400px";
+            // 모달이 열릴 때 지도의 크기가 모달에 맞게 조정되도록 map.relayout() 함수 호출
+            map.relayout();
+            map.setCenter(moveLatLon);
+        }
+
+        function relayout() {
+            // 모달이 열릴 때도 relayout 함수 호출
+            resizeMap();
+            // 기존의 relayout 함수 내용 추가
+            map.relayout();
+        }
+
+        // 모달이 닫힐 때 resize 이벤트가 발생하도록 함수를 호출하는 코드 추가
+        $("#mapModal").on("hidden.bs.modal", function () {
+            resizeMap();
+        });
+    }
+
 
 
     // == 마이페이지 비밀번호 바꾸기 기능 ==

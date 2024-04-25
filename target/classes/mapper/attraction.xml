@@ -7,7 +7,7 @@
     <select id="loadAttraction">
         SELECT *
         FROM attraction_info ai
-                 INNER JOIN attraction_description ades ON ai.content_id = ades.content_id
+            inner join attraction_description ades ON ai.content_id = ades.content_id
         WHERE content_type_id = #{typeCode}
           AND sido_code = #{sidoCode}
           AND title LIKE CONCAT('%', #{title}, '%')
