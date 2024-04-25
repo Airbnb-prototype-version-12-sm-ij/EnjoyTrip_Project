@@ -11,6 +11,9 @@ import com.ssafy.enjoytrip.domain.member.entity.MemberEntity;
 @Mapper
 public interface MemberMapper {
 
+	// 로그인
+	public MemberEntity login(MemberDto.Login login) throws SQLException;
+
 	// 회원가입
 	public void addMember(MemberDto.Info info) throws SQLException;
 

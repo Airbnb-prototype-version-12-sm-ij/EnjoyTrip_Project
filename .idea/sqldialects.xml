@@ -4,6 +4,7 @@
     <file url="file://$PROJECT_DIR$/src/main/resources/mapper/attraction.xml" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/mapper/member.xml" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/resource/enjoytrip.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/resource/trip_data.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/resource/trip_schema.sql" dialect="MySQL" />
   </component>
 </project>

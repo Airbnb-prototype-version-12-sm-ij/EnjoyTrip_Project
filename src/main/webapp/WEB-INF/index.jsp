@@ -631,14 +631,20 @@
             let form = document.getElementById("loginForm"); // form 정보를 받아온다
             const username = document.getElementById("loginUserId").value;
             const password = document.getElementById("loginPassword").value;
-            fetch("<%=root %>/trip?action=login", {
+
+            console.log(username, password);
+
+            fetch("<%=root %>/members/login", {
                 method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
                 body: JSON.stringify({
-                    loginUserId: username,
-                    loginPassword: password
+                    userId: username,
+                    userPassword: password
                 })
             }).then((response) => {
-                console.log(response.ok);
+                console.log(response);
                 if (response.ok) {
                     alert('로그인에 성공했습니다.');
                     $("#loginModal").modal("hide");
@@ -653,7 +659,7 @@
     // [2] 로그아웃 버튼 클릭시, controller 이용해 로그아웃 시행
     if (document.querySelector("#logoutBtn") != null) {
         document.querySelector("#logoutBtn").addEventListener("click", function () {
-            location.href = "<%=root %>/trip?action=logout";
+            location.href = "<%=root %>/member/logout";
         });
     }
     // [3] 로그인 이후, 성공여부 표기
@@ -728,6 +734,7 @@
         let contentTypeId = document.getElementById("search-content-id").value;
         let keyword = document.getElementById("search-keyword").value;
 
+        console.log(sidoCode, contentTypeId, keyword);
 
         // AJAX 요청 보내기
         let xhr = new XMLHttpRequest();
@@ -737,6 +744,7 @@
                 // 서버에서 데이터를 받았을 때의 처리
                 const attractionList = JSON.parse(xhr.responseText);
                 // 받은 데이터를 활용하여 테이블 업데이트
+                console.log(attractionList);
                 updateTable(attractionList);
 
             }

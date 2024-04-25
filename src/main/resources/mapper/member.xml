@@ -5,6 +5,13 @@
 
 <mapper namespace="com.ssafy.enjoytrip.domain.member.mapper.MemberMapper">
 
+    <select id="login">
+        SELECT *
+        FROM members
+        WHERE user_id = #{userId}
+          AND user_password = #{userPassword}
+    </select>
+
     <insert id="addMember">
         insert into members (user_id, user_name, user_password, grade)
         values (#{user_id}, #{userName}, #{userPassword}, #{grade})

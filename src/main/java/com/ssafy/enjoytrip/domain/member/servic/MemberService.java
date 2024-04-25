@@ -8,6 +8,9 @@ import com.ssafy.enjoytrip.domain.member.entity.MemberEntity;
 
 public interface MemberService {
 
+	// 로그인
+	public MemberEntity login(MemberDto.Login login) throws IOException;
+
 	// 회원가입
 	public void addMember(MemberDto.Info info) throws IOException;
 

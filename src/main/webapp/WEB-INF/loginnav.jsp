@@ -4,6 +4,7 @@
 <%
     MemberEntity loginMember = (MemberEntity)request.getSession().getAttribute("memberDto");
 %>
+
 <!DOCTYPE html>
 <ul class="navbar-nav me-lg-5 d-flexb">
     <%

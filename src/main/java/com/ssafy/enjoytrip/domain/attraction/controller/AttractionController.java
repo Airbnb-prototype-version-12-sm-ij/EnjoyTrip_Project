@@ -3,7 +3,9 @@ package com.ssafy.enjoytrip.domain.attraction.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,20 +24,23 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/attractions")
+@CrossOrigin("*")
 public class AttractionController {
 
 	private final AttractionService attractionService;
 
 	@GetMapping("/search")
 	public ResponseEntity<?> searchAttractions(@ModelAttribute SearchAttraction searchAttraction) {
-		List<AttractionEntity> attractionList = null;
+
+		log.info("searchAttractions: {}", searchAttraction);
+
 
 		try {
-			attractionList = attractionService.loadAttraction(searchAttraction);
+			List<AttractionEntity> attractionList = attractionService.loadAttraction(searchAttraction);
+			return new ResponseEntity<List<AttractionEntity>>(attractionList, HttpStatus.OK);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-		return ResponseEntity.ok(attractionList);
 	}
 
 	@GetMapping("/{content_id}")

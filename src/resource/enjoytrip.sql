@@ -17,8 +17,8 @@ CREATE TABLE IF NOT EXISTS `enjoytrip`.`members`
     COLLATE = utf8mb4_0900_ai_ci;
 
 insert into `enjoytrip`.`members` (user_id, user_name, user_password, grade)
-values ('ssafy', '김싸피', '1234', 'default'),
-       ('admin', '관리자', '1234', 'default'),
-       ('joo1798', '주수아', '1798', 'admin'),
-       ('dldlswns', '이인준', '1234', 'admin');
+values ('ssafy', '김싸피', 'a477d9bfed77d6d10bcf91408877fec661196de6fa2c513daa2030b234f927ee', 'default'),
+       ('admin', '관리자', 'a477d9bfed77d6d10bcf91408877fec661196de6fa2c513daa2030b234f927ee', 'default'),
+       ('joo1798', '주수아', 'a477d9bfed77d6d10bcf91408877fec661196de6fa2c513daa2030b234f927ee', 'admin'),
+       ('dldlswns', '이인준', 'a477d9bfed77d6d10bcf91408877fec661196de6fa2c513daa2030b234f927ee', 'admin');
 

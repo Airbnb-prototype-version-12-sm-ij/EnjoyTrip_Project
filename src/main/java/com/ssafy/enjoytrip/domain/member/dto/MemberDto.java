@@ -19,4 +19,16 @@ public class MemberDto {
 				.userPassword(memberEntity.getUserPassword()).build();
 		}
 	}
+
+	@Data
+	@Builder
+	public static class Login {
+		private String userId;
+		private String userPassword;
+	}
+
+	public static Login of(MemberEntity memberEntity) {
+		return Login.builder().userId(memberEntity.getUserId()).userPassword(memberEntity.getUserPassword()).build();
+	}
+
 }
