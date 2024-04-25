@@ -1,6 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="com.ssafy.enjoytrip.domain.member.dto.MemberDto" %>
+<%@ page import="java.util.*" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%
     String root = request.getContextPath();
+    List<MemberDto.Info> memberList = (List<MemberDto.Info>)request.getAttribute("memberList");
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -146,9 +149,7 @@
     <div class="container-fluid">
         <!-- 로고로 바꾸기 -->
         <div class="navbar-brand ms-5 ps-5">
-            <img src="./assets/img/logo.png"
-                 width="96px"
-                 alt="로고"/>
+            <img src="./assets/img/logo.png" width="96px" alt="로고"/>
         </div>
     </div>
 </nav>
@@ -168,17 +169,21 @@
         <div id="memberList">
 
             <%
-                /*        for(MemberDto mbd : MemberList){ */
+                for (MemberDto.Info member : memberList) {
             %>
-            <div class="col-3 d-flex align-items-center">${user.name}</div>
-            <div class="col-3 d-flex align-items-center">${user.userId}</div>
-            <div class="col-3 d-flex align-items-center">${user.password}</div>
+            <div class="col-3 d-flex align-items-center"><%=member.getUserName()%>
+            </div>
+            <div class="col-3 d-flex align-items-center"><%=member.getUserId()%>
+            </div>
+            <div class="col-3 d-flex align-items-center"><%=member.getUserPassword()%>
+            </div>
             <div class="col-3 d-flex align-items-center">
-                <button type="button" class="btn btn-outline-danger user-delete" data-user-id="${user.userId}">X
+                <button type="button" class="btn btn-outline-danger user-delete" data-user-id="<%=member.getUserId()%>">
+                    X
                 </button>
             </div>
             <%
-                /*         } */
+                }
             %>
         </div>
     </div>
