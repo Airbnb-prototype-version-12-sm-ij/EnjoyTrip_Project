@@ -642,7 +642,7 @@
         </div>
     </div>
 </div>
-<footer>@광주_5반 11팀 주수아 선장과 일등항해사 이인준</footer>
+<footer>@광주_5반 황성민 선장과 일등항해사 이인준</footer>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script src="./assets/js/mypage.js"></script>
