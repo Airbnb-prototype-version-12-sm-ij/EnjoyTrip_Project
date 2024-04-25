@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.ssafy.trip.dao.AttractionMapper">
+<mapper namespace="com.ssafy.enjoytrip.domain.attraction.mapper.AttractionMapper">
 
-    <select id="loadAttraction" resultType="com.ssafy.trip.model.AttractionDto">
+    <select id="loadAttraction">
         SELECT *
         FROM attraction_info ai
                  INNER JOIN attraction_description ades ON ai.content_id = ades.content_id
@@ -13,17 +13,16 @@
           AND title LIKE CONCAT('%', #{title}, '%')
     </select>
 
-    <select id="pickAttraction" resultType="com.ssafy.trip.model.AttractionDto">
+    <select id="pickAttraction">
         SELECT *
         FROM attraction_info ai
                  INNER JOIN attraction_description ades ON ai.content_id = ades.content_id
         WHERE ai.content_id = #{content_id}
     </select>
 
-    <select id="getGugun" resultType="com.ssafy.trip.model.AttractionDto">
+    <select id="getGugun">
         SELECT *
         FROM gugun
         WHERE sido_code = #{sido}
     </select>
-
 </mapper>

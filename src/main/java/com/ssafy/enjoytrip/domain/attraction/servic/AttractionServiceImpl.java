@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AttractionServiceImpl implements AttractionService {
 
-	AttractionMapper attractionMapper;
+	private final AttractionMapper attractionMapper;
 
 	@Override
 	public List<AttractionEntity> loadAttraction(AttractionDto.SearchAttraction searchAttraction) throws SQLException {

@@ -31,7 +31,7 @@
     </delete>
 
     <!-- 특정 회원 정보 -->
-    <select id="pickMember" resultType="com.ssafy.enjoytrip.domain.member.dto.MemberDto.Info">
+    <select id="pickMember">
         SELECT *
         FROM members
         WHERE user_id = #{userId}
