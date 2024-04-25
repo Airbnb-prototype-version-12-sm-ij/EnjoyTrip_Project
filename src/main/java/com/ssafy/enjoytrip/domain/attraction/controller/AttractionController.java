@@ -1,4 +1,3 @@
-
 package com.ssafy.enjoytrip.domain.attraction.controller;
 
 import java.sql.SQLException;
@@ -13,17 +12,18 @@ import com.ssafy.enjoytrip.domain.attraction.dto.AttractionDto;
 import com.ssafy.enjoytrip.domain.attraction.entity.AttractionEntity;
 import com.ssafy.enjoytrip.domain.attraction.servic.AttractionService;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
+@Slf4j
+@RequiredArgsConstructor
 @RequestMapping("/attractions")
 public class AttractionController {
 
 	private final AttractionService attractionService;
 
-	public AttractionController(AttractionService attractionService) {
-		this.attractionService = attractionService;
-	}
-
-	@GetMapping
+	@GetMapping("/")
 	public List<AttractionEntity> loadAttraction(AttractionDto.SearchAttraction searchAttraction) throws SQLException {
 		return attractionService.loadAttraction(searchAttraction);
 	}
