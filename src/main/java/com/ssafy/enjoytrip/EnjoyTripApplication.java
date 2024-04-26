@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class EnjoyTripApplication {
-
+	// test
 	public static void main(String[] args) {
 		SpringApplication.run(EnjoyTripApplication.class, args);
 	}

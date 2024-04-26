@@ -137,11 +137,11 @@ CREATE TABLE IF NOT EXISTS `enjoytrip`.`attraction_detail`
 DROP TABLE IF EXISTS `enjoytrip`.`members`;
 CREATE TABLE IF NOT EXISTS `enjoytrip`.`members`
 (
-    `user_id`       VARCHAR(16) NOT NULL,
-    `user_name`     VARCHAR(20) NOT NULL,
-    `user_password` VARCHAR(64) NOT NULL,
-    `grade`         VARCHAR(10) NOT NULL,
-    `registration_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, -- 가입일 열 추가
+    `user_id`           VARCHAR(16) NOT NULL,
+    `user_name`         VARCHAR(20) NOT NULL,
+    `user_password`     VARCHAR(64) NOT NULL,
+    `grade`             VARCHAR(10) NOT NULL,
+    `registration_date` TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP, -- 가입일 열 추가
     PRIMARY KEY (`user_id`)
 )
     ENGINE = InnoDB
