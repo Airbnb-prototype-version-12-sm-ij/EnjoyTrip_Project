@@ -1,14 +1,20 @@
 package com.ssafy.enjoytrip.domain.member.controller;
 
-import com.ssafy.enjoytrip.domain.member.servic.MemberServiceImpl;
+import java.io.IOException;
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.enjoytrip.domain.member.dto.MemberDto;
 import com.ssafy.enjoytrip.domain.member.entity.MemberEntity;
-import com.ssafy.enjoytrip.domain.member.mapper.MemberMapper;
+import com.ssafy.enjoytrip.domain.member.servic.MemberServiceImpl;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -47,5 +53,29 @@ public class MemberController {
 	public void logout(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		session.invalidate();
+	}
+
+	// 버튼을 누르면 회원들의 정보를 반환 해주는 회원 관리 REST API
+	@GetMapping("/info")
+	public ResponseEntity<?> getMemberInfo(HttpServletRequest request) {
+		try {
+			List<MemberEntity> memberList = memberServiceImpl.loadMember();
+			return new ResponseEntity<List<MemberEntity>>(memberList, HttpStatus.OK);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	// 회원 id를 받아 회원을 삭제하는 REST API
+	@PostMapping("/delete")
+	public ResponseEntity<?> deleteMember(@RequestBody String userId) {
+
+		try {
+			System.out.println("userId: " + userId);
+			memberServiceImpl.deleteMember(userId);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }

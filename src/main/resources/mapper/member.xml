@@ -18,7 +18,7 @@
     </insert>
 
     <select id="loadMember">
-        select *
+        select user_id, user_name, user_password, grade, DATE_FORMAT(registration_date, '%Y-%m-%d') as registration_date
         from members
     </select>
 

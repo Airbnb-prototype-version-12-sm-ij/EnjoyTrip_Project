@@ -95,7 +95,7 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void deleteMember(String userId) throws IOException {
 		try {
-			memberMapper.deleteMember(userId);
+			memberMapper.deleteMember(userId.replace("\"", ""));
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}

@@ -469,10 +469,11 @@
             <div class="modal-body" style="max-height: 60vh; overflow-y: auto">
                 <!-- 스크롤 추가를 위해 스타일 추가 -->
                 <div class="row">
-                    <div class="col-3">이름</div>
-                    <div class="col-3">아이디</div>
-                    <div class="col-3">비밀번호</div>
-                    <div class="col-3">정보 수정</div>
+                    <div class="col-3 d-flex justify-content-center align-items-center">이름</div>
+                    <div class="col-2 d-flex justify-content-center align-items-center">아이디</div>
+                    <div class="col-2 d-flex justify-content-center align-items-center">등급</div>
+                    <div class="col-2 d-flex justify-content-center align-items-center">가입 일시</div>
+                    <div class="col-2 d-flex justify-content-center align-items-center">회원 삭제</div>
                 </div>
                 <div id="memberList">
                 </div>
@@ -613,7 +614,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script src="../assets/js/mypage.js"></script>
-<script src="../assets/js/membermanagement.js"></script>
+<%--<script src="../assets/js/membermanagement.js"></script>--%>
 <script src="../assets/js/findpwd.js"></script>
 <%--<script src="../assets/js/api.js"></script>--%>
 <script src="../assets/js/login.js"></script>
@@ -628,11 +629,9 @@
     if (document.querySelector("#loginBtn") != null) {
         document.querySelector("#loginBtn").addEventListener("click", function (e) {
             e.preventDefault();
-            let form = document.getElementById("loginForm"); // form 정보를 받아온다
             const username = document.getElementById("loginUserId").value;
             const password = document.getElementById("loginPassword").value;
 
-            console.log(username, password);
 
             fetch("<%=root %>/members/login", {
                 method: "POST",
@@ -644,7 +643,6 @@
                     userPassword: password
                 })
             }).then((response) => {
-                console.log(response);
                 if (response.ok) {
                     alert('로그인에 성공했습니다.');
                     $("#loginModal").modal("hide");
@@ -659,7 +657,7 @@
     // [2] 로그아웃 버튼 클릭시, controller 이용해 로그아웃 시행
     if (document.querySelector("#logoutBtn") != null) {
         document.querySelector("#logoutBtn").addEventListener("click", function () {
-            fetch("<%=root %>/members/logout", {
+            fetch("/members/logout", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -727,20 +725,87 @@
             });
     });
 
+
     // == 회원관리 모달 기능 ==
     // 모달을 열 때마다 실행될 함수
     if (document.getElementById("showMMModalBtn") != null) {
-        document.getElementById("showMMModalBtn").addEventListener("click", function (e) {
-            // 아주 만약에 admin이 아닌데 접근하려고 하면 막아야 함.
-            <% if(loginMember != null && loginMember.getGrade().equals("default")){ %>
-            alert("관리자만 접근할 수 있는 페이지 입니다.");
-            return;
-            <% }%>
+        document.getElementById("showMMModalBtn").addEventListener("click", function MberModal(e) {
             e.preventDefault();
-            let root = "<%=root%>";
-            adminlist(root); // membermanagement.js에 함수화하였음
+            fetch("/members/info")
+                .then(response => response.json())
+                .then(data => {
+                    let memberList = document.getElementById("memberList");
+                    memberList.innerHTML = "";
+                    data.forEach(function (user) {
+                        let userNames = user.userName;
+                        let userId = user.userId;
+                        let grade = user.grade;
+                        let registrationDate = user.registrationDate;
+                        var row = document.createElement("div");
+                        row.classList.add("row");
+                        let div1 = document.createElement("div");
+                        div1.className = "col-3 d-flex justify-content-center align-items-center";
+                        div1.textContent = userNames;
+
+                        let div2 = document.createElement("div");
+                        div2.className = "col-2 d-flex justify-content-center align-items-center";
+                        div2.textContent = userId;
+
+                        let div3 = document.createElement("div");
+                        div3.className = "col-2 d-flex justify-content-center align-items-center";
+                        div3.textContent = grade;
+
+                        let div4 = document.createElement("div");
+                        div4.className = "col-2 d-flex justify-content-center align-items-center";
+                        div4.textContent = registrationDate;
+
+                        let button = document.createElement("button");
+                        button.type = "button";
+                        button.className = "btn btn-outline-danger user-delete";
+                        button.dataset.userId = userId;
+                        button.textContent = "X";
+                        button.addEventListener('click', () => {
+                            fetch("/members/delete", {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify(button.dataset.userId),
+                            })
+                                .then(response => {
+                                    if (!response.ok) {
+                                        throw new Error('Network response was not ok');
+                                    }
+                                    MberModal(e);
+                                })
+                                .catch(error => {
+                                    console.error('There has been a problem with your fetch operation:', error);
+                                    // 여기에서 필요한 추가 작업을 수행하십시오. 예를 들어, 오류 메시지를 표시합니다.
+                                });
+                        });
+                        let div5 = document.createElement("div");
+                        div5.className = "col-2 d-flex justify-content-center align-items-center";
+                        div5.appendChild(button);
+
+                        row.appendChild(div1);
+                        row.appendChild(div2);
+                        row.appendChild(div3);
+                        row.appendChild(div4);
+                        row.appendChild(div5);
+                        memberList.appendChild(row);
+                    });
+                });
         });
     }
+
+    // 모달 닫기 이벤트
+    document.getElementById("MMModal").addEventListener("hidden.bs.modal", function () {
+        let backdrop = document.querySelector(".modal-backdrop");
+        if (backdrop) {
+            backdrop.parentNode.removeChild(backdrop);
+        }
+        document.getElementById("memberList").innerHTML = "";
+    });
 
     // ==== 검색 ====
     document.getElementById("btn-search").addEventListener("click", () => {
@@ -748,7 +813,6 @@
         let contentTypeId = document.getElementById("search-content-id").value;
         let keyword = document.getElementById("search-keyword").value;
 
-        console.log(sidoCode, contentTypeId, keyword);
 
         // AJAX 요청 보내기
         let xhr = new XMLHttpRequest();
@@ -758,7 +822,6 @@
                 // 서버에서 데이터를 받았을 때의 처리
                 const attractionList = JSON.parse(xhr.responseText);
                 // 받은 데이터를 활용하여 테이블 업데이트
-                console.log(attractionList);
                 updateTable(attractionList);
 
             }
