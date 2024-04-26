@@ -265,8 +265,32 @@
                         <label for="findPwdUserName" class="form-label">이름</label>
                         <input type="text" class="form-control" id="findPwdUserName" required/>
                     </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label">새 비밀번호</label>
+                        <input
+                                type="password"
+                                class="form-control"
+                                id="findPassword"
+                                name="password"
+                                required
+                        />
+                        <div id="findPasswordError" class="invalid-feedback">
+                            숫자와 영어 소문자로 5자리 이상 20자리 이하여야 합니다.
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirmPassword" class="form-label">새 비밀번호 확인</label>
+                        <input type="password" class="form-control" id="findConfirmPassword" required/>
+                        <div class="invalid-feedback">비밀번호가 일치하지 않습니다.</div>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="findShowPasswordCheckbox"/>
+                        <label class="form-check-label" for="showPasswordCheckbox">비밀번호 보이기</label>
+                    </div>
+
                     <div class="modal-footer">
-                        <button id="findpwd" type="button" class="btn btn-primary">비밀번호 찾기</button>
+                        <button id="findMember" type="button" class="btn btn-primary">비밀번호 찾기</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                             취소
                         </button>
@@ -276,6 +300,56 @@
         </div>
     </div>
 </div>
+
+<script>
+    // 비밀번호 보이기/감추기
+    document.getElementById("findShowPasswordCheckbox").addEventListener("change", function () {
+        const findPassword = document.getElementById("findPassword");
+        const findConfirmPassword = document.getElementById("findConfirmPassword");
+        if (this.checked) {
+            // 체크박스가 체크되면 비밀번호를 텍스트 형태로 보여줍니다.
+            findPassword.type = "text";
+            findConfirmPassword.type = "text";
+        } else {
+            // 체크박스가 해제되면 비밀번호를 숨깁니다.
+            findPassword.type = "password";
+            findConfirmPassword.type = "password";
+        }
+    });
+
+    document.getElementById("findMember").addEventListener("click", function () {
+        const userId = document.getElementById("findPwdUserId").value;
+        const userName = document.getElementById("findPwdUserName").value;
+        const userPassword = document.getElementById("findConfirmPassword").value;
+
+        fetch("/members/find", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                userId: userId,
+                userName: userName,
+                userPassword : userPassword
+            })
+        }).then((response) => {
+            if (response.ok) {
+                alert("비밀번호 찾아 변경 성공")
+                $("#findPwdModal").modal("hide");
+            } else {
+                alert("정보 확인하세요")
+            }
+        }).then((data) => {
+            // 비밀번호 찾기 성공, data는 서버에서 받은 회원 정보
+            // 필요한 작업 수행
+        }).catch((error) => {
+            console.error('Error:', error);
+        });
+    });
+</script>
+
+
+
 <!-- 마이 페이지 모달 -->
 <div
         class="modal fade"
@@ -661,7 +735,6 @@
     }
     // [2] 로그아웃 버튼 클릭시, controller 이용해 로그아웃 시행
 
-
     if (document.querySelector("#logoutBtn") != null) {
         document.querySelector("#logoutBtn").addEventListener("click", function () {
             fetch("/members/logout", {
@@ -705,32 +778,6 @@
     alert("가입에 실패했습니다. 다시 시도해주세요.");
     <% }
     }%>
-
-
-    // == 비밀번호 찾기 모달 기능 ==
-    document.getElementById("findpwd").addEventListener("click", function (e) {
-        e.preventDefault();
-        var userId = document.getElementById("findPwdUserId").value;
-        var name = document.getElementById("findPwdUserName").value;
-
-        // DB에서 userId를 기반으로 유저를 검색한다.
-        fetch("<%=root %>/trip?action=findPwd", {
-            method: "POST",
-            body: JSON.stringify({
-                findUserId: userId,
-                findUserName: name
-            })
-        }).then((response) => response.json())
-            .then((data) => {
-                console.log(data.success);
-                if (data.success) {
-                    alert("비밀번호는 " + data.password + "입니다.");
-                } else {
-                    alert("일치하는 정보가 없습니다.");
-                }
-            });
-    });
-
 
     // == 회원관리 모달 기능 ==
     // 모달을 열 때마다 실행될 함수

@@ -32,5 +32,13 @@ public class MemberDto {
 	}
 
 
+	@Data
+	@Builder
+	public static class Find{
+		private String userId;
+		private String userName;
+	}
+
+
 
 }

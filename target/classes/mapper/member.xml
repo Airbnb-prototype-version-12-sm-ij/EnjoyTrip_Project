@@ -45,5 +45,11 @@
         WHERE user_id = #{userId}
     </select>
 
+    <select id="findMember">
+        SELECT *
+        FROM members
+        WHERE user_id = #{userId} and user_name = #{userName}
+    </select>
+
 
 </mapper>

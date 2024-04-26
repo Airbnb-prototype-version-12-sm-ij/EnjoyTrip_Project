@@ -71,7 +71,7 @@ public class MemberController {
 
 		log.info("------------------------modify: {}------------------------", newPassword);
 
-		MemberEntity loginInfo = (MemberEntity)session.getAttribute("memberDto");
+		MemberEntity loginInfo = (MemberEntity) session.getAttribute("memberDto");
 		MemberDto.Info info = MemberDto.Info.of(loginInfo);
 		info.setUserPassword(newPassword.replace("\"", ""));
 		log.info("------------------------modify: {}------------------------", info);
@@ -107,4 +107,29 @@ public class MemberController {
 			throw new RuntimeException(e);
 		}
 	}
+
+
+	@PostMapping("/find")
+	public ResponseEntity<?> findMember(@RequestBody MemberDto.Info info) {
+
+	MemberDto.Find find = MemberDto.Find.builder().userId(info.getUserId()).userName(info.getUserName()).build();
+
+		try {
+
+			MemberEntity member = memberServiceImpl.findMember(find);
+			log.info("findMember: {}", member);
+
+			if (member != null){
+				member.setUserPassword(info.getUserPassword());
+				memberServiceImpl.modifyMember(MemberDto.Info.of(member));
+				return new ResponseEntity<MemberEntity>(member, HttpStatus.OK);
+			} else {
+				return new ResponseEntity<MemberEntity>(member, HttpStatus.UNAUTHORIZED);
+			}
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+
+	}
+
 }

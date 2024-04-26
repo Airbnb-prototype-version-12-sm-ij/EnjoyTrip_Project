@@ -75,6 +75,17 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
+	public MemberEntity findMember(MemberDto.Find find) throws IOException {
+
+		try {
+			return memberMapper.findMember(find);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+
+	}
+
+	@Override
 	public List<MemberEntity> loadMember() throws IOException {
 		try {
 			return memberMapper.loadMember();

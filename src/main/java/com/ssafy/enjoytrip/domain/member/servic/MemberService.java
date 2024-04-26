@@ -1,6 +1,7 @@
 package com.ssafy.enjoytrip.domain.member.servic;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 import com.ssafy.enjoytrip.domain.member.dto.MemberDto;
@@ -25,4 +26,6 @@ public interface MemberService {
 
 	// 특정 회원 정보
 	public MemberEntity pickMember(String userId) throws IOException;
+
+	public MemberEntity findMember(MemberDto.Find find) throws IOException;
 }
