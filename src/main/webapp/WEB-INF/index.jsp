@@ -687,8 +687,7 @@
     if (document.querySelector("#registBtn") != null) {
         document.querySelector("#registBtn").addEventListener("click", function (e) {
             e.preventDefault();
-            let root = "<%=root%>";
-            regist(root); // signup.js에 함수화하였음
+            regist(); // signup.js에 함수화하였음
         });
     }
     // 회원가입 이후, 성공여부 표기
@@ -987,9 +986,8 @@
     // == 마이페이지 탈퇴 기능 ==
     document.getElementById("Membership-Withdrawal-btn").addEventListener("click", function (e) {
         e.preventDefault();
-        let root = "<%=root%>";
-        let loginId = "<%=thisId%>";
-        withdrawal(root, loginId); // mypage.js에 함수화하였음
+        let loginId = "<%=loginMember != null ? loginMember.getUserId() : null%>";
+        withdrawal(loginId); // mypage.js에 함수화하였음
     })
 
 </script>

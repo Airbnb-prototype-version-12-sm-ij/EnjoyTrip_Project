@@ -113,7 +113,7 @@ function changePassword(root) {
         headers: {
             "Content-Type": "text/plain"
         },
-        body : JSON.stringify(newPassword),
+        body: JSON.stringify(newPassword),
     }).then((response) => response.json())
         .then((data) => {
             if (data.success) {
@@ -137,19 +137,28 @@ function changePassword(root) {
 }
 
 // 탈퇴 기능 함수화
-function withdrawal(root, thisId) {
+function withdrawal(thisId) {
     // DB에서 userId를 기반으로 유저 데이터를 삭제하고, 로그아웃을 시킨다.
-    fetch(root + "/trip?action=delete", {
+    fetch("/members/delete", {
         method: "POST",
-        body: JSON.stringify({
-            userId: thisId
-        })
+        body: JSON.stringify(thisId),
     }).then((response) => { // 굳이 응답이 필요없으므로 성공유무만 판단
         console.log(response.ok);
         if (response.ok) {
             alert("회원을 탈퇴했습니다. 로그아웃됩니다.");
-            $("#MyPageModal").modal("hide");
-            location.href = root + "/trip?action=logout";
+            fetch("/members/logout", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then((response) => {
+                if (response.ok) {
+                    location.reload();
+                } else {
+                    // Handle errors here
+                    console.error('Logout failed');
+                }
+            });
         } else { // 에러가 발생한 경우
             alert('탈퇴에 실패했습니다.');
         }

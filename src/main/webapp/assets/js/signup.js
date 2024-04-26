@@ -183,8 +183,7 @@ function validateName(name) {
 */
 
 // 회원가입 기능 함수화
-function regist(root) {
-    console.log(root);
+function regist() {
     let userId = document.getElementById("userId").value;
     let userPwd = document.getElementById("password").value;
     let confirmPwd = document.getElementById("confirmPassword").value;
@@ -198,9 +197,9 @@ function regist(root) {
         return;
     }
     let form = document.getElementById("signupForm"); // form 정보를 받아온다
-    fetch(root + "/members/join", {
+    fetch("/members/join", {
         method: "POST",
-        headers:{
+        headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
