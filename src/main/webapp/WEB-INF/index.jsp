@@ -145,6 +145,10 @@
             max-height: calc(70vh - 300px); /* 모달 창 높이에서 헤더와 푸터 높이를 제외한 값 */
             overflow-y: auto;
         }
+
+        th {
+            text-align: center;
+        }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link
@@ -591,7 +595,12 @@
             <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <th>게시판</th>
+                    <th>
+                        <button class="btn-light">
+                            게시판
+                        </button>
+                    </th>
+
                 </tr>
                 </thead>
                 <tbody>
