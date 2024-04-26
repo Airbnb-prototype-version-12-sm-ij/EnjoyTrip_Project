@@ -5,6 +5,7 @@
 
 <mapper namespace="com.ssafy.enjoytrip.domain.member.mapper.MemberMapper">
 
+
     <select id="login">
         SELECT *
         FROM members
@@ -13,8 +14,8 @@
     </select>
 
     <insert id="addMember">
-        insert into members (user_id, user_name, user_password, grade)
-        values (#{user_id}, #{userName}, #{userPassword}, #{grade})
+        insert into members (user_id, user_name, user_password)
+        values (#{userId}, #{userName}, #{userPassword})
     </insert>
 
     <select id="loadMember">
@@ -25,9 +26,9 @@
     <!-- 회원 정보 수정 -->
     <update id="modifyMember">
         UPDATE members
-        SET user_name     = #{info.userName},
-            user_password = #{info.userPassword}
-        WHERE user_id = #{info.userId}
+        SET user_name     = #{userName},
+            user_password = #{userPassword}
+        WHERE user_id = #{userId}
     </update>
 
     <!-- 회원 탈퇴 -->

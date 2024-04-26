@@ -1,9 +1,15 @@
+
+
+
 -- MySQL Workbench Forward Engineering
 
 SET @OLD_UNIQUE_CHECKS = @@UNIQUE_CHECKS, UNIQUE_CHECKS = 0;
 SET @OLD_FOREIGN_KEY_CHECKS = @@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS = 0;
 SET @OLD_SQL_MODE = @@SQL_MODE, SQL_MODE =
         'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+
+
 
 -- -----------------------------------------------------
 -- Schema mydb
@@ -18,10 +24,22 @@ SET @OLD_SQL_MODE = @@SQL_MODE, SQL_MODE =
 CREATE SCHEMA IF NOT EXISTS `enjoytrip` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
 USE `enjoytrip`;
 
+
+
+Drop TABLE IF EXISTS `enjoytrip`.`sido`;
+Drop TABLE IF EXISTS `enjoytrip`.`gugun`;
+Drop TABLE IF EXISTS `enjoytrip`.`attraction_info`;
+Drop TABLE IF EXISTS `enjoytrip`.`attraction_description`;
+Drop TABLE IF EXISTS `enjoytrip`.`attraction_detail`;
+DROP TABLE IF EXISTS `enjoytrip`.`members`;
+Drop TABLE IF EXISTS `enjoytrip`.`posts`;
+Drop TABLE IF EXISTS `enjoytrip`.`wishlist`;
+
+
 -- -----------------------------------------------------
 -- Table `enjoytrip`.`sido`
 -- -----------------------------------------------------
-Drop TABLE IF EXISTS `enjoytrip`.`sido`;
+
 CREATE TABLE IF NOT EXISTS `enjoytrip`.`sido`
 (
     `sido_code` INT         NOT NULL,
@@ -35,7 +53,7 @@ CREATE TABLE IF NOT EXISTS `enjoytrip`.`sido`
 -- -----------------------------------------------------
 -- Table `enjoytrip`.`gugun`
 -- -----------------------------------------------------
-Drop TABLE IF EXISTS `enjoytrip`.`gugun`;
+
 CREATE TABLE IF NOT EXISTS `enjoytrip`.`gugun`
 (
     `gugun_code` INT         NOT NULL,
@@ -54,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `enjoytrip`.`gugun`
 -- -----------------------------------------------------
 -- Table `enjoytrip`.`attraction_info`
 -- -----------------------------------------------------
-Drop TABLE IF EXISTS `enjoytrip`.`attraction_info`;
+
 CREATE TABLE IF NOT EXISTS `enjoytrip`.`attraction_info`
 (
     `content_id`      INT             NOT NULL,
@@ -93,7 +111,7 @@ CREATE TABLE IF NOT EXISTS `enjoytrip`.`attraction_info`
 -- -----------------------------------------------------
 -- Table `enjoytrip`.`attraction_description`
 -- -----------------------------------------------------
-Drop TABLE IF EXISTS `enjoytrip`.`attraction_description`;
+
 CREATE TABLE IF NOT EXISTS `enjoytrip`.`attraction_description`
 (
     `content_id` INT            NOT NULL,
@@ -112,7 +130,7 @@ CREATE TABLE IF NOT EXISTS `enjoytrip`.`attraction_description`
 -- -----------------------------------------------------
 -- Table `enjoytrip`.`attraction_detail`
 -- -----------------------------------------------------
-Drop TABLE IF EXISTS `enjoytrip`.`attraction_detail`;
+
 CREATE TABLE IF NOT EXISTS `enjoytrip`.`attraction_detail`
 (
     `content_id`    INT         NOT NULL,
@@ -134,7 +152,7 @@ CREATE TABLE IF NOT EXISTS `enjoytrip`.`attraction_detail`
 -- -----------------------------------------------------
 -- Table `enjoytrip`.`members`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `enjoytrip`.`members`;
+
 CREATE TABLE IF NOT EXISTS `enjoytrip`.`members`
 (
     `user_id`           VARCHAR(16) NOT NULL,
@@ -153,7 +171,7 @@ CREATE TABLE IF NOT EXISTS `enjoytrip`.`members`
 -- -----------------------------------------------------
 -- Table `enjoytrip`.`posts`
 -- -----------------------------------------------------
-Drop TABLE IF EXISTS `enjoytrip`.`posts`;
+
 CREATE TABLE IF NOT EXISTS `enjoytrip`.`posts`
 (
     `post_id`    INT          NOT NULL AUTO_INCREMENT,
@@ -185,7 +203,7 @@ CREATE TABLE IF NOT EXISTS `enjoytrip`.`posts`
     COLLATE = utf8mb4_0900_ai_ci;
 
 
-Drop TABLE IF EXISTS `enjoytrip`.`wishlist`;
+
 CREATE TABLE IF NOT EXISTS `enjoytrip`.`wishlist`
 (
     `wishlist_id` INT         NOT NULL AUTO_INCREMENT,
@@ -210,7 +228,38 @@ CREATE TABLE IF NOT EXISTS `enjoytrip`.`wishlist`
 
 
 
+
+
+-- -----------------------------------------------------
+-- Table `enjoytrip`.`members`
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `enjoytrip`.`members`
+(
+    `user_id`       VARCHAR(16) NOT NULL,
+    `user_name`     VARCHAR(20) NOT NULL,
+    `user_password` VARCHAR(64) NOT NULL,
+    `grade`         VARCHAR(10) DEFAULT 'default',
+    PRIMARY KEY (`user_id`)
+    )
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_0900_ai_ci;
+
+
+ALTER TABLE `enjoytrip`.`members`
+    MODIFY `grade` VARCHAR(10) NOT NULL DEFAULT 'default';
+
+insert into `enjoytrip`.`members` (user_id, user_name, user_password)
+values ('ssafy', '김싸피', 'a477d9bfed77d6d10bcf91408877fec661196de6fa2c513daa2030b234f927ee'),
+       ('admin', '관리자', 'a477d9bfed77d6d10bcf91408877fec661196de6fa2c513daa2030b234f927ee'),
+       ('joo1798', '주수아', 'a477d9bfed77d6d10bcf91408877fec661196de6fa2c513daa2030b234f927ee'),
+       ('dldlswns', '이인준', 'a477d9bfed77d6d10bcf91408877fec661196de6fa2c513daa2030b234f927ee');
+
+
+
 SET SQL_MODE = @OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS = @OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS = @OLD_UNIQUE_CHECKS;
 
+commit;

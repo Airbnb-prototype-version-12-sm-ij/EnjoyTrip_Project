@@ -108,16 +108,27 @@ function changePassword(root) {
         return;
     }
     // DB에서 userId를 기반으로 유저 데이터를 수정한다.
-    fetch(root + "/trip?action=modify", {
+    fetch(root + "/members/modify", {
         method: "POST",
-        body: JSON.stringify({
-            newPwd: newPassword
-        })
+        headers: {
+            "Content-Type": "text/plain"
+        },
+        body : JSON.stringify(newPassword),
     }).then((response) => response.json())
         .then((data) => {
             if (data.success) {
                 alert("비밀번호 변경에 성공했습니다. 다시 로그인해주세요.");
-                location.href = root + "/trip?action=logout";
+
+                fetch("/members/logout", {
+                    method: "POST"
+                }).then((response) => {
+                    if (response.ok) {
+                        alert("로그아웃 되었습니다.");
+                        location.reload();
+                    }
+                }).catch((error) => {
+                    console.error('Error:', error);
+                });
             } else {
                 alert("비밀번호 변경에 실패했습니다.");
             }

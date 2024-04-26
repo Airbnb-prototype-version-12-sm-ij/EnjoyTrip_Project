@@ -1,6 +1,10 @@
 package com.ssafy.enjoytrip.domain.member.controller;
 
 import java.io.IOException;
+import java.util.stream.Collectors;
+
+import com.ssafy.enjoytrip.domain.member.servic.MemberServiceImpl;
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -54,6 +58,54 @@ public class MemberController {
 		HttpSession session = request.getSession();
 		session.invalidate();
 	}
+
+	@PostMapping("/join")
+	public void join(@RequestBody MemberDto.Info info, HttpServletRequest request) {
+		log.info("--------------------MemberController --- join: {}----------------------", info);
+
+		try {
+			memberServiceImpl.addMember(info);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	// @PostMapping("/modify")
+	// public void modify(HttpServletRequest request, HttpSession session) throws IOException {
+	// 	String newPassword = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
+	//
+	// 	MemberEntity loginInfo = (MemberEntity) session.getAttribute("memberDto");
+	//
+	// 	MemberDto.Info info = MemberDto.Info.of(loginInfo);
+	//
+	// 	info.setUserPassword(newPassword);
+	//
+	// 	memberServiceImpl.modifyMember(info);
+	// }
+
+
+	@PostMapping("/modify")
+	public ResponseEntity<?> modify(@RequestBody String newPassword, HttpServletRequest request, HttpSession session) {
+
+		log.info("------------------------modify: {}------------------------", newPassword);
+
+		MemberEntity loginInfo = (MemberEntity) session.getAttribute("memberDto");
+		MemberDto.Info info = MemberDto.Info.of(loginInfo);
+		info.setUserPassword(newPassword.replace("\"", ""));
+		log.info("------------------------modify: {}------------------------", info);
+
+		try {
+			memberServiceImpl.modifyMember(info);
+			// 비밀번호 변경 작업이 성공했을 경우
+			return ResponseEntity.ok().body("{\"success\": true}");
+		} catch (Exception e) {
+			// 비밀번호 변경 작업이 실패했을 경우
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"success\": false}");
+		}
+	}
+
+
+
 
 	// 버튼을 누르면 회원들의 정보를 반환 해주는 회원 관리 REST API
 	@GetMapping("/info")

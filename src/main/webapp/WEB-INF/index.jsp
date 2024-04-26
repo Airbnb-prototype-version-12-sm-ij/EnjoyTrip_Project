@@ -399,7 +399,7 @@
                 ></button>
             </div>
             <div class="modal-body">
-                <form id="signupForm" method="POST" action="">
+                <form id="signupForm" method="POST" action="${root}/members/join">
                     <input type="hidden" name="action" value="regist"/>
                     <div class="mb-3">
                         <label for="userId" class="form-label">아이디</label>
@@ -655,6 +655,8 @@
         });
     }
     // [2] 로그아웃 버튼 클릭시, controller 이용해 로그아웃 시행
+
+
     if (document.querySelector("#logoutBtn") != null) {
         document.querySelector("#logoutBtn").addEventListener("click", function () {
             fetch("/members/logout", {
@@ -988,7 +990,7 @@
         let root = "<%=root%>";
         let loginId = "<%=thisId%>";
         withdrawal(root, loginId); // mypage.js에 함수화하였음
-    });
+    })
 
 </script>
 </body>

@@ -85,6 +85,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public void modifyMember(MemberDto.Info info) throws IOException {
+		info.setUserPassword(getHashValue(info.getUserPassword()));
 		try {
 			memberMapper.modifyMember(info);
 		} catch (SQLException e) {

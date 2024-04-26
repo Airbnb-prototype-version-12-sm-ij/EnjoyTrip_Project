@@ -198,12 +198,15 @@ function regist(root) {
         return;
     }
     let form = document.getElementById("signupForm"); // form 정보를 받아온다
-    fetch(root + "/trip?action=regist", {
+    fetch(root + "/members/join", {
         method: "POST",
+        headers:{
+            'Content-Type': 'application/json'
+        },
         body: JSON.stringify({
-            id: userId,
-            password: userPwd,
-            name: userName
+            userId: userId,
+            userPassword: userPwd,
+            userName: userName
         })
     }).then((response) => {
         console.log(response.ok);

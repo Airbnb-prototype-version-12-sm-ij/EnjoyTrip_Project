@@ -31,4 +31,6 @@ public class MemberDto {
 		private String userPassword;
 	}
 
+
+
 }
