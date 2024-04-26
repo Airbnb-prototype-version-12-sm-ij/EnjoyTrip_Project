@@ -1,12 +1,10 @@
 package com.ssafy.enjoytrip.domain.member.controller;
 
+import com.ssafy.enjoytrip.domain.member.servic.MemberServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 import com.ssafy.enjoytrip.domain.member.dto.MemberDto;
 import com.ssafy.enjoytrip.domain.member.entity.MemberEntity;
@@ -18,21 +16,21 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@RestController
-@RequestMapping("/members")
-@RequiredArgsConstructor
 @CrossOrigin("*")
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/members")
 public class MemberController {
 
-	private final MemberMapper memberMapper;
+	private final MemberServiceImpl memberServiceImpl;
 
 	@PostMapping("/login")
+	@ResponseBody
 	public ResponseEntity<?> login(@RequestBody MemberDto.Login login, HttpServletRequest request) {
-		log.info("--------------------MemberController --- login: {}----------------------", login);
 
 		try {
-			MemberEntity loginInfo = memberMapper.login(login);
-			log.info("--------------------loginInfo: {}----------------------", loginInfo);
+			MemberEntity loginInfo = memberServiceImpl.login(login);
+			log.info("loginInfo: {}", loginInfo);
 			if (loginInfo != null) {
 				HttpSession session = request.getSession();
 				session.setAttribute("memberDto", loginInfo);

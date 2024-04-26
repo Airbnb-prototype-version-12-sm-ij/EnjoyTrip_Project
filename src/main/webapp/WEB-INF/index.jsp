@@ -658,10 +658,24 @@
     }
     // [2] 로그아웃 버튼 클릭시, controller 이용해 로그아웃 시행
     if (document.querySelector("#logoutBtn") != null) {
-        document.querySelector("#logoutBtn").addEventListener("click", function () {
-            location.href = "<%=root %>/member/logout";
+    document.querySelector("#logoutBtn").addEventListener("click", function () {
+        fetch("<%=root %>/members/logout", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((response) => {
+            if (response.ok) {
+                // 로그아웃 성공시
+                alert('로그아웃 되었습니다.');
+                location.reload();
+            } else {
+                // Handle errors here
+                console.error('Logout failed');
+            }
         });
-    }
+    });
+}
     // [3] 로그인 이후, 성공여부 표기
     <% 
     String msg = (String)request.getSession().getAttribute("loginFail");

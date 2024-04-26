@@ -24,15 +24,13 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public MemberEntity login(MemberDto.Login login) throws IOException {
-		log.info("--------------------Service - login: {}----------------------", login);
 		login.setUserPassword(getHashValue(login.getUserPassword()));
-		log.info("--------------------Service - login: {}----------------------", login);
+		log.info("login: {}", login);
 		try {
-			memberMapper.login(login);
+			return memberMapper.login(login);
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
-		return null;
 	}
 
 	@Override
