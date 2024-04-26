@@ -22,10 +22,14 @@ SET @OLD_SQL_MODE = @@SQL_MODE, SQL_MODE =
 -- Schema enjoytrip
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `enjoytrip` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+
 USE `enjoytrip`;
 
 
 
+
+Drop TABLE IF EXISTS `enjoytrip`.`post_img`;
+Drop TABLE IF EXISTS `enjoytrip`.`post_comments`;
 Drop TABLE IF EXISTS `enjoytrip`.`sido`;
 Drop TABLE IF EXISTS `enjoytrip`.`gugun`;
 Drop TABLE IF EXISTS `enjoytrip`.`attraction_info`;
@@ -33,6 +37,7 @@ Drop TABLE IF EXISTS `enjoytrip`.`attraction_description`;
 Drop TABLE IF EXISTS `enjoytrip`.`attraction_detail`;
 DROP TABLE IF EXISTS `enjoytrip`.`members`;
 Drop TABLE IF EXISTS `enjoytrip`.`posts`;
+Drop TABLE IF EXISTS `enjoytrip`.`posting`;
 Drop TABLE IF EXISTS `enjoytrip`.`wishlist`;
 
 
@@ -169,10 +174,10 @@ CREATE TABLE IF NOT EXISTS `enjoytrip`.`members`
 
 
 -- -----------------------------------------------------
--- Table `enjoytrip`.`posts`
+-- Table `enjoytrip`.`posting`
 -- -----------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS `enjoytrip`.`posts`
+CREATE TABLE IF NOT EXISTS `enjoytrip`.`posting`
 (
     `post_id`    INT          NOT NULL AUTO_INCREMENT,
     `title`      VARCHAR(100) NOT NULL,
@@ -246,9 +251,60 @@ CREATE TABLE IF NOT EXISTS `enjoytrip`.`members`
     DEFAULT CHARACTER SET = utf8mb4
     COLLATE = utf8mb4_0900_ai_ci;
 
-
 ALTER TABLE `enjoytrip`.`members`
     MODIFY `grade` VARCHAR(10) NOT NULL DEFAULT 'default';
+
+
+
+
+CREATE TABLE IF NOT EXISTS `enjoytrip`.`post_img`
+(
+    `id` INT AUTO_INCREMENT,
+    `post_id` INT NOT NULL,
+    `save_folder` VARCHAR(255) NOT NULL,
+    `original_file` VARCHAR(255) NOT NULL,
+    `save_file` VARCHAR(255) NOT NULL,
+    PRIMARY KEY (`id`),
+    INDEX `post_img_to_post_post_id_fk_idx` (`post_id` ASC) VISIBLE,
+    CONSTRAINT `post_img_to_post_post_id_fk`
+        FOREIGN KEY (`post_id`)
+            REFERENCES `enjoytrip`.`posting` (`post_id`)
+            ON DELETE CASCADE
+)
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_0900_ai_ci;
+
+
+
+-- post_comments 테이블 생성
+CREATE TABLE IF NOT EXISTS `enjoytrip`.`post_comments`
+(
+    `comment_id` INT AUTO_INCREMENT,
+    `post_id` INT NOT NULL,
+    `user_id` VARCHAR(16) NOT NULL,
+    `comment` TEXT NOT NULL,
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`comment_id`),
+    INDEX `post_comments_to_post_post_id_fk_idx` (`post_id` ASC) VISIBLE,
+    INDEX `post_comments_to_members_user_id_fk_idx` (`user_id` ASC) VISIBLE,
+    CONSTRAINT `post_comments_to_post_post_id_fk`
+        FOREIGN KEY (`post_id`)
+            REFERENCES `enjoytrip`.`posting` (`post_id`)
+            ON DELETE CASCADE,
+    CONSTRAINT `post_comments_to_members_user_id_fk`
+        FOREIGN KEY (`user_id`)
+            REFERENCES `enjoytrip`.`members` (`user_id`)
+            ON DELETE CASCADE
+)
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_0900_ai_ci;
+
+
+
+
+
 
 insert into `enjoytrip`.`members` (user_id, user_name, user_password, grade)
 values ('ssafy', '김싸피', 'a477d9bfed77d6d10bcf91408877fec661196de6fa2c513daa2030b234f927ee', "admin"),

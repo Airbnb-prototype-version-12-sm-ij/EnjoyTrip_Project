@@ -43,5 +43,6 @@ public class AttractionServiceImpl implements AttractionService {
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
+
 	}
 }

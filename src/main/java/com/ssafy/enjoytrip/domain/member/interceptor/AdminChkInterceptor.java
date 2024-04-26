@@ -7,11 +7,13 @@ import com.ssafy.enjoytrip.domain.member.entity.MemberEntity;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 
 //@SuppressWarnings("deprecation")
 //public class ConfirmInterceptor extends HandlerInterceptorAdapter {
 //spring 5.3 부터는 HandlerInterceptor implements
 //@Component
+@Slf4j
 public class AdminChkInterceptor implements HandlerInterceptor {
 
 	@Override
@@ -23,7 +25,8 @@ public class AdminChkInterceptor implements HandlerInterceptor {
 			return true;
 		}
 		request.setAttribute("msg", "관리자만 접근 가능합니다.");
-		response.sendRedirect(request.getContextPath() + "/");
+
+		response.sendRedirect("/");
 		return false;
 	}
 
