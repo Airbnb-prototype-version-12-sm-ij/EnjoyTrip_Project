@@ -1,22 +1,127 @@
-// 비밀번호 찾기 버튼 클릭 시
-/*document.getElementById("findpwd").addEventListener("click", function () {
-  var userId = document.getElementById("findPwdUserId").value;
-  var name = document.getElementById("findPwdUserName").value;
-
-  // 로컬 스토리지에서 저장된 아이디와 비밀번호 확인
-  var savedUsers = JSON.parse(localStorage.getItem("users")); // 로컬 스토리지에서 유저 정보 가져오기
-  var userFound = savedUsers.find((user) => user.userId === userId && user.name === name); // 유저 정보 확인
-
-  if (userFound) {
-    alert(`비밀 번호는 ${userFound.password}입니다`);
-    $("#findPwdModal").modal("hide");
-  } else {
-    alert("아이디 또는 이름이 올바르지 않습니다.");
-  }
-});*/
-
-// 모달 표시 이벤트
 document.getElementById("showFindPwdModalBtn").addEventListener("click", function () {
     let modal = new bootstrap.Modal(document.getElementById("findPwdModal"));
     modal.show();
+});
+
+// ========================================== 아이디 검사 =================================================
+document.getElementById("findPwdUserId").addEventListener("input", function () {
+    const findPwdUserId = this.value;
+    validateUserId(findPwdUserId);
+});
+
+function validateUserId(findPwdUserId) {
+    let regex = /^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{5,20}$/;
+    if (regex.test(findPwdUserId)) {
+        document.getElementById("findPwdUserId").classList.remove("is-invalid");
+        return true;
+    } else {
+        document.getElementById("findPwdUserId").classList.add("is-invalid");
+        return false;
+    }
+}
+
+// ======================================================================================================
+// ========================================== 비밀번호 검사 ===============================================
+document.getElementById("findPassword").addEventListener("input", function () {
+    const findPassword = this.value;
+    validatePassword(findPassword);
+});
+
+function validatePassword(findPassword) {
+    let regex = /^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{5,20}$/;
+    if (!regex.test(findPassword)) {
+        document.getElementById("findPassword").classList.add("is-invalid");
+        return false;
+    } else {
+        document.getElementById("findPassword").classList.remove("is-invalid");
+        return true;
+    }
+}
+
+// ======================================================================================================
+// ==================================== 비밀번호 재입력 확인 ===============================================
+document.getElementById("findConfirmPassword").addEventListener("input", function () {
+    const findConfirmPassword = this.value;
+    const findPassword = document.getElementById("findPassword").value;
+    validatePasswordConfirmation(findPassword, findConfirmPassword);
+});
+
+function validatePasswordConfirmation(findPassword, findConfirmPassword) {
+    if (findPassword !== findConfirmPassword) {
+        document.getElementById("findConfirmPassword").classList.add("is-invalid");
+        return false;
+    } else {
+        document.getElementById("findConfirmPassword").classList.remove("is-invalid");
+        return true;
+    }
+}
+
+// ======================================================================================================
+// ==================================== 사용자 이름 확인 ===================================================
+
+document.getElementById("findPwdUserName").addEventListener("input", function () {
+    const findPwdUserName = this.value;
+    validateName(findPwdUserName);
+});
+
+function validateName(findPwdUserName) {
+    let regex = /^[가-힣]+$/;
+    if (!regex.test(findPwdUserName)) {
+        document.getElementById("findPwdUserName").classList.add("is-invalid");
+        return false;
+    } else {
+        document.getElementById("findPwdUserName").classList.remove("is-invalid");
+        return true;
+    }
+}
+
+// ======================================================================================================
+// ==================================== 비밀번호 체크 박스 ===================================================
+
+const showPasswordCheckbox = document.getElementById("findShowPasswordCheckbox");
+
+showPasswordCheckbox.addEventListener("change", function () {
+    const findPasswordInput = document.getElementById("findPassword");
+    const findConfirmPasswordInput = document.getElementById("findConfirmPassword");
+    if (this.checked) {
+        findPasswordInput.type = "text";
+        findConfirmPasswordInput.type = "text";
+    } else {
+        findPasswordInput.type = "password";
+        findConfirmPasswordInput.type = "password";
+    }
+});
+
+document.getElementById("userId").addEventListener("input", function () {
+    const userId = this.value;
+    validateUserId(userId);
+});
+
+// ======================================================================================================
+// ==================================== 비밀번호 변경 API 호출 함수 =========================================
+document.getElementById("findMember").addEventListener("click", function () {
+    const userId = document.getElementById("findPwdUserId").value;
+    const userName = document.getElementById("findPwdUserName").value;
+    const userPassword = document.getElementById("findConfirmPassword").value;
+
+    fetch("/members/find", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            userId: userId,
+            userName: userName,
+            userPassword: userPassword
+        })
+    }).then((response) => {
+        if (response.ok) {
+            alert("비밀번호 찾아 변경 성공")
+            $("#findPwdModal").modal("hide");
+        } else {
+            alert("정보 확인하세요")
+        }
+    }).catch((error) => {
+        console.error('Error:', error);
+    });
 });

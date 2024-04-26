@@ -21,4 +21,5 @@ public class AttractionEntity {
 	private double longitude;
 	private String mlevel;
 	private String overview;
+	
 }

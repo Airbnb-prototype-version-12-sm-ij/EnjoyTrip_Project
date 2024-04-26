@@ -101,14 +101,14 @@
 });*/
 
 // 비밀번호 변경 기능 함수화
-function changePassword(root) {
+function changePassword() {
     //console.log(root);
     let newPassword = document.getElementById("newPassword").value;
     if (!validateNewPassword(newPassword)) {
         return;
     }
     // DB에서 userId를 기반으로 유저 데이터를 수정한다.
-    fetch(root + "/members/modify", {
+    fetch("/members/modify", {
         method: "POST",
         headers: {
             "Content-Type": "text/plain"

@@ -14,7 +14,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>백엔드 관통</title>
+    <title>스프링 부트 적용 관통</title>
     <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
             rel="stylesheet"
@@ -259,20 +259,25 @@
                 <form id="findPwdForm">
                     <div class="mb-3">
                         <label for="findPwdUserId" class="form-label">아이디</label>
-                        <input type="text" class="form-control" id="findPwdUserId" required/>
+                        <input type="text" class="findPwdUserId form-control" id="findPwdUserId" required/>
+                        <div id="findPwdUserIdError" class="invalid-feedback">
+                            숫자와 영어 소문자로 5자리 이상 20자리 이하여야 합니다.
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label for="findPwdUserName" class="form-label">이름</label>
-                        <input type="text" class="form-control" id="findPwdUserName" required/>
+                        <input type="text" class="findPwdUserName form-control" id="findPwdUserName" required/>
+                        <div id="findPwdUserNameError" class="invalid-feedback">
+                            한글만 입력 가능합니다.
+                        </div>
                     </div>
-
                     <div class="mb-3">
                         <label for="password" class="form-label">새 비밀번호</label>
                         <input
                                 type="password"
                                 class="form-control"
                                 id="findPassword"
-                                name="password"
+                                name="findPassword"
                                 required
                         />
                         <div id="findPasswordError" class="invalid-feedback">
@@ -281,11 +286,12 @@
                     </div>
                     <div class="mb-3">
                         <label for="confirmPassword" class="form-label">새 비밀번호 확인</label>
-                        <input type="password" class="form-control" id="findConfirmPassword" required/>
-                        <div class="invalid-feedback">비밀번호가 일치하지 않습니다.</div>
+                        <input type="password" class="findConfirmPassword form-control" id="findConfirmPassword"
+                               required/>
+                        <div id="findConfirmPasswordError" class="invalid-feedback">비밀번호가 일치하지 않습니다.</div>
                     </div>
                     <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" id="findShowPasswordCheckbox"/>
+                        <input type="checkbox" class="findShowPasswordCheckbox" id="findShowPasswordCheckbox"/>
                         <label class="form-check-label" for="showPasswordCheckbox">비밀번호 보이기</label>
                     </div>
 
@@ -300,54 +306,6 @@
         </div>
     </div>
 </div>
-
-<script>
-    // 비밀번호 보이기/감추기
-    document.getElementById("findShowPasswordCheckbox").addEventListener("change", function () {
-        const findPassword = document.getElementById("findPassword");
-        const findConfirmPassword = document.getElementById("findConfirmPassword");
-        if (this.checked) {
-            // 체크박스가 체크되면 비밀번호를 텍스트 형태로 보여줍니다.
-            findPassword.type = "text";
-            findConfirmPassword.type = "text";
-        } else {
-            // 체크박스가 해제되면 비밀번호를 숨깁니다.
-            findPassword.type = "password";
-            findConfirmPassword.type = "password";
-        }
-    });
-
-    document.getElementById("findMember").addEventListener("click", function () {
-        const userId = document.getElementById("findPwdUserId").value;
-        const userName = document.getElementById("findPwdUserName").value;
-        const userPassword = document.getElementById("findConfirmPassword").value;
-
-        fetch("/members/find", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                userId: userId,
-                userName: userName,
-                userPassword : userPassword
-            })
-        }).then((response) => {
-            if (response.ok) {
-                alert("비밀번호 찾아 변경 성공")
-                $("#findPwdModal").modal("hide");
-            } else {
-                alert("정보 확인하세요")
-            }
-        }).then((data) => {
-            // 비밀번호 찾기 성공, data는 서버에서 받은 회원 정보
-            // 필요한 작업 수행
-        }).catch((error) => {
-            console.error('Error:', error);
-        });
-    });
-</script>
-
 
 
 <!-- 마이 페이지 모달 -->
@@ -473,7 +431,7 @@
                 ></button>
             </div>
             <div class="modal-body">
-                <form id="signupForm" method="POST" action="${root}/members/join">
+                <form id="signupForm" method="POST" action="/members/join">
                     <input type="hidden" name="action" value="regist"/>
                     <div class="mb-3">
                         <label for="userId" class="form-label">아이디</label>
@@ -712,7 +670,7 @@
             const password = document.getElementById("loginPassword").value;
 
 
-            fetch("<%=root %>/members/login", {
+            fetch("/members/login", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -730,7 +688,6 @@
                     alert('아이디나 비밀번호를 확인해주세요.');
                 }
             });
-            // 로그인하고 모달을 꺼야하는데 메인으로 그냥 보내면 되겠지?
         });
     }
     // [2] 로그아웃 버튼 클릭시, controller 이용해 로그아웃 시행
@@ -770,7 +727,6 @@
     }
     // 회원가입 이후, 성공여부 표기
     <% if(request.getAttribute("registSuccess") != null){
-
         if(request.getAttribute("registSuccess").equals("yes")){
     %>
     alert("가입에 성공했습니다. 로그인해주세요.");
@@ -851,7 +807,7 @@
         });
     }
 
-    // 모달 닫기 이벤트
+    // 회원 관리 모달 닫기 이벤트
     document.getElementById("MMModal").addEventListener("hidden.bs.modal", function () {
         let backdrop = document.querySelector(".modal-backdrop");
         if (backdrop) {
@@ -1001,11 +957,13 @@
         changePassword(root); // mypage.js에 함수화하였음
     });
 
+    // 비밀번호 입력시 보이기
     document.getElementById("newPassword").addEventListener("input", function () {
         const newPassword = this.value;
         validateNewPassword(newPassword);
     });
 
+    // ====== 새 비밀번호 검사 ======
     function validateNewPassword(newPassword) {
         const newpasswordInput = document.getElementById("newPassword");
         let regex = /^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{5,20}$/;
@@ -1018,12 +976,14 @@
         }
     }
 
+    // ====== 새 비밀번호 확인 검사 ======
     document.getElementById("confirmNewPassword").addEventListener("input", function () {
         const confirmNewPassword = this.value;
         const newpassword = document.getElementById("newPassword").value;
         validateNewPasswordConfirmation(newpassword, confirmNewPassword);
     });
 
+    // ====== 비밀번호 동일 검사 ======
     function validateNewPasswordConfirmation(newpassword, confirmNewPassword) {
         const confirmNewPasswordInput = document.getElementById("confirmNewPassword");
         if (newpassword !== confirmNewPassword) {

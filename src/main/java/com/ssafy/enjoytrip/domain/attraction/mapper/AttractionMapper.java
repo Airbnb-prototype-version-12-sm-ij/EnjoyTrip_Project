@@ -1,4 +1,3 @@
-
 package com.ssafy.enjoytrip.domain.attraction.mapper;
 
 import java.sql.SQLException;
@@ -20,4 +19,5 @@ public interface AttractionMapper {
 
 	// 시도코드 받아서 구군코드 구하기
 	List<AttractionDto> getGugun(int sido) throws SQLException;
+
 }
