@@ -2,6 +2,8 @@ package com.ssafy.enjoytrip.domain.member.dto;
 
 import com.ssafy.enjoytrip.domain.member.entity.MemberEntity;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.Builder;
 import lombok.Data;
 
@@ -14,8 +16,17 @@ public class MemberDto {
 	@Data
 	@Builder
 	public static class Info {
+
+		@NotBlank
+		@Pattern(regexp = "^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{5,20}$")
 		private String userId;
+
+		@NotBlank
+		@Pattern(regexp = "^[가-힣]+$")
 		private String userName;
+
+		@NotBlank
+		@Pattern(regexp = "^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{5,20}$")
 		private String userPassword;
 
 		public static Info of(MemberEntity memberEntity) {
@@ -27,18 +38,27 @@ public class MemberDto {
 	@Data
 	@Builder
 	public static class Login {
+
+		@NotBlank
+		// @Pattern(regexp = "^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{4,20}$")
 		private String userId;
+
+		@NotBlank
+		// @Pattern(regexp = "^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{4,20}$")
 		private String userPassword;
 	}
 
-
 	@Data
 	@Builder
-	public static class Find{
+	public static class Find {
+
+		@NotBlank
+		@Pattern(regexp = "^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{5,20}$")
 		private String userId;
+
+		@NotBlank
+		@Pattern(regexp = "^[가-힣]+$")
 		private String userName;
 	}
-
-
 
 }

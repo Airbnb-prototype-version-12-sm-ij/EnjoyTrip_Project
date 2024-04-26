@@ -72,6 +72,12 @@
             <version>3.0.1</version>
         </dependency>
         <!-- JSP Setting end...-->
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

@@ -678,7 +678,6 @@
             const username = document.getElementById("loginUserId").value;
             const password = document.getElementById("loginPassword").value;
 
-
             fetch("/members/login", {
                 method: "POST",
                 headers: {

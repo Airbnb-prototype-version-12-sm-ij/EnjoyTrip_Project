@@ -5,11 +5,10 @@ import lombok.Data;
 
 public class PostDto {
 
-
 	// 등록 수정할때 DTO
 	@Data
 	@Builder
-	public static class Regist{
+	public static class Regist {
 		private String title;
 		private String content;
 		private int sidoCode;
@@ -30,18 +29,17 @@ public class PostDto {
 	// 댓글 DTO
 	@Data
 	@Builder
-	public static class Comment{
+	public static class Comment {
 		private Integer id;
 		private Integer postId;
 		private String userId;
 		private String comment;
 	}
 
-
 	// 게시글 삭제 DTO 유저의 id와  게시글 Id로 검사
 	@Data
 	@Builder
-	public static class DeletePost{
+	public static class DeletePost {
 		private String userId;
 		private Integer postId;
 
@@ -50,10 +48,9 @@ public class PostDto {
 	// 댓글 삭제 DTO 유저의 id와  댓글 Id로 검사
 	@Data
 	@Builder
-	public static class DeleteComment{
+	public static class DeleteComment {
 		private String userId;
 		private Integer commentId;
 	}
-
 
 }

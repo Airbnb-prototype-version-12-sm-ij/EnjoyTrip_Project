@@ -1,13 +1,9 @@
-
-
-
 -- MySQL Workbench Forward Engineering
 
 SET @OLD_UNIQUE_CHECKS = @@UNIQUE_CHECKS, UNIQUE_CHECKS = 0;
 SET @OLD_FOREIGN_KEY_CHECKS = @@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS = 0;
 SET @OLD_SQL_MODE = @@SQL_MODE, SQL_MODE =
         'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
-
 
 
 
@@ -24,7 +20,6 @@ SET @OLD_SQL_MODE = @@SQL_MODE, SQL_MODE =
 CREATE SCHEMA IF NOT EXISTS `enjoytrip` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
 
 USE `enjoytrip`;
-
 
 
 
@@ -233,8 +228,6 @@ CREATE TABLE IF NOT EXISTS `enjoytrip`.`wishlist`
 
 
 
-
-
 -- -----------------------------------------------------
 -- Table `enjoytrip`.`members`
 -- -----------------------------------------------------
@@ -246,7 +239,7 @@ CREATE TABLE IF NOT EXISTS `enjoytrip`.`members`
     `user_password` VARCHAR(64) NOT NULL,
     `grade`         VARCHAR(10) DEFAULT 'default',
     PRIMARY KEY (`user_id`)
-    )
+)
     ENGINE = InnoDB
     DEFAULT CHARACTER SET = utf8mb4
     COLLATE = utf8mb4_0900_ai_ci;
@@ -256,14 +249,13 @@ ALTER TABLE `enjoytrip`.`members`
 
 
 
-
 CREATE TABLE IF NOT EXISTS `enjoytrip`.`post_img`
 (
-    `id` INT AUTO_INCREMENT,
-    `post_id` INT NOT NULL,
-    `save_folder` VARCHAR(255) NOT NULL,
+    `id`            INT AUTO_INCREMENT,
+    `post_id`       INT          NOT NULL,
+    `save_folder`   VARCHAR(255) NOT NULL,
     `original_file` VARCHAR(255) NOT NULL,
-    `save_file` VARCHAR(255) NOT NULL,
+    `save_file`     VARCHAR(255) NOT NULL,
     PRIMARY KEY (`id`),
     INDEX `post_img_to_post_post_id_fk_idx` (`post_id` ASC) VISIBLE,
     CONSTRAINT `post_img_to_post_post_id_fk`
@@ -276,15 +268,14 @@ CREATE TABLE IF NOT EXISTS `enjoytrip`.`post_img`
     COLLATE = utf8mb4_0900_ai_ci;
 
 
-
 -- post_comments 테이블 생성
 CREATE TABLE IF NOT EXISTS `enjoytrip`.`post_comments`
 (
     `comment_id` INT AUTO_INCREMENT,
-    `post_id` INT NOT NULL,
-    `user_id` VARCHAR(16) NOT NULL,
-    `comment` TEXT NOT NULL,
-    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `post_id`    INT         NOT NULL,
+    `user_id`    VARCHAR(16) NOT NULL,
+    `comment`    TEXT        NOT NULL,
+    `created_at` TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`comment_id`),
     INDEX `post_comments_to_post_post_id_fk_idx` (`post_id` ASC) VISIBLE,
     INDEX `post_comments_to_members_user_id_fk_idx` (`user_id` ASC) VISIBLE,
@@ -300,9 +291,6 @@ CREATE TABLE IF NOT EXISTS `enjoytrip`.`post_comments`
     ENGINE = InnoDB
     DEFAULT CHARACTER SET = utf8mb4
     COLLATE = utf8mb4_0900_ai_ci;
-
-
-
 
 
 

@@ -17,7 +17,6 @@ public interface PostingMapper {
 	// 게시글 조회 (특정)
 	PostEntity getPost(Integer postId) throws SQLException;
 
-
 	// 게시글 등록
 	void registPost(PostDto.Regist regist) throws SQLException;
 

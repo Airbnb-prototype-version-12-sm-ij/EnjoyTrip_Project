@@ -5,6 +5,9 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,8 +34,20 @@ public class MemberController {
 	private final MemberServiceImpl memberServiceImpl;
 
 	@PostMapping("/login")
-	public ResponseEntity<?> login(@RequestBody MemberDto.Login login, HttpServletRequest request) {
+	public ResponseEntity<?> login(@Validated @RequestBody MemberDto.Login login,
+		BindingResult bindingResult,
+		HttpServletRequest request) {
 		log.info("--------------------MemberController --- login: {}----------------------", login);
+
+		// errors 의 메세지만 출력
+		for (ObjectError error : bindingResult.getAllErrors()) {
+			log.info("Error: {}", error.getDefaultMessage());
+		}
+
+		if (bindingResult.hasErrors()) {
+			log.info("bindingResult: {}", bindingResult);
+			return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
+		}
 
 		try {
 			MemberEntity loginInfo = memberServiceImpl.login(login);
@@ -40,6 +55,7 @@ public class MemberController {
 			if (loginInfo != null) {
 				HttpSession session = request.getSession();
 				session.setAttribute("memberDto", loginInfo);
+				System.out.println(loginInfo.getUserId() + "님 로그인 성공");
 				return new ResponseEntity<>(HttpStatus.OK);
 			} else {
 				return new ResponseEntity<>("유저 로그인 정보를 확인하세요", HttpStatus.UNAUTHORIZED);
@@ -56,8 +72,13 @@ public class MemberController {
 	}
 
 	@PostMapping("/join")
-	public void join(@RequestBody MemberDto.Info info) {
+	public void join(@Validated @RequestBody MemberDto.Info info, BindingResult bindingResult) {
 		log.info("--------------------MemberController --- join: {}----------------------", info);
+
+		if (bindingResult.hasErrors()) {
+			System.out.println(bindingResult.getAllErrors());
+			throw new RuntimeException("회원가입 정보를 확인하세요");
+		}
 
 		try {
 			memberServiceImpl.addMember(info);
@@ -66,12 +87,14 @@ public class MemberController {
 		}
 	}
 
+	// 비밀번호 변경
+	// 검증 로직 필요함
 	@PostMapping("/modify")
 	public ResponseEntity<?> modify(@RequestBody String newPassword, HttpServletRequest request, HttpSession session) {
 
 		log.info("------------------------modify: {}------------------------", newPassword);
 
-		MemberEntity loginInfo = (MemberEntity) session.getAttribute("memberDto");
+		MemberEntity loginInfo = (MemberEntity)session.getAttribute("memberDto");
 		MemberDto.Info info = MemberDto.Info.of(loginInfo);
 		info.setUserPassword(newPassword.replace("\"", ""));
 		log.info("------------------------modify: {}------------------------", info);
@@ -98,6 +121,7 @@ public class MemberController {
 	}
 
 	// 회원 id를 받아 회원을 삭제하는 REST API
+	// 검증 로직 필요함
 	@PostMapping("/delete")
 	public ResponseEntity<?> deleteMember(@RequestBody String userId) {
 		try {
@@ -108,18 +132,22 @@ public class MemberController {
 		}
 	}
 
-
 	@PostMapping("/find")
-	public ResponseEntity<?> findMember(@RequestBody MemberDto.Info info) {
+	public ResponseEntity<?> findMember(@Validated @RequestBody MemberDto.Info info, BindingResult bindingResult) {
 
-	MemberDto.Find find = MemberDto.Find.builder().userId(info.getUserId()).userName(info.getUserName()).build();
+		if (bindingResult.hasErrors()) {
+			System.out.println(bindingResult.getAllErrors());
+			return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
+		}
+
+		MemberDto.Find find = MemberDto.Find.builder().userId(info.getUserId()).userName(info.getUserName()).build();
 
 		try {
 
 			MemberEntity member = memberServiceImpl.findMember(find);
 			log.info("findMember: {}", member);
 
-			if (member != null){
+			if (member != null) {
 				member.setUserPassword(info.getUserPassword());
 				memberServiceImpl.modifyMember(MemberDto.Info.of(member));
 				return new ResponseEntity<MemberEntity>(member, HttpStatus.OK);

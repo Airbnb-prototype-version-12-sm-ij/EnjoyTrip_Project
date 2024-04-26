@@ -1,7 +1,6 @@
 package com.ssafy.enjoytrip.domain.member.servic;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
 import com.ssafy.enjoytrip.domain.member.dto.MemberDto;
