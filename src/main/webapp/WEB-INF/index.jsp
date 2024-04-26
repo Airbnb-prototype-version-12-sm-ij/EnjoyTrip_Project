@@ -658,30 +658,31 @@
     }
     // [2] 로그아웃 버튼 클릭시, controller 이용해 로그아웃 시행
     if (document.querySelector("#logoutBtn") != null) {
-    document.querySelector("#logoutBtn").addEventListener("click", function () {
-        fetch("<%=root %>/members/logout", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then((response) => {
-            if (response.ok) {
-                // 로그아웃 성공시
-                alert('로그아웃 되었습니다.');
-                location.reload();
-            } else {
-                // Handle errors here
-                console.error('Logout failed');
-            }
+        document.querySelector("#logoutBtn").addEventListener("click", function () {
+            fetch("<%=root %>/members/logout", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then((response) => {
+                if (response.ok) {
+                    // 로그아웃 성공시
+                    alert('로그아웃 되었습니다.');
+                    location.reload();
+                } else {
+                    // Handle errors here
+                    console.error('Logout failed');
+                }
+            });
         });
     }
     // [3] 로그인 이후, 성공여부 표기
-    <% 
+    <%
     String msg = (String)request.getSession().getAttribute("loginFail");
     if(msg != null) {%>
     alert("<%=msg%>");
     <%	request.getSession().removeAttribute("loginFail");
-  }%>
+    }%>
     // === 회원가입 기능 ===
     if (document.querySelector("#registBtn") != null) {
         document.querySelector("#registBtn").addEventListener("click", function (e) {
@@ -692,9 +693,9 @@
     }
     // 회원가입 이후, 성공여부 표기
     <% if(request.getAttribute("registSuccess") != null){
-    	
+
         if(request.getAttribute("registSuccess").equals("yes")){
-      %>
+    %>
     alert("가입에 성공했습니다. 로그인해주세요.");
     <%} else {%>
     alert("가입에 실패했습니다. 다시 시도해주세요.");
@@ -838,6 +839,13 @@
             map: map,
         });
 
+        function relayout() {
+            // 모달이 열릴 때도 relayout 함수 호출
+            resizeMap();
+            // 기존의 relayout 함수 내용 추가
+            map.relayout();
+        }
+
         // 모달의 footer에 정보 추가
         document.getElementById("map-modalfooter").innerHTML =
             "<strong>관광지 이름:</strong>" + title + "<br>" + "<strong>주소:</strong>" + addr1 + addr2 + "<br>" + "<strong>설명:</strong>" + overview;
@@ -846,8 +854,10 @@
 
         // 모달이 열릴 때 resize 이벤트가 발생하도록 함수를 호출하는 코드 추가
         $("#mapModal").on("shown.bs.modal", function () {
+            relayout();
             resizeMap();
         });
+
 
         function resizeMap() {
             var mapContainer = document.getElementById("map");
@@ -858,12 +868,6 @@
             map.setCenter(moveLatLon);
         }
 
-        function relayout() {
-            // 모달이 열릴 때도 relayout 함수 호출
-            resizeMap();
-            // 기존의 relayout 함수 내용 추가
-            map.relayout();
-        }
 
         // 모달이 닫힐 때 resize 이벤트가 발생하도록 함수를 호출하는 코드 추가
         $("#mapModal").on("hidden.bs.modal", function () {
@@ -921,7 +925,7 @@
         let root = "<%=root%>";
         let loginId = "<%=thisId%>";
         withdrawal(root, loginId); // mypage.js에 함수화하였음
-    })
+    });
 
 </script>
 </body>
