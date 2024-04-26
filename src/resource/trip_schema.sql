@@ -250,11 +250,11 @@ CREATE TABLE IF NOT EXISTS `enjoytrip`.`members`
 ALTER TABLE `enjoytrip`.`members`
     MODIFY `grade` VARCHAR(10) NOT NULL DEFAULT 'default';
 
-insert into `enjoytrip`.`members` (user_id, user_name, user_password)
-values ('ssafy', '김싸피', 'a477d9bfed77d6d10bcf91408877fec661196de6fa2c513daa2030b234f927ee'),
-       ('admin', '관리자', 'a477d9bfed77d6d10bcf91408877fec661196de6fa2c513daa2030b234f927ee'),
-       ('joo1798', '주수아', 'a477d9bfed77d6d10bcf91408877fec661196de6fa2c513daa2030b234f927ee'),
-       ('dldlswns', '이인준', 'a477d9bfed77d6d10bcf91408877fec661196de6fa2c513daa2030b234f927ee');
+insert into `enjoytrip`.`members` (user_id, user_name, user_password, grade)
+values ('ssafy', '김싸피', 'a477d9bfed77d6d10bcf91408877fec661196de6fa2c513daa2030b234f927ee', "관리자"),
+       ('admin', '관리자', 'a477d9bfed77d6d10bcf91408877fec661196de6fa2c513daa2030b234f927ee', "관리자"),
+       ('joo1798', '주수아', 'a477d9bfed77d6d10bcf91408877fec661196de6fa2c513daa2030b234f927ee', "관리자"),
+       ('dldlswns', '이인준', 'a477d9bfed77d6d10bcf91408877fec661196de6fa2c513daa2030b234f927ee', "관리자");
 
 
 
