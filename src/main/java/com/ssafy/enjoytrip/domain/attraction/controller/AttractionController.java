@@ -41,6 +41,7 @@ public class AttractionController {
 		}
 	}
 
+	@SuppressWarnings("checkstyle:ParameterName")
 	@GetMapping("/{content_id}")
 	public AttractionEntity getAttraction(@PathVariable Integer content_id) {
 		try {

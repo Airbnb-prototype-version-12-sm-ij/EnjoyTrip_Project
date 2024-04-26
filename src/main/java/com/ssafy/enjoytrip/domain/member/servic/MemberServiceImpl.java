@@ -25,6 +25,7 @@ public class MemberServiceImpl implements MemberService {
 	private static String getHashValue(String pwd) {
 
 		// 솔트 이부분은 실제 숨겨야 하는 내용
+
 		String salt = "ssafy11th";
 
 		String result = "";
@@ -51,6 +52,7 @@ public class MemberServiceImpl implements MemberService {
 		return result;
 	}
 
+	@SuppressWarnings("checkstyle:RegexpMultiline")
 	@Override
 	public MemberEntity login(MemberDto.Login login) throws IOException {
 		log.info("--------------------Service - login: {}----------------------", login);

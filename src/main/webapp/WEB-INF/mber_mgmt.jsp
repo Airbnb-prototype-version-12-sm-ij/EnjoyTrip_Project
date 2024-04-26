@@ -49,7 +49,7 @@
         body {
             /* 배경 이미지 추가 및 폰트 적용 */
             background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-            url("/Users/iinjun/Desktop/ssafy/spring_0424/EnjoyTrip/EnjoyTrip_Project/src/main/webapp/assets/img/background1.jpg");
+            url("/assets/img/background1.jpg");
             background-size: cover;
             background-repeat: no-repeat;
             display: flex;

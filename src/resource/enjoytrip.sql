@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS `enjoytrip`.`members`
 (
     `user_id`       VARCHAR(16) NOT NULL,
     `user_name`     VARCHAR(20) NOT NULL,
-    `user_password` VARCHAR(16) NOT NULL,
+    `user_password` VARCHAR(64) NOT NULL,
     `grade`         VARCHAR(10) NOT NULL,
     PRIMARY KEY (`user_id`)
 )

@@ -1,3 +1,4 @@
+<%--suppress ALL --%>
 <%@ page contentType="text/html; charset=utf-8"
          pageEncoding="utf-8"
          import="com.ssafy.enjoytrip.domain.attraction.entity.AttractionEntity"
@@ -659,7 +660,21 @@
     // [2] 로그아웃 버튼 클릭시, controller 이용해 로그아웃 시행
     if (document.querySelector("#logoutBtn") != null) {
         document.querySelector("#logoutBtn").addEventListener("click", function () {
-            location.href = "<%=root %>/member/logout";
+            fetch("/members/logout", {
+                method: 'GET'
+            })
+                .then(response => {
+                    if (response.ok) {
+                        console.log("Logout successful");
+                        location.reload();
+                        // You can add any actions to be performed after successful logout
+                    } else {
+                        console.error('Logout failed');
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
         });
     }
     // [3] 로그인 이후, 성공여부 표기
@@ -744,7 +759,6 @@
                 // 서버에서 데이터를 받았을 때의 처리
                 const attractionList = JSON.parse(xhr.responseText);
                 // 받은 데이터를 활용하여 테이블 업데이트
-                console.log(attractionList);
                 updateTable(attractionList);
 
             }
@@ -853,7 +867,7 @@
         }
 
         // 모달이 닫힐 때 resize 이벤트가 발생하도록 함수를 호출하는 코드 추가
-        $("#mapModal").on("hidden.bs.modal", function () {
+        $("#mapssModal").on("hidden.bs.modal", function () {
             resizeMap();
         });
     }

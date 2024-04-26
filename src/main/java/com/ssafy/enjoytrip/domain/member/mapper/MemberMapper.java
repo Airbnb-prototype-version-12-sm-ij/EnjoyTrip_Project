@@ -12,20 +12,20 @@ import com.ssafy.enjoytrip.domain.member.entity.MemberEntity;
 public interface MemberMapper {
 
 	// 로그인
-	public MemberEntity login(MemberDto.Login login) throws SQLException;
+	MemberEntity login(MemberDto.Login login) throws SQLException;
 
 	// 회원가입
-	public void addMember(MemberDto.Info info) throws SQLException;
+	void addMember(MemberDto.Info info) throws SQLException;
 
 	// 회원 정보 load
-	public List<MemberEntity> loadMember() throws SQLException;
+	List<MemberEntity> loadMember() throws SQLException;
 
 	// 회원 정보 수정
-	public void modifyMember(MemberDto.Info info) throws SQLException;
+	void modifyMember(MemberDto.Info info) throws SQLException;
 
 	// 회원 탈퇴
-	public void deleteMember(String userId) throws SQLException;
+	void deleteMember(String userId) throws SQLException;
 
 	// 특정 회원 정보
-	public MemberEntity pickMember(String userId) throws SQLException;
+	MemberEntity pickMember(String userId) throws SQLException;
 }
