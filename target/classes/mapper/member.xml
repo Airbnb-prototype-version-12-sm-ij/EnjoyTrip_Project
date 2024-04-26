@@ -5,7 +5,7 @@
 
 <mapper namespace="com.ssafy.enjoytrip.domain.member.mapper.MemberMapper">
 
-    <select id="login" resultType="com.ssafy.enjoytrip.domain.member.dto.MemberDto.Info">
+    <select id="login">
         SELECT *
         FROM members
         WHERE user_id = #{userId}

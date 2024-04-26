@@ -16,6 +16,11 @@ CREATE TABLE IF NOT EXISTS `enjoytrip`.`members`
     DEFAULT CHARACTER SET = utf8mb4
     COLLATE = utf8mb4_0900_ai_ci;
 
+#user_password 타입을 varchar60으로 변경
+
+
+desc members;
+
 insert into `enjoytrip`.`members` (user_id, user_name, user_password, grade)
 values ('ssafy', '김싸피', 'a477d9bfed77d6d10bcf91408877fec661196de6fa2c513daa2030b234f927ee', 'default'),
        ('admin', '관리자', 'a477d9bfed77d6d10bcf91408877fec661196de6fa2c513daa2030b234f927ee', 'default'),
