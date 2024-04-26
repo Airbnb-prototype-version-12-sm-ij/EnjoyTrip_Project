@@ -71,7 +71,6 @@ public class MemberController {
 	public ResponseEntity<?> deleteMember(@RequestBody String userId) {
 
 		try {
-			System.out.println("userId: " + userId);
 			memberServiceImpl.deleteMember(userId);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (IOException e) {
