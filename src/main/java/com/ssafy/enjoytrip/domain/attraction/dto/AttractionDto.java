@@ -20,4 +20,11 @@ public class AttractionDto {
 				.build();
 		}
 	}
+
+	@Data
+	@Builder
+	public static class Gugun {
+		private Integer sidoCode;
+		private String gugunName;
+	}
 }

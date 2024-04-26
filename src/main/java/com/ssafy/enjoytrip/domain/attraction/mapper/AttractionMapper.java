@@ -17,7 +17,7 @@ public interface AttractionMapper {
 	// 정보 보기 누르면 해당 관광지의 content_id 받아서 해당 관광지의 모든 정보 받아오기
 	AttractionEntity pickAttraction(int content_id) throws SQLException;
 
-	// 시도코드 받아서 구군코드 구하기
-	List<AttractionDto> getGugun(int sido) throws SQLException;
+	// 시도 코드를 넣어서 구군 정보 얻어오기 ex) 서울 ->  강남구, 강서구, ...
+	List<AttractionDto.Gugun> getGugun(int sido) throws SQLException;
 
 }

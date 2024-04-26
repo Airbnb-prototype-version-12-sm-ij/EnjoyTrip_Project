@@ -37,7 +37,7 @@ public class AttractionServiceImpl implements AttractionService {
 	}
 
 	@Override
-	public List<AttractionDto> getGugun(Integer sido) throws IOException {
+	public List<AttractionDto.Gugun> getGugun(Integer sido) throws IOException {
 		try {
 			return attractionMapper.getGugun(sido);
 		} catch (SQLException e) {

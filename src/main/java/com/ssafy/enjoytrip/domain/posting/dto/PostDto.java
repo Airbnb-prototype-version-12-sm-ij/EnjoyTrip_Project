@@ -11,8 +11,9 @@ public class PostDto {
 	public static class Regist {
 		private String title;
 		private String content;
-		private int sidoCode;
-		private int gugunCode;
+		private String userId;
+		private Integer sidoCode;
+		private Integer gugunCode;
 	}
 
 	// 이미지 파일 관련 DTO

@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PostServiceImpl implements PostService {
 
-	PostingMapper postingMapper;
+	private final PostingMapper postingMapper;
 
 	@Override
 	public List<PostEntity> getPostList() throws IOException {

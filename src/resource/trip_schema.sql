@@ -202,6 +202,9 @@ CREATE TABLE IF NOT EXISTS `enjoytrip`.`posting`
     DEFAULT CHARACTER SET = utf8mb4
     COLLATE = utf8mb4_0900_ai_ci;
 
+ALTER TABLE `enjoytrip`.`posting`
+    ADD COLUMN `hit` INT NOT NULL DEFAULT 0;
+
 
 
 CREATE TABLE IF NOT EXISTS `enjoytrip`.`wishlist`
@@ -300,6 +303,13 @@ values ('ssafy', '김싸피', 'a477d9bfed77d6d10bcf91408877fec661196de6fa2c513da
        ('joo1798', '주수아', 'a477d9bfed77d6d10bcf91408877fec661196de6fa2c513daa2030b234f927ee', "admin"),
        ('dldlswns', '이인준', 'a477d9bfed77d6d10bcf91408877fec661196de6fa2c513daa2030b234f927ee', "admin");
 
+
+
+insert into posting(title, content, user_id, sido_code, gugun_code)
+values ("광주 무등산", "수박 졸맛탱", "admin", 1, 5);
+
+insert into posting(title, content, user_id, sido_code, gugun_code)
+values ("세종 특별시 살기 좋은 도시", "기모찌", "admin", 1, 8);
 
 
 SET SQL_MODE = @OLD_SQL_MODE;

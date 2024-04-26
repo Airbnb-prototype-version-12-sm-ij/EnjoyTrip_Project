@@ -25,4 +25,5 @@
         FROM gugun
         WHERE sido_code = #{sido}
     </select>
+    
 </mapper>
