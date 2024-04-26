@@ -52,7 +52,7 @@ public class AttractionController {
 	}
 
 	@GetMapping("/gugun/{sido}")
-	public List<AttractionDto> getGugun(@PathVariable Integer sido) {
+	public List<AttractionDto.Gugun> getGugun(@PathVariable Integer sido) {
 		try {
 			return attractionService.getGugun(sido);
 		} catch (Exception e) {

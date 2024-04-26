@@ -7,25 +7,25 @@
     <!-- 게시글 조회 (전체) -->
     <select id="getPostList">
         SELECT *
-        FROM posts
+        FROM posting
     </select>
 
     <!-- 게시글 조회 (특정) -->
     <select id="getPost">
         SELECT *
-        FROM posts
+        FROM posting
         WHERE post_id = #{postId}
     </select>
 
     <!-- 게시글 등록 -->
     <insert id="registPost">
-        INSERT INTO posts (title, content, sido_code, gugun_code)
-        VALUES (#{title}, #{content}, #{sidoCode}, #{gugunCode})
+        INSERT INTO posting (user_id, title, content, sido_code, gugun_code)
+        VALUES (#{userId}, #{title}, #{content}, #{sidoCode}, #{gugunCode})
     </insert>
 
     <!-- 게시글 수정 -->
     <update id="modifyPost">
-        UPDATE posts
+        UPDATE posting
         SET title      = #{title},
             content    = #{content},
             sido_code  = #{sidoCode},
@@ -36,7 +36,7 @@
     <!-- 게시글 삭제 -->
     <delete id="deletePost">
         DELETE
-        FROM posts
+        FROM posting
         WHERE post_id = #{postId}
     </delete>
 

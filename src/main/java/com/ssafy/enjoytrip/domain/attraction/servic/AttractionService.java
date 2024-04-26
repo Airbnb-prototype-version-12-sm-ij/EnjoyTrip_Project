@@ -15,6 +15,6 @@ public interface AttractionService {
 	AttractionEntity pickAttraction(Integer contentId) throws IOException;
 
 	// 시도코드 받아서 구군코드 구하기
-	List<AttractionDto> getGugun(Integer sido) throws IOException;
+	List<AttractionDto.Gugun> getGugun(Integer sido) throws IOException;
 
 }
