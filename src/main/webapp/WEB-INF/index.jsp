@@ -315,8 +315,8 @@
                     </div>
                     <div class="mb-3">아이디: <%=thisId %>
                     </div>
-                    <div class="mb-3">비밀번호: <%=thisPassword %>
-                    </div>
+                    <%--<div class="mb-3">비밀번호: <%=thisPassword %>
+                    </div>--%>
                     <div class="mb-3">
                         <label for="newPassword" class="form-label">새 비밀번호</label>
                         <input
@@ -621,6 +621,11 @@
 <script src="../assets/js/signup.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+    // 인터셉터로 잡혀서 오면 아래 코드 실행
+
+    <% if(request.getAttribute("msg") != null){ %>
+    alert("<%=request.getAttribute("msg")%>");
+    <% } %>
 
 
     // === 로그인, 로그아웃 관련 기능 ===
