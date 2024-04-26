@@ -78,9 +78,9 @@ function validateName(findPwdUserName) {
 // ======================================================================================================
 // ==================================== 비밀번호 체크 박스 ===================================================
 
-const showPasswordCheckbox = document.getElementById("findShowPasswordCheckbox");
+const findShowPasswordCheckbox = document.getElementById("findShowPasswordCheckbox");
 
-showPasswordCheckbox.addEventListener("change", function () {
+findShowPasswordCheckbox.addEventListener("change", function () {
     const findPasswordInput = document.getElementById("findPassword");
     const findConfirmPasswordInput = document.getElementById("findConfirmPassword");
     if (this.checked) {
