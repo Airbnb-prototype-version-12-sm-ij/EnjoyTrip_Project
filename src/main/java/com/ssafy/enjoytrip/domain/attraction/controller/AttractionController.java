@@ -1,4 +1,3 @@
-
 package com.ssafy.enjoytrip.domain.attraction.controller;
 
 import java.util.List;
@@ -33,7 +32,6 @@ public class AttractionController {
 	public ResponseEntity<?> searchAttractions(@ModelAttribute SearchAttraction searchAttraction) {
 
 		log.info("searchAttractions: {}", searchAttraction);
-
 
 		try {
 			List<AttractionEntity> attractionList = attractionService.loadAttraction(searchAttraction);
