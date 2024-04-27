@@ -28,15 +28,6 @@
 <body>
 
 
-<style>
-    div#posting {
-        width: 80%;
-        position: absolute;
-        top: 10%;
-    }
-</style>
-
-
 <%@ include file="../common/loginnav.jsp" %> <!-- 로그인 페이지 조각 추가 -->
 
 

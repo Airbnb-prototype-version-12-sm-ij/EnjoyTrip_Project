@@ -10,7 +10,7 @@
         <!-- 로고로 바꾸기 -->
         <div class="navbar-brand ms-5 ps-5">
             <a href="http://localhost">
-                <img src="../assets/img/logo.png" width="96px" alt="로고"/>
+                <img src="../../assets/img/logo.png" width="96px" alt="로고"/>
             </a>
         </div>
         <div class="d-flex flex-column-reverse align-items-lg-center">

@@ -82,10 +82,12 @@
                         placeholder="제목..."
                         value=${post.title}
                 />
+                <div id="titleError" class="alert alert-danger" style="display: none;">제목을 입력해주세요</div>
             </div>
             <div class="mb-3">
                 <label for="content" class="form-label">내용 : </label>
                 <textarea class="form-control" id="content" name="content" rows="7">${post.content}</textarea>
+                <div id="contentError" class="alert alert-danger" style="display: none;">내용을 입력해주세요</div>
             </div>
             <div class="mb-3">
                 <label for="upfile" class="form-label">파일:</label>
@@ -104,42 +106,13 @@
     </div>
 </div>
 
-<script>
-    document.getElementById('search-sido').addEventListener('change', function () {
-        var selectedValue = this.value;
-        if (selectedValue) {
-            fetch('/posting/getGugun/' + selectedValue)
-                .then(response => response.json())
-                .then(data => {
-                    var select = document.getElementById('search-gugun');
-                    // 기존의 옵션을 모두 제거합니다.
-                    select.innerHTML = '';
-                    // 새로운 옵션을 추가합니다.
-                    data.forEach(function (item) {
-                        var option = document.createElement('option');
-                        option.value = item.gugunCode;
-                        option.text = item.gugunName;
-                        select.add(option);
-                    });
-                })
-                .catch(error => console.error('Error:', error));
-        }
-    });
-
-
-    document.getElementById('btn-list').addEventListener('click', function () {
-        location.href = '/posting/list';
-    });
-
-</script>
-
 <footer>@광주_5반 황성민 선장과 일등항해사 이인준</footer>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="../../assets/js/mypage.js"></script>
 <%--<script src="../assets/js/membermanagement.js"></script>--%>
 <script src="../../assets/js/findpwd.js"></script>
-<%--<script src="../assets/js/api.js"></script>--%>
+<script src="../../assets/js/postmodify.js"></script>
 <script src="../../assets/js/login.js"></script>
 <script src="../../assets/js/signup.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

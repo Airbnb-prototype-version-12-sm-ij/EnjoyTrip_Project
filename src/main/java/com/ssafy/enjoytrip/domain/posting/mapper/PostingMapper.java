@@ -26,6 +26,9 @@ public interface PostingMapper {
 	// 게시글 삭제
 	void deletePost(PostDto.DeletePost deletePost) throws SQLException;
 
+	// 시도 찾기
+	String getSido(Integer sidoCode) throws SQLException;
+
 	// 댓글 등록
 	void registComment(PostDto.Comment comment) throws SQLException;
 

@@ -28,6 +28,9 @@ public interface PostService {
 	@Transactional
 	void deletePost(PostDto.DeletePost deletePost) throws IOException;
 
+	// 시도 찾기
+	String getSido(Integer sidoCode) throws IOException;
+
 	// 댓글 등록
 	@Transactional
 	void registComment(PostDto.Comment comment) throws IOException;

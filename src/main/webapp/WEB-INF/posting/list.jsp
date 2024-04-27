@@ -73,12 +73,13 @@
                 <th scope="col">글번호</th>
                 <th scope="col">제목</th>
                 <th scope="col">작성자</th>
+                <th scope="col">지역</th>
                 <th scope="col">조회수</th>
                 <th scope="col">작성일</th>
             </tr>
             </thead>
             <tbody>
-            <c:forEach var="post" items="${postList}">
+            <c:forEach var="post" items="${postList}" varStatus="idx">
                 <tr class="text-center">
                     <th scope="row">${post.postId}</th>
                     <td class="text-start">
@@ -92,7 +93,7 @@
                         </a>
                     </td>
                     <td>${post.userId}</td>
-
+                    <td>${sidos[idx.index]}</td>
                     <td>${post.hit}</td>
 
                     <td>${post.createdAt}</td>

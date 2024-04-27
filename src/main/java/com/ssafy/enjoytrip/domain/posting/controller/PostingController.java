@@ -1,19 +1,24 @@
 package com.ssafy.enjoytrip.domain.posting.controller;
 
+import static com.ssafy.enjoytrip.domain.posting.dto.PostDto.*;
+
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ssafy.enjoytrip.domain.member.entity.MemberEntity;
-import com.ssafy.enjoytrip.domain.posting.dto.PostDto;
 import com.ssafy.enjoytrip.domain.posting.entity.PostEntity;
 import com.ssafy.enjoytrip.domain.posting.service.PostService;
 
@@ -35,7 +40,13 @@ public class PostingController {
 		try {
 			List<PostEntity> postList = postService.getPostList();
 
+			List<String> sidos = new ArrayList<>();
+
+			for (PostEntity post : postList) {
+				sidos.add(postService.getSido(post.getSidoCode()));
+			}
 			model.addAttribute("postList", postList);
+			model.addAttribute("sidos", sidos);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
@@ -48,7 +59,23 @@ public class PostingController {
 	}
 
 	@PostMapping("/write")
-	public String write(PostDto.Regist regist, HttpSession session) {
+	public String write(@Validated Regist regist,
+		BindingResult bindingResult,
+		Model model,
+		HttpSession session) {
+		log.info("=======================regist : {}", regist);
+		if (bindingResult.hasErrors()) {
+
+			log.info("error : {}", bindingResult.getAllErrors());
+
+			StringBuilder sb = new StringBuilder();
+
+			for (ObjectError error : bindingResult.getAllErrors()) {
+				sb.append(error.getDefaultMessage());
+			}
+			model.addAttribute("errorMsg", sb.toString());
+			return "posting/write";
+		}
 
 		String userId = ((MemberEntity)session.getAttribute("memberDto")).getUserId();
 		regist.setUserId(userId);
@@ -63,9 +90,9 @@ public class PostingController {
 
 	// 시도 코드로 구군 데이터 얻기
 	@GetMapping("/getGugun/{sidoCode}")
-	public ResponseEntity<List<PostDto.Gugun>> getGugun(@PathVariable String sidoCode) {
+	public ResponseEntity<List<Gugun>> getGugun(@PathVariable String sidoCode) {
 		try {
-			List<PostDto.Gugun> gugun = postService.getGugun(sidoCode);
+			List<Gugun> gugun = postService.getGugun(sidoCode);
 			return new ResponseEntity<>(gugun, HttpStatus.OK);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
@@ -92,7 +119,7 @@ public class PostingController {
 	@PostMapping("/delete/{postId}")
 	public String deletePost(@PathVariable Integer postId, HttpSession session) {
 
-		PostDto.DeletePost deletePost = PostDto.DeletePost.builder()
+		DeletePost deletePost = DeletePost.builder()
 			.userId(((MemberEntity)session.getAttribute("memberDto")).getUserId())
 			.postId(postId)
 			.build();
@@ -125,7 +152,18 @@ public class PostingController {
 	}
 
 	@PostMapping("/modify/{postId}")
-	public String modify(@PathVariable Integer postId, PostDto.Update update, HttpSession session) {
+	public String modify(@PathVariable Integer postId,
+		@Validated Update update,
+		BindingResult bindingResult,
+		Model model,
+		HttpSession session) {
+
+		if (bindingResult.hasErrors()) {
+
+			log.info("error : {}", bindingResult.getAllErrors());
+
+			return "posting/modify/" + postId;
+		}
 
 		String userId = ((MemberEntity)session.getAttribute("memberDto")).getUserId();
 		update.setUserId(userId);

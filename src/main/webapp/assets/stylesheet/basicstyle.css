@@ -136,3 +136,9 @@ div#writeForm {
     position: absolute;
     top: 10%;
 }
+
+div#posting {
+    width: 80%;
+    position: absolute;
+    top: 10%;
+}

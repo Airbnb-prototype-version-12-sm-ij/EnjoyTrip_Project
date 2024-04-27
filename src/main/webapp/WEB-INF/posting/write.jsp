@@ -32,16 +32,6 @@
 />
 <body>
 
-
-<style>
-    div#writeForm {
-        width: 80%;
-        position: absolute;
-        top: 10%;
-    }
-</style>
-
-
 <%@ include file="../common/loginnav.jsp" %> <!-- 로그인 페이지 조각 추가 -->
 
 
@@ -79,8 +69,6 @@
                     <option value="38">전라남도</option>
                     <option value="39">제주도</option>
                 </select>
-
-
                 <div>
                     <label for="search-gugun" class="gugun-label">구군 : </label>
                     <select id="search-gugun" name="gugunCode" class="gugun-form-select"
@@ -97,10 +85,12 @@
                         name="title"
                         placeholder="제목..."
                 />
+                <div id="titleError" class="alert alert-danger" style="display: none;">제목을 입력해주세요</div>
             </div>
             <div class="mb-3">
                 <label for="content" class="form-label">내용 : </label>
                 <textarea class="form-control" id="content" name="content" rows="7"></textarea>
+                <div id="contentError" class="alert alert-danger" style="display: none;">내용을 입력해주세요</div>
             </div>
             <div class="mb-3">
                 <label for="upfile" class="form-label">파일:</label>
@@ -119,35 +109,13 @@
             </div>
         </form>
     </div>
+    ${errorMsg}
 </div>
-
-<script>
-    document.getElementById('search-sido').addEventListener('change', function () {
-        var selectedValue = this.value;
-        if (selectedValue) {
-            fetch('/posting/getGugun/' + selectedValue)
-                .then(response => response.json())
-                .then(data => {
-                    var select = document.getElementById('search-gugun');
-                    // 기존의 옵션을 모두 제거합니다.
-                    select.innerHTML = '';
-                    // 새로운 옵션을 추가합니다.
-                    data.forEach(function (item) {
-                        var option = document.createElement('option');
-                        option.value = item.gugunCode;
-                        option.text = item.gugunName;
-                        select.add(option);
-                    });
-                })
-                .catch(error => console.error('Error:', error));
-        }
-    });
-</script>
 <footer>@광주_5반 황성민 선장과 일등항해사 이인준</footer>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="../../assets/js/mypage.js"></script>
-<%--<script src="../assets/js/membermanagement.js"></script>--%>
+<script src="../../assets/js/postwrite.js"></script>
 <script src="../../assets/js/findpwd.js"></script>
 <%--<script src="../assets/js/api.js"></script>--%>
 <script src="../../assets/js/login.js"></script>
