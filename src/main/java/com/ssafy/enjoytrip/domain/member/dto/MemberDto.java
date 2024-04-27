@@ -18,7 +18,7 @@ public class MemberDto {
 	public static class Info {
 
 		@NotBlank
-		@Pattern(regexp = "^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{5,20}$")
+		@Pattern(regexp = "^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{3,15}$")
 		private String userId;
 
 		@NotBlank
@@ -26,7 +26,7 @@ public class MemberDto {
 		private String userName;
 
 		@NotBlank
-		@Pattern(regexp = "^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{5,20}$")
+		@Pattern(regexp = "^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{3,15}$")
 		private String userPassword;
 
 		public static Info of(MemberEntity memberEntity) {
@@ -40,11 +40,11 @@ public class MemberDto {
 	public static class Login {
 
 		@NotBlank
-		// @Pattern(regexp = "^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{4,20}$")
+		@Pattern(regexp = "^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{3,15}$")
 		private String userId;
 
 		@NotBlank
-		// @Pattern(regexp = "^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{4,20}$")
+		@Pattern(regexp = "^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{3,15}$")
 		private String userPassword;
 	}
 

@@ -79,10 +79,16 @@
                     <div class="mb-3">
                         <label for="loginUserId" class="form-label">아이디</label>
                         <input type="text" class="form-control" id="loginUserId" name="loginUserId" required/>
+                        <div id="loginUserIdError" class="invalid-feedback">
+                            숫자와 영어 소문자로 3자리 이상 15자리 이하여야 합니다.
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label for="loginPassword" class="form-label">비밀번호</label>
                         <input type="password" class="form-control" id="loginPassword" name="loginPassword" required/>
+                        <div id="loginPasswordError" class="invalid-feedback">
+                            숫자와 영어 소문자로 3자리 이상 15자리 이하여야 합니다.
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" id="loginBtn">로그인</button>
@@ -552,6 +558,7 @@
                     $("#loginModal").modal("hide");
                     location.reload();
                 } else { // 에러가 발생한 경우
+                    
                     alert('아이디나 비밀번호를 확인해주세요.');
                 }
             });

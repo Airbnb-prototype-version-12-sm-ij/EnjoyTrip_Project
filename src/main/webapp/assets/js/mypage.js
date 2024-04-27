@@ -175,7 +175,7 @@ document.getElementById("newPassword").addEventListener("input", function () {
 // 비밀번호 유효성 검사
 function validatePassword(newPassword) {
     const newPasswordInput = document.getElementById("newPassword");
-    let regex = /^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{5,20}$/;
+    let regex = /^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{3,15}$/;
     if (!regex.test(newPassword)) {
         newPasswordInput.classList.add("is-invalid");
         return false;

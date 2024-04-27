@@ -44,7 +44,7 @@ document.getElementById("userId").addEventListener("input", function () {
 // 회원가입 유효성 검사 함수들
 function validateUserId(userId) {
     const userIdInput = document.getElementById("userId");
-    let regex = /^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{5,20}$/;
+    let regex = /^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{3,15}$/;
     if (!regex.test(userId)) {
         userIdInput.classList.add("is-invalid");
         return false;
@@ -61,7 +61,7 @@ document.getElementById("password").addEventListener("input", function () {
 
 function validatePassword(password) {
     const passwordInput = document.getElementById("password");
-    let regex = /^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{5,20}$/;
+    let regex = /^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{3,15}$/;
     if (!regex.test(password)) {
         passwordInput.classList.add("is-invalid");
         return false;

@@ -75,3 +75,36 @@ if (document.getElementById("loginModal") != null) {
     });
 }
 
+// 아이디 유효성 검사
+document.getElementById("loginUserId").addEventListener("input", function () {
+    const loginUserId = this.value;
+    validateloginUserId(loginUserId);
+});
+
+function validateloginUserId(loginUserId) {
+    let regex = /^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{3,15}$/;
+    if (!regex.test(loginUserId)) {
+        document.getElementById("loginUserId").classList.add("is-invalid");
+        return false;
+    } else {
+        document.getElementById("loginUserId").classList.remove("is-invalid");
+        return true;
+    }
+}
+
+// 비밀번호 유효성 검사
+document.getElementById("loginPassword").addEventListener("input", function () {
+    const loginPassword = this.value;
+    validateloginPassword(loginPassword);
+});
+
+function validateloginPassword(loginPassword) {
+    let regex = /^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{3,15}$/;
+    if (!regex.test(loginPassword)) {
+        document.getElementById("loginPassword").classList.add("is-invalid");
+        return false;
+    } else {
+        document.getElementById("loginPassword").classList.remove("is-invalid");
+        return true;
+    }
+}
