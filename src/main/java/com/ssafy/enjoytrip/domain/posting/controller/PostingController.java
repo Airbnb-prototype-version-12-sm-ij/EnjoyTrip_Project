@@ -1,8 +1,14 @@
 package com.ssafy.enjoytrip.domain.posting.controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -11,6 +17,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.enjoytrip.domain.member.entity.MemberEntity;
 import com.ssafy.enjoytrip.domain.posting.dto.PostDto;
@@ -27,6 +35,15 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/posting")
 public class PostingController {
 
+	@Value("${file.path}")
+	private String uploadPath;
+
+	@Value("${file.path.upload-images}")
+	private String uploadImagePath;
+
+	@Value("${file.path.upload-files}")
+	private String uploadFilePath;
+
 	private final PostService postService;
 
 	@GetMapping("/list")
@@ -36,7 +53,7 @@ public class PostingController {
 			List<PostEntity> postList = postService.getPostList();
 
 			model.addAttribute("postList", postList);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 		return "posting/list";
@@ -48,13 +65,50 @@ public class PostingController {
 	}
 
 	@PostMapping("/write")
-	public String write(PostDto.Regist regist, HttpSession session) {
+	public String write(PostDto.Regist regist, @RequestParam("upfile") MultipartFile[] files,
+		HttpSession session) throws
+		IOException {
+
+		log.debug("uploadPath : {}, uploadImagePath : {}, uploadFilePath : {}", uploadPath, uploadImagePath,
+			uploadFilePath);
+		log.debug("MultipartFile.isEmpty : {}", files[0].isEmpty());
+		if (!files[0].isEmpty()) {
+			//			String realPath = servletContext.getRealPath(UPLOAD_PATH);
+			//			String realPath = servletContext.getRealPath("/resources/img");
+			String today = new SimpleDateFormat("yyMMdd").format(new Date());
+			String saveFolder = uploadPath + File.separator + today;
+			log.debug("저장 폴더 : {}", saveFolder);
+			File folder = new File(saveFolder);
+			if (!folder.exists())
+				folder.mkdirs();
+			List<PostDto.FileInfo> fileInfos = new ArrayList<PostDto.FileInfo>();
+			for (MultipartFile mfile : files) {
+				PostDto.FileInfo fileInfoDto = PostDto.FileInfo.builder().build();
+				String originalFileName = mfile.getOriginalFilename();
+
+				log.info("==========================originalFileName : {}========================", originalFileName);
+
+				if (!originalFileName.isEmpty()) {
+					String saveFileName = UUID.randomUUID().toString().replace("-", "")
+						+ originalFileName.substring(originalFileName.lastIndexOf('.'));
+
+					log.info("==========================saveFileName : {}========================", saveFileName);
+					fileInfoDto.setSaveFolder(today);
+					fileInfoDto.setOriginalFile(originalFileName);
+					fileInfoDto.setSaveFile(saveFileName);
+					log.debug("원본 파일 이름 : {}, 실제 저장 파일 이름 : {}", mfile.getOriginalFilename(), saveFileName);
+					mfile.transferTo(new File(folder, saveFileName));
+				}
+				fileInfos.add(fileInfoDto);
+			}
+			regist.setFileInfos(fileInfos);
+		}
 
 		String userId = ((MemberEntity)session.getAttribute("memberDto")).getUserId();
 		regist.setUserId(userId);
 		try {
 			postService.registPost(regist);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 
@@ -67,7 +121,7 @@ public class PostingController {
 		try {
 			List<PostDto.Gugun> gugun = postService.getGugun(sidoCode);
 			return new ResponseEntity<>(gugun, HttpStatus.OK);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
@@ -76,14 +130,18 @@ public class PostingController {
 	@GetMapping("{postId}")
 	public String view(@PathVariable Integer postId, Model model) {
 
+		log.info("=====================================================================");
+
 		try {
 			PostEntity post = postService.getPost(postId);
+			List<PostDto.FileInfo> fileInfos = postService.fileInfoList(postId);
 
+			model.addAttribute("fileInfos", fileInfos);
 			model.addAttribute("post", post);
 
 			log.info("post : {}", post);
 
-		} catch (IOException e) {
+		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 		return "posting/view";
@@ -99,7 +157,7 @@ public class PostingController {
 
 		try {
 			postService.deletePost(deletePost);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 
@@ -114,7 +172,7 @@ public class PostingController {
 
 		try {
 			post = postService.getPost(postId);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 
@@ -133,7 +191,7 @@ public class PostingController {
 
 		try {
 			postService.modifyPost(update);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 

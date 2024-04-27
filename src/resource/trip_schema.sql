@@ -23,7 +23,7 @@ USE `enjoytrip`;
 
 
 
-Drop TABLE IF EXISTS `enjoytrip`.`post_img`;
+Drop TABLE IF EXISTS `enjoytrip`.`file_info`;
 Drop TABLE IF EXISTS `enjoytrip`.`post_comments`;
 Drop TABLE IF EXISTS `enjoytrip`.`sido`;
 Drop TABLE IF EXISTS `enjoytrip`.`gugun`;
@@ -252,7 +252,7 @@ ALTER TABLE `enjoytrip`.`members`
 
 
 
-CREATE TABLE IF NOT EXISTS `enjoytrip`.`post_img`
+CREATE TABLE IF NOT EXISTS `enjoytrip`.`file_info`
 (
     `id`            INT AUTO_INCREMENT,
     `post_id`       INT          NOT NULL,
@@ -260,8 +260,8 @@ CREATE TABLE IF NOT EXISTS `enjoytrip`.`post_img`
     `original_file` VARCHAR(255) NOT NULL,
     `save_file`     VARCHAR(255) NOT NULL,
     PRIMARY KEY (`id`),
-    INDEX `post_img_to_post_post_id_fk_idx` (`post_id` ASC) VISIBLE,
-    CONSTRAINT `post_img_to_post_post_id_fk`
+    INDEX `file_info_to_post_post_id_fk_idx` (`post_id` ASC) VISIBLE,
+    CONSTRAINT `file_info_to_post_post_id_fk`
         FOREIGN KEY (`post_id`)
             REFERENCES `enjoytrip`.`posting` (`post_id`)
             ON DELETE CASCADE

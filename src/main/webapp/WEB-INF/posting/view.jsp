@@ -66,7 +66,17 @@
             <div class="col-md-4 align-self-center text-end"></div>
             <div class="divider mb-3"></div>
             <div class="text-secondary">
-                ${post.content}
+
+                <div>
+                    <img src="../upload_img/${fileInfos[0].saveFolder}/${fileInfos[0].saveFile}"
+                         alt="${fileInfo[0].originalFile}">
+                </div>
+
+
+                <text>
+                    <br>
+                    ${post.content}
+                </text>
             </div>
             <%--            <c:if test="${!empty post.fileInfos}">--%>
             <%--                <div class="mt-3">--%>

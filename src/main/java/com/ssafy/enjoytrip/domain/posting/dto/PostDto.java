@@ -1,5 +1,7 @@
 package com.ssafy.enjoytrip.domain.posting.dto;
 
+import java.util.List;
+
 import lombok.Builder;
 import lombok.Data;
 
@@ -9,11 +11,13 @@ public class PostDto {
 	@Data
 	@Builder
 	public static class Regist {
+		private Integer postId;
 		private String title;
 		private String content;
 		private String userId;
 		private Integer sidoCode;
 		private Integer gugunCode;
+		private List<FileInfo> fileInfos;
 	}
 
 	@Data
@@ -70,5 +74,14 @@ public class PostDto {
 	public static class Gugun {
 		private Integer gugunCode;
 		private String gugunName;
+	}
+
+	@Data
+	@Builder
+	public static class FileInfo {
+		private String saveFolder;
+		private String originalFile;
+		private String saveFile;
+
 	}
 }
