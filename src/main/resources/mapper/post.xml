@@ -19,10 +19,27 @@
     </select>
 
     <!-- 게시글 등록 -->
-    <insert id="registPost">
+    <insert id="registPost" useGeneratedKeys="true" keyProperty="postId">
         INSERT INTO posting (user_id, title, content, sido_code, gugun_code)
         VALUES (#{userId}, #{title}, #{content}, #{sidoCode}, #{gugunCode})
     </insert>
+
+    <!-- 게시글 등록 후 파일 정보 등록 -->
+    <insert id="registerFile">
+        insert into file_info (post_id, save_folder, original_file, save_file)
+        values
+        <foreach collection="fileInfos" item="fileinfo" separator=" , ">
+            (#{postId}, #{fileinfo.saveFolder}, #{fileinfo.originalFile}, #{fileinfo.saveFile})
+        </foreach>
+    </insert>
+
+    <!-- 게시글의 파일들 불러오기-->
+    <select id="fileInfoList">
+        select save_folder, original_file, save_file
+        from file_info
+        where post_id = #{articleNo}
+    </select>
+
 
     <!-- 게시글 수정 -->
     <update id="modifyPost">

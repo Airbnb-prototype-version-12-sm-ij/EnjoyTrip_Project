@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.enjoytrip.domain.posting.dto.PostDto;
 import com.ssafy.enjoytrip.domain.posting.entity.PostEntity;
@@ -18,21 +19,33 @@ public interface PostingMapper {
 	PostEntity getPost(Integer postId) throws SQLException;
 
 	// 게시글 등록
+	@Transactional
 	void registPost(PostDto.Regist regist) throws SQLException;
 
+	// 파일 등록
+	@Transactional
+	void registerFile(PostDto.Regist regist) throws SQLException;
+
+	// 게시글의 파일들 불러오기
+	List<PostDto.FileInfo> fileInfoList(int articleNo) throws SQLException;
+
 	// 게시글 수정
+	@Transactional
 	void modifyPost(PostDto.Update update) throws SQLException;
 
 	// 게시글 삭제
+	@Transactional
 	void deletePost(PostDto.DeletePost deletePost) throws SQLException;
 
 	// 시도 찾기
 	String getSido(Integer sidoCode) throws SQLException;
 
 	// 댓글 등록
+	@Transactional
 	void registComment(PostDto.Comment comment) throws SQLException;
 
 	// 댓글 삭제
+	@Transactional
 	void deleteComment(PostDto.DeleteComment deleteComment) throws SQLException;
 
 	// 시도 코드로 구군 코드 얻어오기

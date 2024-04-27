@@ -1,6 +1,8 @@
 package com.ssafy.enjoytrip.domain.posting.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import java.util.List;
+
 import lombok.Builder;
 import lombok.Data;
 
@@ -11,6 +13,8 @@ public class PostDto {
 	@Builder
 	public static class Regist {
 
+
+		private Integer postId;
 		@NotBlank(message = "제목을 입력해주세요.")
 		private String title;
 		@NotBlank(message = "내용을 입력해주세요.")
@@ -18,6 +22,7 @@ public class PostDto {
 		private String userId;
 		private Integer sidoCode;
 		private Integer gugunCode;
+		private List<FileInfo> fileInfos;
 	}
 
 	@Data
@@ -78,5 +83,14 @@ public class PostDto {
 	public static class Gugun {
 		private Integer gugunCode;
 		private String gugunName;
+	}
+
+	@Data
+	@Builder
+	public static class FileInfo {
+		private String saveFolder;
+		private String originalFile;
+		private String saveFile;
+
 	}
 }

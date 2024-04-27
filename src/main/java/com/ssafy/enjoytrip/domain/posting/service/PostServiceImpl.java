@@ -1,6 +1,5 @@
 package com.ssafy.enjoytrip.domain.posting.service;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -21,7 +20,7 @@ public class PostServiceImpl implements PostService {
 	private final PostingMapper postingMapper;
 
 	@Override
-	public List<PostEntity> getPostList() throws IOException {
+	public List<PostEntity> getPostList() throws Exception {
 		try {
 			return postingMapper.getPostList();
 		} catch (SQLException e) {
@@ -30,7 +29,7 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public PostEntity getPost(Integer postId) throws IOException {
+	public PostEntity getPost(Integer postId) throws Exception {
 		try {
 			return postingMapper.getPost(postId);
 		} catch (SQLException e) {
@@ -39,16 +38,30 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public void registPost(PostDto.Regist regist) throws IOException {
+	public void registPost(PostDto.Regist regist) throws Exception {
 		try {
 			postingMapper.registPost(regist);
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
+
+		List<PostDto.FileInfo> fileInfos = regist.getFileInfos();
+		if (fileInfos != null && !fileInfos.isEmpty()) {
+			try {
+				postingMapper.registerFile(regist);
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		}
 	}
 
 	@Override
-	public void modifyPost(PostDto.Update update) throws IOException {
+	public List<PostDto.FileInfo> fileInfoList(int articleNo) throws Exception {
+		return postingMapper.fileInfoList(articleNo);
+	}
+
+	@Override
+	public void modifyPost(PostDto.Update update) throws Exception {
 		try {
 			postingMapper.modifyPost(update);
 		} catch (SQLException e) {
@@ -58,7 +71,7 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public void deletePost(PostDto.DeletePost deletePost) throws IOException {
+	public void deletePost(PostDto.DeletePost deletePost) throws Exception {
 		try {
 			postingMapper.deletePost(deletePost);
 		} catch (SQLException e) {
@@ -67,17 +80,7 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public String getSido(Integer sidoCode) throws IOException {
-		try {
-			return postingMapper.getSido(sidoCode);
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-
-	}
-
-	@Override
-	public void registComment(PostDto.Comment comment) throws IOException {
+	public void registComment(PostDto.Comment comment) throws Exception {
 		try {
 			postingMapper.registComment(comment);
 		} catch (SQLException e) {
@@ -87,7 +90,7 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public void deleteComment(PostDto.DeleteComment deleteComment) throws IOException {
+	public void deleteComment(PostDto.DeleteComment deleteComment) throws Exception {
 		try {
 			postingMapper.deleteComment(deleteComment);
 		} catch (SQLException e) {
@@ -96,12 +99,11 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public List<PostDto.Gugun> getGugun(String sidoCode) throws IOException {
+	public List<PostDto.Gugun> getGugun(String sidoCode) throws Exception {
 		try {
 			return postingMapper.getGugun(sidoCode);
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
 	}
-
 }
