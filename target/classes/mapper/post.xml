@@ -42,6 +42,13 @@
         WHERE post_id = #{postId}
     </delete>
 
+    <!-- 시도 이름 찾기 -->
+    <select id="getSido">
+        SELECT sido_name
+        FROM sido
+        WHERE sido_code = #{sidoCode}
+    </select>
+
     <!-- 댓글 등록 -->
     <insert id="registComment">
         INSERT INTO comments (post_id, user_id, comment)
