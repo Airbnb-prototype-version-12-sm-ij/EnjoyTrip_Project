@@ -9,7 +9,9 @@
     <div class="container-fluid">
         <!-- 로고로 바꾸기 -->
         <div class="navbar-brand ms-5 ps-5">
-            <img src="../assets/img/logo.png" width="96px" alt="로고"/>
+            <a href="http://localhost">
+                <img src="../assets/img/logo.png" width="96px" alt="로고"/>
+            </a>
         </div>
         <div class="d-flex flex-column-reverse align-items-lg-center">
             <div class="collapse navbar-collapse mt-lg-0" id="navbarSupportedContent">
