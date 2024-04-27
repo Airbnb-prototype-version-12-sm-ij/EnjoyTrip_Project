@@ -61,4 +61,22 @@ public class MemberDto {
 		private String userName;
 	}
 
+	@Data
+	@Builder
+	public static class ForModify {
+
+		@NotBlank
+		@Pattern(regexp = "^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{3,15}$")
+		private String userPassword;
+	}
+
+	@Data
+	@Builder
+	public static class ForDelete {
+
+		@NotBlank
+		@Pattern(regexp = "^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{3,15}$")
+		private String userId;
+	}
+
 }

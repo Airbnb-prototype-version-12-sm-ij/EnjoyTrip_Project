@@ -68,12 +68,22 @@ public class MemberController {
 	@PostMapping("/logout")
 	public void logout(HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		session.invalidate();
+		if (session != null) {
+			session.invalidate();
+		} else {
+			throw new RuntimeException("로그아웃 실패");
+		}
+		log.info("로그아웃 성공");
 	}
 
 	@PostMapping("/join")
 	public void join(@Validated @RequestBody MemberDto.Info info, BindingResult bindingResult) {
 		log.info("--------------------MemberController --- join: {}----------------------", info);
+
+		// errors 의 메세지만 출력
+		for (ObjectError error : bindingResult.getAllErrors()) {
+			log.info("Error: {}", error.getDefaultMessage());
+		}
 
 		if (bindingResult.hasErrors()) {
 			System.out.println(bindingResult.getAllErrors());
@@ -88,21 +98,32 @@ public class MemberController {
 	}
 
 	// 비밀번호 변경
-	// 검증 로직 필요함
 	@PostMapping("/modify")
-	public ResponseEntity<?> modify(@RequestBody String newPassword, HttpServletRequest request, HttpSession session) {
+	public ResponseEntity<?> modify(@Validated @RequestBody MemberDto.ForModify userPassword,
+		BindingResult bindingResult,
+		HttpServletRequest request,
+		HttpSession session) {
 
-		log.info("------------------------modify: {}------------------------", newPassword);
+		log.info("------------------------modify: {}------------------------", userPassword);
 
+		// errors 의 메세지만 출력
+		for (ObjectError error : bindingResult.getAllErrors()) {
+			log.info("Error: {}", error.getDefaultMessage());
+		}
+
+		if (bindingResult.hasErrors()) {
+			System.out.println(bindingResult.getAllErrors());
+			return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
+		}
 		MemberEntity loginInfo = (MemberEntity)session.getAttribute("memberDto");
 		MemberDto.Info info = MemberDto.Info.of(loginInfo);
-		info.setUserPassword(newPassword.replace("\"", ""));
+		info.setUserPassword(userPassword.getUserPassword().replace("\"", ""));
 		log.info("------------------------modify: {}------------------------", info);
 
 		try {
 			memberServiceImpl.modifyMember(info);
 			// 비밀번호 변경 작업이 성공했을 경우
-			return ResponseEntity.ok().body("{\"success\": true}");
+			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
 			// 비밀번호 변경 작업이 실패했을 경우
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"success\": false}");
@@ -123,9 +144,23 @@ public class MemberController {
 	// 회원 id를 받아 회원을 삭제하는 REST API
 	// 검증 로직 필요함
 	@PostMapping("/delete")
-	public ResponseEntity<?> deleteMember(@RequestBody String userId) {
+	public ResponseEntity<?> deleteMember(@Validated @RequestBody MemberDto.ForDelete userId,
+		BindingResult bindingResult) {
+
+		log.info("===========deleteMember: {}", userId);
+		// errors 의 메세지만 출력
+		for (ObjectError error : bindingResult.getAllErrors()) {
+			log.info("Error: {}", error.getDefaultMessage());
+		}
+
+		if (bindingResult.hasErrors()) {
+			log.info("bindingResult: {}", bindingResult);
+			return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
+		}
+
 		try {
-			memberServiceImpl.deleteMember(userId);
+			memberServiceImpl.deleteMember(userId.getUserId());
+			log.info("deleteMember: {}", userId.getUserId());
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (IOException e) {
 			throw new RuntimeException(e);

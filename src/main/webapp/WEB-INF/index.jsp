@@ -558,7 +558,7 @@
                     $("#loginModal").modal("hide");
                     location.reload();
                 } else { // 에러가 발생한 경우
-                    
+
                     alert('아이디나 비밀번호를 확인해주세요.');
                 }
             });
@@ -648,12 +648,15 @@
                         button.dataset.userId = userId;
                         button.textContent = "X";
                         button.addEventListener('click', () => {
+                            console.log(button.dataset.userId);
                             fetch("/members/delete", {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json',
                                 },
-                                body: JSON.stringify(button.dataset.userId),
+                                body: JSON.stringify({
+                                    userId: button.dataset.userId
+                                }),
                             })
                                 .then(response => {
                                     if (!response.ok) {

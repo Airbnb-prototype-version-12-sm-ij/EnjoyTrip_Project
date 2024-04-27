@@ -10,7 +10,7 @@ document.getElementById("findPwdUserId").addEventListener("input", function () {
 });
 
 function validateUserId(findPwdUserId) {
-    let regex = /^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{5,20}$/;
+    let regex = /^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{3,15}$/;
     if (regex.test(findPwdUserId)) {
         document.getElementById("findPwdUserId").classList.remove("is-invalid");
         return true;
@@ -28,7 +28,7 @@ document.getElementById("findPassword").addEventListener("input", function () {
 });
 
 function validatePassword(findPassword) {
-    let regex = /^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{5,20}$/;
+    let regex = /^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{3,15}$/;
     if (!regex.test(findPassword)) {
         document.getElementById("findPassword").classList.add("is-invalid");
         return false;

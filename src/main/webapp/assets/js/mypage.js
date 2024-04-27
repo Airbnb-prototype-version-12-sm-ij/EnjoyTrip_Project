@@ -111,37 +111,44 @@ function changePassword() {
     fetch("/members/modify", {
         method: "POST",
         headers: {
-            "Content-Type": "text/plain"
+            "Content-Type": "application/json"
         },
-        body: JSON.stringify(newPassword),
-    }).then((response) => response.json())
-        .then((data) => {
-            if (data.success) {
-                alert("비밀번호 변경에 성공했습니다. 다시 로그인해주세요.");
+        body: JSON.stringify({
+            password: newPassword
+        }),
+    }).then((response) => {
+        if (response.ok) {
+            alert("비밀번호 변경에 성공했습니다. 다시 로그인해주세요.");
 
-                fetch("/members/logout", {
-                    method: "POST"
-                }).then((response) => {
-                    if (response.ok) {
-                        alert("로그아웃 되었습니다.");
-                        location.reload();
-                    }
-                }).catch((error) => {
-                    console.error('Error:', error);
-                });
-            } else {
-                alert("비밀번호 변경에 실패했습니다.");
-            }
-        });
+            fetch("/members/logout", {
+                method: "POST"
+            }).then((response) => {
+                if (response.ok) {
+                    alert("로그아웃 되었습니다.");
+                    location.reload();
+                }
+            }).catch((error) => {
+                console.error('Error:', error);
+            });
+        } else {
+            alert("비밀번호 변경에 실패했습니다.");
+        }
+    });
     // 비밀번호가 바뀐 직후, 다시 로그인을 시키는걸로 하자.
 }
 
 // 탈퇴 기능 함수화
-function withdrawal(thisId) {
+function withdrawal(userId) {
     // DB에서 userId를 기반으로 유저 데이터를 삭제하고, 로그아웃을 시킨다.
+    console.log(userId);
     fetch("/members/delete", {
         method: "POST",
-        body: JSON.stringify(thisId),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            userId: userId,
+        })
     }).then((response) => { // 굳이 응답이 필요없으므로 성공유무만 판단
         console.log(response.ok);
         if (response.ok) {
