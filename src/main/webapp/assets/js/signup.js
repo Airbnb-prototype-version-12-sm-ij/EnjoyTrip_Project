@@ -1,4 +1,3 @@
-// 회원가입 기능 함수화
 function regist() {
     let userId = document.getElementById("userId").value;
     let userPwd = document.getElementById("password").value;

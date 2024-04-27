@@ -100,6 +100,59 @@
   modal.show();
 });*/
 
+// == 마이페이지 비밀번호 바꾸기 기능 ==
+// 현재 새 비밀번호-새 비밀번호 확인 정책 검사가 제대로 되지 않는 문제가 있음...
+// 일단은 새 비밀번호 창의 값을 기반으로 비밀번호를 바꾸도록 하자.
+document.getElementById("password-chg-btn").addEventListener("click", function (e) {
+    e.preventDefault();
+    changePassword(root); // mypage.js에 함수화하였음
+});
+
+// 비밀번호 입력시 보이기
+document.getElementById("newPassword").addEventListener("input", function () {
+    const newPassword = this.value;
+    validateNewPassword(newPassword);
+});
+
+// ====== 새 비밀번호 검사 ======
+function validateNewPassword(newPassword) {
+    const newpasswordInput = document.getElementById("newPassword");
+    let regex = /^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{5,20}$/;
+    if (!regex.test(newPassword)) {
+        newpasswordInput.classList.add("is-invalid");
+        return false;
+    } else {
+        newpasswordInput.classList.remove("is-invalid");
+        return true;
+    }
+}
+
+// ====== 새 비밀번호 확인 검사 ======
+document.getElementById("confirmNewPassword").addEventListener("input", function () {
+    const confirmNewPassword = this.value;
+    const newpassword = document.getElementById("newPassword").value;
+    validateNewPasswordConfirmation(newpassword, confirmNewPassword);
+});
+
+// ====== 비밀번호 동일 검사 ======
+function validateNewPasswordConfirmation(newpassword, confirmNewPassword) {
+    const confirmNewPasswordInput = document.getElementById("confirmNewPassword");
+    if (newpassword !== confirmNewPassword) {
+        confirmNewPasswordInput.classList.add("is-invalid");
+        return false;
+    } else {
+        confirmNewPasswordInput.classList.remove("is-invalid");
+        return true;
+    }
+}
+
+// == 마이페이지 탈퇴 기능 ==
+document.getElementById("Membership-Withdrawal-btn").addEventListener("click", function (e) {
+    e.preventDefault();
+    let loginId = "<%=loginMember != null ? loginMember.getUserId() : null%>";
+    withdrawal(loginId); // mypage.js에 함수화하였음
+})
+
 // 비밀번호 변경 기능 함수화
 function changePassword() {
     //console.log(root);
