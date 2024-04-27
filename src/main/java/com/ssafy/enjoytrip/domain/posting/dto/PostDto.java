@@ -16,6 +16,17 @@ public class PostDto {
 		private Integer gugunCode;
 	}
 
+	@Data
+	@Builder
+	public static class Update {
+		private Integer postId;
+		private String title;
+		private String content;
+		private String userId;
+		private Integer sidoCode;
+		private Integer gugunCode;
+	}
+
 	// 이미지 파일 관련 DTO
 	@Data
 	@Builder
@@ -54,4 +65,10 @@ public class PostDto {
 		private Integer commentId;
 	}
 
+	@Data
+	@Builder
+	public static class Gugun {
+		private Integer gugunCode;
+		private String gugunName;
+	}
 }

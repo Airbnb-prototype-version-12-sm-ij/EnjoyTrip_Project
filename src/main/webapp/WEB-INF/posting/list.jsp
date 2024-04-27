@@ -1,8 +1,7 @@
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ page
         contentType="text/html; charset=utf-8"
         pageEncoding="utf-8"
-        import="com.ssafy.enjoytrip.domain.attraction.entity.AttractionEntity"
-        import="java.util.*"
 %>
 
 <!doctype html>
@@ -25,30 +24,8 @@
     }
 </style>
 
-<nav class="navbar navbar-expand-lg navbar-light">
-    <div class="container-fluid">
-        <!-- 로고로 바꾸기 -->
-        <div class="navbar-brand ms-5 ps-5">
-            <img src="../assets/img/logo.png" width="96px" alt="로고"/>
-        </div>
-        <div class="d-flex flex-column-reverse align-items-lg-center">
-            <div class="collapse navbar-collapse mt-lg-0" id="navbarSupportedContent">
-                <%@ include file="../common/loginnav.jsp" %> <!-- 로그인 페이지 조각 추가 -->
-            </div>
-            <button
-                    class="navbar-toggler"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation"
-            >
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </div>
-    </div>
-</nav>
+<%@ include file="../common/loginnav.jsp" %> <!-- 로그인 페이지 조각 추가 -->
+
 
 <div id="postList" class="row justify-content-center">
     <div class="col-lg-8 col-md-10 col-sm-12">

@@ -1,7 +1,9 @@
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ page
         contentType="text/html; charset=utf-8"
         pageEncoding="utf-8"
 %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
 <!doctype html>
 <html lang="en">
@@ -23,30 +25,8 @@
     }
 </style>
 
-<nav class="navbar navbar-expand-lg navbar-light">
-    <div class="container-fluid">
-        <!-- 로고로 바꾸기 -->
-        <div class="navbar-brand ms-5 ps-5">
-            <img src="../assets/img/logo.png" width="96px" alt="로고"/>
-        </div>
-        <div class="d-flex flex-column-reverse align-items-lg-center">
-            <div class="collapse navbar-collapse mt-lg-0" id="navbarSupportedContent">
-                <%@ include file="../common/loginnav.jsp" %> <!-- 로그인 페이지 조각 추가 -->
-            </div>
-            <button
-                    class="navbar-toggler"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation"
-            >
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </div>
-    </div>
-</nav>
+
+<%@ include file="../common/loginnav.jsp" %> <!-- 로그인 페이지 조각 추가 -->
 
 
 <div id="posting" class="row justify-content-center">
@@ -106,25 +86,40 @@
                     <%--                        <input type="hidden" id="articleno" name="articleno" value="${post.articleNo}">--%>
                     <%--                    </form>--%>
                     <script>
-                        document.querySelector("#btn-mv-modify").addEventListener("click", function () {
-                            let form = document.querySelector("#form-no-param");
-                            form.setAttribute("action", "${root}/article/modify");
-                            form.submit();
+
+                        var postId = "${post.postId}";
+
+
+                        // ===============================삭제 버튼=============================
+                        document.getElementById('btn-delete').addEventListener('click', function () {
+                            console.log('/posting/delete/' + postId);
+                            fetch('/posting/delete/' + postId, {
+                                method: 'POST',
+                            })
+                                .then(response => {
+                                    if (!response.ok) {
+                                        throw new Error('Network response was not ok');
+                                    }
+                                    // 요청이 성공하면 페이지를 새로고침하거나 다른 동작을 수행합니다.
+                                    location.href = "/posting/list";
+                                })
+                                .catch(error => console.error('Error:', error));
                         });
 
-                        document.querySelector("#btn-delete").addEventListener("click", function () {
-                            if (confirm("정말 삭제하시겠습니까?")) {
-                                let form = document.querySelector("#form-no-param");
-                                form.setAttribute("action", "${root}/article/delete");
-                                form.submit();
-                            }
+
+                        // ===============================수정 버튼=============================
+                        document.getElementById('btn-mv-modify').addEventListener('click', function () {
+                            location.href = '/posting/modify/' + postId;
                         });
+
+
                     </script>
                 </c:if>
             </div>
         </div>
     </div>
 </div>
+
 
 </body>
 </html>
