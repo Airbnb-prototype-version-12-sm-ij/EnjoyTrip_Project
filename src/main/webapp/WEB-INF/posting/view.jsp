@@ -106,25 +106,40 @@
                     <%--                        <input type="hidden" id="articleno" name="articleno" value="${post.articleNo}">--%>
                     <%--                    </form>--%>
                     <script>
-                        document.querySelector("#btn-mv-modify").addEventListener("click", function () {
-                            let form = document.querySelector("#form-no-param");
-                            form.setAttribute("action", "${root}/article/modify");
-                            form.submit();
+
+                        var postId = "${post.postId}";
+
+
+                        // ===============================삭제 버튼=============================
+                        document.getElementById('btn-delete').addEventListener('click', function () {
+                            console.log('/posting/delete/' + postId);
+                            fetch('/posting/delete/' + postId, {
+                                method: 'POST',
+                            })
+                                .then(response => {
+                                    if (!response.ok) {
+                                        throw new Error('Network response was not ok');
+                                    }
+                                    // 요청이 성공하면 페이지를 새로고침하거나 다른 동작을 수행합니다.
+                                    location.href = "/posting/list";
+                                })
+                                .catch(error => console.error('Error:', error));
                         });
 
-                        document.querySelector("#btn-delete").addEventListener("click", function () {
-                            if (confirm("정말 삭제하시겠습니까?")) {
-                                let form = document.querySelector("#form-no-param");
-                                form.setAttribute("action", "${root}/article/delete");
-                                form.submit();
-                            }
+
+                        // ===============================수정 버튼=============================
+                        document.getElementById('btn-mv-modify').addEventListener('click', function () {
+                            location.href = '/posting/modify/' + postId;
                         });
+
+
                     </script>
                 </c:if>
             </div>
         </div>
     </div>
 </div>
+
 
 </body>
 </html>

@@ -51,11 +51,11 @@
 <div id="writeForm" class="row justify-content-center">
     <div class="col-lg-8 col-md-10 col-sm-12">
         <h2 class="my-3 py-3 shadow-sm bg-light text-center">
-            <mark class="sky">글쓰기</mark>
+            <mark class="sky">글 수정하기</mark>
         </h2>
     </div>
     <div class="col-lg-8 col-md-10 col-sm-12">
-        <form id="form-register" method="POST" enctype="multipart/form-data" action="/posting/write">
+        <form id="form-modify" method="POST" enctype="multipart/form-data" action="/posting/modify/${post.postId}">
             <input type="hidden" name="pgno" value="1">
             <input type="hidden" name="key" value="">
             <input type="hidden" name="word" value="">
@@ -99,11 +99,12 @@
                         id="subject"
                         name="title"
                         placeholder="제목..."
+                        value=${post.title}
                 />
             </div>
             <div class="mb-3">
                 <label for="content" class="form-label">내용 : </label>
-                <textarea class="form-control" id="content" name="content" rows="7"></textarea>
+                <textarea class="form-control" id="content" name="content" rows="7">${post.content}</textarea>
             </div>
             <div class="mb-3">
                 <label for="upfile" class="form-label">파일:</label>
@@ -112,7 +113,7 @@
 
             <div class="col-auto text-center">
                 <button type="submit" id="btn-register" class="btn btn-outline-primary mb-3">
-                    글작성
+                    글수정
                 </button>
                 <button type="button" id="btn-list" class="btn btn-outline-danger mb-3">
                     목록으로이동...
@@ -143,6 +144,12 @@
                 .catch(error => console.error('Error:', error));
         }
     });
+
+
+    document.getElementById('btn-list').addEventListener('click', function () {
+        location.href = '/posting/list';
+    });
+
 </script>
 
 </body>

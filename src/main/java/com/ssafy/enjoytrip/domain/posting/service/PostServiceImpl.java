@@ -11,8 +11,10 @@ import com.ssafy.enjoytrip.domain.posting.entity.PostEntity;
 import com.ssafy.enjoytrip.domain.posting.mapper.PostingMapper;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class PostServiceImpl implements PostService {
 
@@ -46,10 +48,11 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public void modifyPost(PostDto.Regist regist) throws IOException {
+	public void modifyPost(PostDto.Update update) throws IOException {
 		try {
-			postingMapper.modifyPost(regist);
+			postingMapper.modifyPost(update);
 		} catch (SQLException e) {
+			log.info(" =========================================SERVICE modifyPost error");
 			throw new RuntimeException(e);
 		}
 	}
@@ -77,6 +80,15 @@ public class PostServiceImpl implements PostService {
 	public void deleteComment(PostDto.DeleteComment deleteComment) throws IOException {
 		try {
 			postingMapper.deleteComment(deleteComment);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
+	public List<PostDto.Gugun> getGugun(String sidoCode) throws IOException {
+		try {
+			return postingMapper.getGugun(sidoCode);
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}

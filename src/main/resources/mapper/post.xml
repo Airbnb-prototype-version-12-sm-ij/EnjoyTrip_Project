@@ -8,6 +8,7 @@
     <select id="getPostList">
         SELECT *
         FROM posting
+        ORDER BY created_at DESC
     </select>
 
     <!-- 게시글 조회 (특정) -->
@@ -31,6 +32,7 @@
             sido_code  = #{sidoCode},
             gugun_code = #{gugunCode}
         WHERE post_id = #{postId}
+          and user_id like #{userId}
     </update>
 
     <!-- 게시글 삭제 -->
@@ -52,5 +54,12 @@
         FROM comments
         WHERE id = #{commentId}
     </delete>
+
+    <!--    시도 정보로 구군코드 얻어오기 -->
+    <select id="getGugun">
+        SELECT gugun_code, gugun_name
+        FROM gugun
+        WHERE sido_code = #{sidoCode}
+    </select>
 
 </mapper>

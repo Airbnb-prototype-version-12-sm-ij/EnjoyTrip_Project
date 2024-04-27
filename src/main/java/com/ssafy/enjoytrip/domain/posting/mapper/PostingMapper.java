@@ -21,7 +21,7 @@ public interface PostingMapper {
 	void registPost(PostDto.Regist regist) throws SQLException;
 
 	// 게시글 수정
-	void modifyPost(PostDto.Regist regist) throws SQLException;
+	void modifyPost(PostDto.Update update) throws SQLException;
 
 	// 게시글 삭제
 	void deletePost(PostDto.DeletePost deletePost) throws SQLException;
@@ -32,6 +32,8 @@ public interface PostingMapper {
 	// 댓글 삭제
 	void deleteComment(PostDto.DeleteComment deleteComment) throws SQLException;
 
+	// 시도 코드로 구군 코드 얻어오기
+	List<PostDto.Gugun> getGugun(String sidoCode) throws SQLException;
 
 	/*TODO 댓글 수정*/
 }

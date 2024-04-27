@@ -296,6 +296,15 @@ CREATE TABLE IF NOT EXISTS `enjoytrip`.`post_comments`
     COLLATE = utf8mb4_0900_ai_ci;
 
 
+insert into sido
+values ('0', '전체');
+
+
+INSERT INTO gugun (gugun_code, gugun_name, sido_code)
+SELECT 0, '전체', sido_code
+FROM sido;
+
+
 
 insert into `enjoytrip`.`members` (user_id, user_name, user_password, grade)
 values ('ssafy', '김싸피', 'a477d9bfed77d6d10bcf91408877fec661196de6fa2c513daa2030b234f927ee', "admin"),
