@@ -5,6 +5,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.ssafy.enjoytrip.domain.member.interceptor.AdminChkInterceptor;
+import com.ssafy.enjoytrip.domain.member.interceptor.LoginChkInterceptor;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
@@ -15,5 +16,9 @@ public class WebConfig implements WebMvcConfigurer {
 			.addInterceptor(new AdminChkInterceptor())
 			.order(1)
 			.addPathPatterns("/members/info");
+		registry
+			.addInterceptor(new LoginChkInterceptor())
+			.order(2)
+			.addPathPatterns("/posting/**");
 	}
 }

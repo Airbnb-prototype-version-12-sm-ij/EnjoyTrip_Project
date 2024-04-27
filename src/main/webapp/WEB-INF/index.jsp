@@ -237,7 +237,7 @@
 
         // AJAX 요청 보내기
         let xhr = new XMLHttpRequest();
-        xhr.open("GET", "<%=root%>/attractions/search?sidoCode=" + sidoCode + "&typeCode=" + contentTypeId + "&title=" + keyword, true);
+        xhr.open("GET", "/attractions/search?sidoCode=" + sidoCode + "&typeCode=" + contentTypeId + "&title=" + keyword, true);
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 // 서버에서 데이터를 받았을 때의 처리
