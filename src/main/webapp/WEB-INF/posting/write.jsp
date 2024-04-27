@@ -1,3 +1,12 @@
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ page
+        contentType="text/html; charset=utf-8"
+        pageEncoding="utf-8"
+        import="com.ssafy.enjoytrip.domain.attraction.entity.AttractionEntity"
+        import="java.util.*"
+%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+
 <!doctype html>
 <html lang="en">
 <head>
