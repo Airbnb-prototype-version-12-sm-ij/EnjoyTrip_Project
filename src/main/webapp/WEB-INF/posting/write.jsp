@@ -111,7 +111,7 @@
                 <button type="submit" id="btn-register" class="btn btn-outline-primary mb-3">
                     글작성
                 </button>
-                <a href="http://localhost/posting/">
+                <a href="/posting/list">
                     <button type="button" id="btn-list" class="btn btn-outline-danger mb-3">
                         목록으로이동...
                     </button>

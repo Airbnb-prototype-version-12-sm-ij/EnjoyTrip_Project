@@ -129,3 +129,10 @@ footer {
 th {
     text-align: center;
 }
+
+
+div#writeForm {
+    width: 80%;
+    position: absolute;
+    top: 10%;
+}
