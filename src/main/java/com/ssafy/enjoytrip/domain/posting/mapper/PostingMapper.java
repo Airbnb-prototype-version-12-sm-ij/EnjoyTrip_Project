@@ -37,8 +37,11 @@ public interface PostingMapper {
 	@Transactional
 	void deletePost(PostDto.DeletePost deletePost) throws SQLException;
 
-	// 시도 찾기
+	// 시도 이름 찾기
 	String getSidoName(Integer sidoCode) throws SQLException;
+
+	// 시도 코드 찾기
+	List<Integer> getSidoCode(String sidoName) throws SQLException;
 
 	// 구군 찾기
 	String getGugunName(Integer sidoCode, Integer gugunCode) throws SQLException;
@@ -57,6 +60,9 @@ public interface PostingMapper {
 	// 조회수 증가
 	@Transactional
 	void increaseHit(Integer postId) throws SQLException;
+
+	// 게시글 검색
+	List<PostEntity> searchPostList(String key, String word) throws SQLException;
 
 
 	/*TODO 댓글 수정*/

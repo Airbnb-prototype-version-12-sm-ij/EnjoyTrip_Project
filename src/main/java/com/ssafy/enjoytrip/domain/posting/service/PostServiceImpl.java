@@ -29,6 +29,11 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
+	public List<PostEntity> searchPostList(String key, String word) throws Exception {
+		return postingMapper.searchPostList(key, word);
+	}
+
+	@Override
 	public PostEntity getPost(Integer postId) throws Exception {
 		try {
 			return postingMapper.getPost(postId);
@@ -83,6 +88,15 @@ public class PostServiceImpl implements PostService {
 	public String getSidoName(Integer sidoCode) throws Exception {
 		try {
 			return postingMapper.getSidoName(sidoCode);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
+	public List<Integer> getSidoCode(String sidoName) throws Exception {
+		try {
+			return postingMapper.getSidoCode(sidoName);
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}

@@ -12,6 +12,9 @@ public interface PostService {
 	// 게시글 조회 (전체)
 	List<PostEntity> getPostList() throws Exception;
 
+	// 게시글 조회 (검색)
+	List<PostEntity> searchPostList(String key, String word) throws Exception;
+
 	// 게시글 조회 (특정)
 	PostEntity getPost(Integer postId) throws Exception;
 
@@ -30,8 +33,11 @@ public interface PostService {
 	@Transactional
 	void deletePost(PostDto.DeletePost deletePost) throws Exception;
 
-	// 시도 찾기
+	// 시도 이름 찾기
 	String getSidoName(Integer sidoCode) throws Exception;
+
+	// 시도 코드 찾기
+	List<Integer> getSidoCode(String sidoName) throws Exception;
 
 	// 구군 찾기
 	String getGugunName(Integer sidoCode, Integer gugunCode) throws Exception;
