@@ -133,6 +133,7 @@ public class MemberController {
 	// 버튼을 누르면 회원들의 정보를 반환 해주는 회원 관리 REST API
 	@GetMapping("/info")
 	public ResponseEntity<?> getMemberInfo(HttpServletRequest request) {
+		log.info("===========getMemberInfo: {}================", request);
 		try {
 			List<MemberEntity> memberList = memberServiceImpl.loadMember();
 			return new ResponseEntity<List<MemberEntity>>(memberList, HttpStatus.OK);
@@ -161,6 +162,21 @@ public class MemberController {
 		try {
 			memberServiceImpl.deleteMember(userId.getUserId());
 			log.info("deleteMember: {}", userId.getUserId());
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	// 회원이 탈퇴하는 Controller
+	@PostMapping("/withdraw")
+	public ResponseEntity<?> withdrawMember(HttpSession session) {
+
+		String userId = ((MemberEntity)session.getAttribute("memberDto")).getUserId();
+
+		try {
+			memberServiceImpl.deleteMember(userId);
+			log.info("withdrawMember: {}", userId);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
