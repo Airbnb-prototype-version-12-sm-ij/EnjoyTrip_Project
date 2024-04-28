@@ -167,6 +167,21 @@ public class MemberController {
 		}
 	}
 
+	// 회원이 탈퇴하는 Controller
+	@PostMapping("/withdraw")
+	public ResponseEntity<?> withdrawMember(HttpSession session) {
+
+		String userId = ((MemberEntity)session.getAttribute("memberDto")).getUserId();
+
+		try {
+			memberServiceImpl.deleteMember(userId);
+			log.info("withdrawMember: {}", userId);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	@PostMapping("/find")
 	public ResponseEntity<?> findMember(@Validated @RequestBody MemberDto.Info info, BindingResult bindingResult) {
 

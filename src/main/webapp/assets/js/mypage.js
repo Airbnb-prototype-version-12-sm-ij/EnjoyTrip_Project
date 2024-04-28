@@ -105,7 +105,7 @@
 // 일단은 새 비밀번호 창의 값을 기반으로 비밀번호를 바꾸도록 하자.
 document.getElementById("password-chg-btn").addEventListener("click", function (e) {
     e.preventDefault();
-    changePassword(root); // mypage.js에 함수화하였음
+    changePassword(); // mypage.js에 함수화하였음
 });
 
 // 비밀번호 입력시 보이기
@@ -167,7 +167,7 @@ function changePassword() {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            password: newPassword
+            userPassword: newPassword
         }),
     }).then((response) => {
         if (response.ok) {
@@ -194,14 +194,8 @@ function changePassword() {
 function withdrawal(userId) {
     // DB에서 userId를 기반으로 유저 데이터를 삭제하고, 로그아웃을 시킨다.
     console.log(userId);
-    fetch("/members/delete", {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            userId: userId,
-        })
+    fetch("/members/withdraw", {
+        method: "POST"
     }).then((response) => { // 굳이 응답이 필요없으므로 성공유무만 판단
         console.log(response.ok);
         if (response.ok) {

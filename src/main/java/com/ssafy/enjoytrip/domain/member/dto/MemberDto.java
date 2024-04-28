@@ -62,7 +62,6 @@ public class MemberDto {
 	}
 
 	@Data
-	@Builder
 	public static class ForModify {
 
 		@NotBlank
