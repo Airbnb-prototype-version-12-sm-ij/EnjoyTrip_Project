@@ -3,6 +3,7 @@
 if (document.getElementById("showMMModalBtn") != null) {
     document.getElementById("showMMModalBtn").addEventListener("click", function MberModal(e) {
         e.preventDefault();
+        console.log("회원 관리 모달 오픈");
         fetch("/members/info")
             .then(response => response.json())
             .then(data => {

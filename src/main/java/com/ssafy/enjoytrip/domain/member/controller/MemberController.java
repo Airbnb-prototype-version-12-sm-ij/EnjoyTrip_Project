@@ -133,6 +133,7 @@ public class MemberController {
 	// 버튼을 누르면 회원들의 정보를 반환 해주는 회원 관리 REST API
 	@GetMapping("/info")
 	public ResponseEntity<?> getMemberInfo(HttpServletRequest request) {
+		log.info("===========getMemberInfo: {}================", request);
 		try {
 			List<MemberEntity> memberList = memberServiceImpl.loadMember();
 			return new ResponseEntity<List<MemberEntity>>(memberList, HttpStatus.OK);
