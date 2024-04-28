@@ -41,13 +41,36 @@
         </h2>
     </div>
     <div class="col-lg-8 col-md-10 col-sm-12">
-        <div class="row align-self-center mb-2">
-            <div class="col-md-2 text-start">
-                <a href="/posting/write" id="btn-mv-register" class="btn btn-outline-primary btn-sm">
-                    글쓰기
-                </a>
-            </div>
-            <div class="col-md-7 offset-3">
+        <%--        <div class="row align-self-center mb-2">--%>
+        <div class="col-md-2 text-start">
+            <a href="/posting/write" id="btn-mv-register" class="btn btn-outline-primary btn-sm">
+                글쓰기
+            </a>
+        </div>
+        <div style="display: flex; align-items: center;">
+            <label for="search-sido" class="sido-label">시도 : </label>
+            <select id="search-sido" class="form-select form-select-sm ms-1 me-2 w-50 sido-form-select" name="sidoCode"
+                    aria-label="Default select example">
+                <option value="0" selected>전체</option>
+                <option value="1">서울</option>
+                <option value="2">인천</option>
+                <option value="3">대전</option>
+                <option value="4">대구</option>
+                <option value="5">광주</option>
+                <option value="6">부산</option>
+                <option value="7">울산</option>
+                <option value="8">세종특별자치시</option>
+                <option value="31">경기도</option>
+                <option value="32">강원도</option>
+                <option value="33">충청북도</option>
+                <option value="34">충청남도</option>
+                <option value="35">경상북도</option>
+                <option value="36">경상남도</option>
+                <option value="37">전라북도</option>
+                <option value="38">전라남도</option>
+                <option value="39">제주도</option>
+            </select>
+            <div class="col-md-6.8 offset-2">
                 <form class="d-flex" id="form-search" method="get" action="/posting/list">
                     <input type="hidden" name="pgno" value="1"/>
                     <select
@@ -65,6 +88,7 @@
                         <button id="btn-search" class="btn btn-dark" type="submit">검색</button>
                     </div>
                 </form>
+                <%--            </div>--%>
             </div>
         </div>
         <div id="listBody">
@@ -80,7 +104,7 @@
                 </tr>
                 </thead>
 
-                <tbody>
+                <tbody id="postListBody">
                 <c:forEach var="post" items="${postList}" varStatus="idx">
                     <tr class="text-center">
                         <th scope="row">${post.postId}</th>
@@ -97,12 +121,10 @@
                         <td>${post.userId}</td>
                         <td>${sidos[idx.index]}</td>
                         <td>${post.hit}</td>
-
                         <td>${post.createdAt}</td>
                     </tr>
                 </c:forEach>
                 </tbody>
-
             </table>
         </div>
     </div>
@@ -118,6 +140,7 @@
 <script src="../../assets/js/findpwd.js"></script>
 <%--<script src="../assets/js/api.js"></script>--%>
 <script src="../../assets/js/login.js"></script>
+<script src="../../assets/js/postlist.js"></script>
 <script src="../../assets/js/signup.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

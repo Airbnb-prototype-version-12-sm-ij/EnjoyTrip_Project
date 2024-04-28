@@ -18,6 +18,9 @@ public interface PostingMapper {
 	// 게시글 조회 (특정)
 	PostEntity getPost(Integer postId) throws SQLException;
 
+	// 게시글 조회 (지역)
+	List<PostEntity> getPostsBySidoCode(String sidoCode) throws SQLException;
+
 	// 게시글 등록
 	@Transactional
 	void registPost(PostDto.Regist regist) throws SQLException;

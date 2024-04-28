@@ -88,6 +88,20 @@ public class PostingController {
 		return "posting/list";
 	}
 
+	@GetMapping("/list/{sidoCode}")
+	public ResponseEntity<List<PostEntity>> getPostsBySidoCode(@PathVariable String sidoCode) {
+		try {
+			List<PostEntity> posts = postService.getPostsBySidoCode(sidoCode);
+			for (PostEntity post : posts) {
+				String sidoName = postService.getSidoName(post.getSidoCode());
+				post.setSidoName(sidoName); // 시도 이름 설정
+			}
+			return new ResponseEntity<>(posts, HttpStatus.OK);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	@GetMapping("/write")
 	public String writeForm() {
 		return "posting/write";

@@ -18,6 +18,13 @@
         WHERE post_id = #{postId}
     </select>
 
+    <!-- 지역 코드 조회 -->
+    <select id="getPostsBySidoCode">
+        SELECT *
+        FROM posting
+        WHERE sido_code = #{sidoCode}
+    </select>
+
     <!-- 게시글 등록 -->
     <insert id="registPost" useGeneratedKeys="true" keyProperty="postId">
         INSERT INTO posting (user_id, title, content, sido_code, gugun_code)

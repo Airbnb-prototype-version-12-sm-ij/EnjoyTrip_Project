@@ -9,6 +9,7 @@ public class PostEntity {
 	private String title;
 	private String content;
 	private String userId;
+	private String sidoName;
 	private Integer sidoCode;
 	private Integer gugunCode;
 	private String createdAt;

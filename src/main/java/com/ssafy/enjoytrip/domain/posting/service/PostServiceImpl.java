@@ -33,6 +33,10 @@ public class PostServiceImpl implements PostService {
 		return postingMapper.searchPostList(key, word);
 	}
 
+	public List<PostEntity> getPostsBySidoCode(String sidoCode) throws SQLException {
+		return postingMapper.getPostsBySidoCode(sidoCode);
+	}
+
 	@Override
 	public PostEntity getPost(Integer postId) throws Exception {
 		try {

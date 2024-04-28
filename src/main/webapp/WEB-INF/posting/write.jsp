@@ -47,9 +47,9 @@
             <input type="hidden" name="key" value="">
             <input type="hidden" name="word" value="">
             <div class="mb-3">
-
                 <label for="search-sido" class="sido-label">시도 : </label>
-                <select id="search-sido" class="sido-form-select" name="sidoCode" aria-label="Default select example">
+                <select id="search-sido" class="form-select form-select-sm ms-1 me-2 w-50 sido-form-select"
+                        name="sidoCode" aria-label="Default select example">
                     <option value="0" selected>검색 할 시, 도 선택</option>
                     <option value="1">서울</option>
                     <option value="2">인천</option>
@@ -69,13 +69,13 @@
                     <option value="38">전라남도</option>
                     <option value="39">제주도</option>
                 </select>
-                <div>
-                    <label for="search-gugun" class="gugun-label">구군 : </label>
-                    <select id="search-gugun" name="gugunCode" class="gugun-form-select"
-                            aria-label="Default select example">
-                        <option value="0" selected>검색 할 구, 군 선택</option>
-                    </select>
-                </div>
+                <label for="search-gugun" class="gugun-label">구군 : </label>
+                <select id="search-gugun" name="gugunCode"
+                        class="form-select form-select-sm ms-1 me-2 w-50 gugun-form-select"
+                        aria-label="Default select example">
+                    <option value="0" selected>검색 할 구, 군 선택</option>
+                </select>
+                <br>
 
                 <label for="subject" class="form-label">제목 : </label>
                 <input

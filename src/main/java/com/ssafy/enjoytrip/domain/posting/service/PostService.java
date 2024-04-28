@@ -15,6 +15,9 @@ public interface PostService {
 	// 게시글 조회 (검색)
 	List<PostEntity> searchPostList(String key, String word) throws Exception;
 
+	// 게시글 조회 (지역)
+	List<PostEntity> getPostsBySidoCode(String sidoCode) throws Exception;
+
 	// 게시글 조회 (특정)
 	PostEntity getPost(Integer postId) throws Exception;
 

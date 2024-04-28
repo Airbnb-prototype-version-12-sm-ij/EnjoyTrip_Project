@@ -162,3 +162,14 @@ div#viewBody {
     overflow-y: auto;
     display: block;
 }
+
+.sido-label {
+    display: inline-block;
+    white-space: nowrap;
+}
+
+select#search-sido, select#search-gugun {
+    display: inline-block;
+    min-width: 150px;
+    max-width: 150px;
+}
