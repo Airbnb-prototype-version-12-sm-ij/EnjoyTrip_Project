@@ -58,7 +58,20 @@ public class PostingController {
 		try {
 			List<PostEntity> postList;
 			if (key != null && word != null) {
-				postList = postService.searchPostList(key, word);
+				if (key.equals("sido_code")) {
+					List<PostEntity> mergedList = new ArrayList<>();
+					List<Integer> sidos = postService.getSidoCode(word);
+
+					for (Integer sidoCode : sidos) {
+						System.out.println("word : " + word);
+						mergedList.addAll(postService.searchPostList(key, sidoCode.toString()));
+					}
+
+					postList = mergedList;
+
+				} else {
+					postList = postService.searchPostList(key, word);
+				}
 			} else {
 				postList = postService.getPostList();
 			}

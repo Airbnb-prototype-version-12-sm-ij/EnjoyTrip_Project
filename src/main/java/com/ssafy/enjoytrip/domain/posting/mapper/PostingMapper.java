@@ -37,8 +37,11 @@ public interface PostingMapper {
 	@Transactional
 	void deletePost(PostDto.DeletePost deletePost) throws SQLException;
 
-	// 시도 찾기
+	// 시도 이름 찾기
 	String getSidoName(Integer sidoCode) throws SQLException;
+
+	// 시도 코드 찾기
+	List<Integer> getSidoCode(String sidoName) throws SQLException;
 
 	// 구군 찾기
 	String getGugunName(Integer sidoCode, Integer gugunCode) throws SQLException;

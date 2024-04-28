@@ -94,6 +94,15 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
+	public List<Integer> getSidoCode(String sidoName) throws Exception {
+		try {
+			return postingMapper.getSidoCode(sidoName);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
 	public String getGugunName(Integer sidoCode, Integer gugunCode) throws Exception {
 		try {
 			return postingMapper.getGugunName(sidoCode, gugunCode);

@@ -58,6 +58,7 @@
                     >
                         <option value="title" selected>제목</option>
                         <option value="user_id">작성자</option>
+                        <option value="sido_code">지역</option>
                     </select>
                     <div class="input-group input-group-sm">
                         <input type="text" name="word" id="word" class="form-control" placeholder="검색어..."/>

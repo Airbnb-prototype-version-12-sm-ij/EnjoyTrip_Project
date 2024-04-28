@@ -66,6 +66,14 @@
         WHERE sido_code = #{sidoCode}
     </select>
 
+    <!-- 시도 코드 찾기 -->
+    <select id="getSidoCode">
+        SELECT sido_code
+        FROM sido
+        WHERE sido_name like concat('%', #{sidoName}, '%')
+    </select>
+
+
     <!-- 구군 이름 찾기 -->
     <select id="getGugunName">
         SELECT gugun_name
@@ -108,5 +116,6 @@
         WHERE ${key} LIKE CONCAT('%', #{word}, '%')
         ORDER BY created_at DESC
     </select>
+
 
 </mapper>

@@ -33,8 +33,11 @@ public interface PostService {
 	@Transactional
 	void deletePost(PostDto.DeletePost deletePost) throws Exception;
 
-	// 시도 찾기
+	// 시도 이름 찾기
 	String getSidoName(Integer sidoCode) throws Exception;
+
+	// 시도 코드 찾기
+	List<Integer> getSidoCode(String sidoName) throws Exception;
 
 	// 구군 찾기
 	String getGugunName(Integer sidoCode, Integer gugunCode) throws Exception;
