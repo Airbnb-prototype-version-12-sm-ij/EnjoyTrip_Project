@@ -44,24 +44,24 @@
 
                 <label for="search-sido" class="sido-label">시도 : </label>
                 <select id="search-sido" class="sido-form-select" name="sidoCode" aria-label="Default select example">
-                    <option value="0" selected>검색 할 시, 도 선택</option>
-                    <option value="1">서울</option>
-                    <option value="2">인천</option>
-                    <option value="3">대전</option>
-                    <option value="4">대구</option>
-                    <option value="5">광주</option>
-                    <option value="6">부산</option>
-                    <option value="7">울산</option>
-                    <option value="8">세종특별자치시</option>
-                    <option value="31">경기도</option>
-                    <option value="32">강원도</option>
-                    <option value="33">충청북도</option>
-                    <option value="34">충청남도</option>
-                    <option value="35">경상북도</option>
-                    <option value="36">경상남도</option>
-                    <option value="37">전라북도</option>
-                    <option value="38">전라남도</option>
-                    <option value="39">제주도</option>
+                    <option value="0" ${post.sidoCode == 0 ? 'selected' : ''}>검색 할 시, 도 선택</option>
+                    <option value="1" ${post.sidoCode == 1 ? 'selected' : ''}>서울</option>
+                    <option value="2" ${post.sidoCode == 2 ? 'selected' : ''}>인천</option>
+                    <option value="3" ${post.sidoCode == 3 ? 'selected' : ''}>대전</option>
+                    <option value="4" ${post.sidoCode == 4 ? 'selected' : ''}>대구</option>
+                    <option value="5" ${post.sidoCode == 5 ? 'selected' : ''}>광주</option>
+                    <option value="6" ${post.sidoCode == 6 ? 'selected' : ''}>부산</option>
+                    <option value="7" ${post.sidoCode == 7 ? 'selected' : ''}>울산</option>
+                    <option value="8" ${post.sidoCode == 8 ? 'selected' : ''}>세종특별자치시</option>
+                    <option value="31" ${post.sidoCode == 31 ? 'selected' : ''}>경기도</option>
+                    <option value="32" ${post.sidoCode == 32 ? 'selected' : ''}>강원도</option>
+                    <option value="33" ${post.sidoCode == 33 ? 'selected' : ''}>충청북도</option>
+                    <option value="34" ${post.sidoCode == 34 ? 'selected' : ''}>충청남도</option>
+                    <option value="35" ${post.sidoCode == 35 ? 'selected' : ''}>경상북도</option>
+                    <option value="36" ${post.sidoCode == 36 ? 'selected' : ''}>경상남도</option>
+                    <option value="37" ${post.sidoCode == 37 ? 'selected' : ''}>전라북도</option>
+                    <option value="38" ${post.sidoCode == 38 ? 'selected' : ''}>전라남도</option>
+                    <option value="39" ${post.sidoCode == 39 ? 'selected' : ''}>제주도</option>
                 </select>
 
 
@@ -116,5 +116,11 @@
 <script src="../../assets/js/login.js"></script>
 <script src="../../assets/js/signup.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    var post = {
+        sidoCode: ${post.sidoCode},
+        gugunCode: ${post.gugunCode}
+    };
+</script>
 </body>
 </html>

@@ -60,11 +60,20 @@
     </delete>
 
     <!-- 시도 이름 찾기 -->
-    <select id="getSido">
+    <select id="getSidoName">
         SELECT sido_name
         FROM sido
         WHERE sido_code = #{sidoCode}
     </select>
+
+    <!-- 구군 이름 찾기 -->
+    <select id="getGugunName">
+        SELECT gugun_name
+        FROM gugun
+        WHERE gugun_code = #{gugunCode}
+          and sido_code = #{sidoCode}
+    </select>
+
 
     <!-- 댓글 등록 -->
     <insert id="registComment">

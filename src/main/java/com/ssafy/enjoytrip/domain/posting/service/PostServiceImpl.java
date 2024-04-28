@@ -80,9 +80,18 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public String getSido(Integer sidoCode) throws Exception {
+	public String getSidoName(Integer sidoCode) throws Exception {
 		try {
-			return postingMapper.getSido(sidoCode);
+			return postingMapper.getSidoName(sidoCode);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
+	public String getGugunName(Integer sidoCode, Integer gugunCode) throws Exception {
+		try {
+			return postingMapper.getGugunName(sidoCode, gugunCode);
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}

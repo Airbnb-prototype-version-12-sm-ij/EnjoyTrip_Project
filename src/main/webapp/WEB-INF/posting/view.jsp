@@ -50,6 +50,8 @@
                     />
                     <p>
                         <span class="fw-bold">${post.userId}</span> <br/>
+                        <span>${sidoName} </span>
+                        <span>${gugunName} </span>
                         <span class="text-secondary fw-light"> ${post.createdAt} 조회 : ${post.hit} </span>
                     </p>
                 </div>

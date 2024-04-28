@@ -60,7 +60,7 @@ public class PostingController {
 			List<String> sidos = new ArrayList<>();
 
 			for (PostEntity post : postList) {
-				sidos.add(postService.getSido(post.getSidoCode()));
+				sidos.add(postService.getSidoName(post.getSidoCode()));
 			}
 			model.addAttribute("postList", postList);
 			model.addAttribute("sidos", sidos);
@@ -163,8 +163,16 @@ public class PostingController {
 			PostEntity post = postService.getPost(postId);
 			List<PostDto.FileInfo> fileInfos = postService.fileInfoList(postId);
 
+			String sidoName = postService.getSidoName(post.getSidoCode());
+			String gugunName = postService.getGugunName(post.getSidoCode(), post.getGugunCode());
+
+			System.out.println("sidoName : " + sidoName);
+			System.out.println("gugunName : " + gugunName);
+
 			model.addAttribute("fileInfos", fileInfos);
 			model.addAttribute("post", post);
+			model.addAttribute("sidoName", sidoName);
+			model.addAttribute("gugunName", gugunName);
 
 			log.info("post : {}", post);
 

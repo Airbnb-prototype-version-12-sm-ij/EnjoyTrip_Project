@@ -10,7 +10,7 @@ public class PostEntity {
 	private String content;
 	private String userId;
 	private Integer sidoCode;
-	private String gugunCode;
+	private Integer gugunCode;
 	private String createdAt;
 	private Integer hit;
 }
