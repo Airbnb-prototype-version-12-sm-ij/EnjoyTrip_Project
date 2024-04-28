@@ -46,4 +46,8 @@ public interface PostService {
 
 	// 구군 정보 얻어오기
 	List<PostDto.Gugun> getGugun(String sidoCode) throws Exception;
+
+	// 조회수 증가
+	@Transactional
+	void increaseHit(Integer postId) throws Exception;
 }

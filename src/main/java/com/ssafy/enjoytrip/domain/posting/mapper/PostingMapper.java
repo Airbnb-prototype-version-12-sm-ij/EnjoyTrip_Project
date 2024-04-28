@@ -54,5 +54,10 @@ public interface PostingMapper {
 	// 시도 코드로 구군 코드 얻어오기
 	List<PostDto.Gugun> getGugun(String sidoCode) throws SQLException;
 
+	// 조회수 증가
+	@Transactional
+	void increaseHit(Integer postId) throws SQLException;
+
+
 	/*TODO 댓글 수정*/
 }

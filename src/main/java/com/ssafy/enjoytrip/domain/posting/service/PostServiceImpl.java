@@ -124,4 +124,14 @@ public class PostServiceImpl implements PostService {
 			throw new RuntimeException(e);
 		}
 	}
+
+	@Override
+	public void increaseHit(Integer postId) throws Exception {
+		try {
+			postingMapper.increaseHit(postId);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
 }
+

@@ -160,14 +160,13 @@ public class PostingController {
 		log.info("=====================================================================");
 
 		try {
+			// 조회수 증가
+			postService.increaseHit(postId);
 			PostEntity post = postService.getPost(postId);
 			List<PostDto.FileInfo> fileInfos = postService.fileInfoList(postId);
 
 			String sidoName = postService.getSidoName(post.getSidoCode());
 			String gugunName = postService.getGugunName(post.getSidoCode(), post.getGugunCode());
-
-			System.out.println("sidoName : " + sidoName);
-			System.out.println("gugunName : " + gugunName);
 
 			model.addAttribute("fileInfos", fileInfos);
 			model.addAttribute("post", post);

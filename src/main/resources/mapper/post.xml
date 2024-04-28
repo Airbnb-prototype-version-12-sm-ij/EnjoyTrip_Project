@@ -95,4 +95,11 @@
         WHERE sido_code = #{sidoCode}
     </select>
 
+    <!-- 조회수 증가 -->
+    <update id="increaseHit">
+        UPDATE posting
+        SET hit = hit + 1
+        WHERE post_id = #{postId}
+    </update>
+
 </mapper>
