@@ -80,7 +80,7 @@
                         id="subject"
                         name="title"
                         placeholder="제목..."
-                        value=${post.title}
+                        value="${post.title}"
                 />
                 <div id="titleError" class="alert alert-danger" style="display: none;">제목을 입력해주세요</div>
             </div>
