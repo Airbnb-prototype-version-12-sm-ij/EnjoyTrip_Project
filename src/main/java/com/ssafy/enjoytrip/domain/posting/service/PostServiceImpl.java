@@ -29,6 +29,11 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
+	public List<PostEntity> searchPostList(String key, String word) throws Exception {
+		return postingMapper.searchPostList(key, word);
+	}
+
+	@Override
 	public PostEntity getPost(Integer postId) throws Exception {
 		try {
 			return postingMapper.getPost(postId);

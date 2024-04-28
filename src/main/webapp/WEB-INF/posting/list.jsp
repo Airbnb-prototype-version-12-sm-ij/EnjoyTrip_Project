@@ -48,7 +48,7 @@
                 </a>
             </div>
             <div class="col-md-7 offset-3">
-                <form class="d-flex" id="form-search" action="">
+                <form class="d-flex" id="form-search" method="get" action="/posting/list">
                     <input type="hidden" name="pgno" value="1"/>
                     <select
                             name="key"
@@ -56,13 +56,12 @@
                             class="form-select form-select-sm ms-5 me-1 w-50"
                             aria-label="검색조건"
                     >
-                        <option selected>검색조건</option>
-                        <option value="subject">제목</option>
-                        <option value="userid">작성자</option>
+                        <option value="title" selected>제목</option>
+                        <option value="user_id">작성자</option>
                     </select>
                     <div class="input-group input-group-sm">
                         <input type="text" name="word" id="word" class="form-control" placeholder="검색어..."/>
-                        <button id="btn-search" class="btn btn-dark" type="button">검색</button>
+                        <button id="btn-search" class="btn btn-dark" type="submit">검색</button>
                     </div>
                 </form>
             </div>

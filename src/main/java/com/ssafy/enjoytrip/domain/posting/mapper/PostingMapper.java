@@ -58,6 +58,9 @@ public interface PostingMapper {
 	@Transactional
 	void increaseHit(Integer postId) throws SQLException;
 
+	// 게시글 검색
+	List<PostEntity> searchPostList(String key, String word) throws SQLException;
+
 
 	/*TODO 댓글 수정*/
 }

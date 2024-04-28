@@ -52,13 +52,18 @@ public class PostingController {
 	private final PostService postService;
 
 	@GetMapping("/list")
-	public String list(Model model) {
-
+	public String list(@RequestParam(required = false) String key,
+		@RequestParam(required = false) String word,
+		Model model) {
 		try {
-			List<PostEntity> postList = postService.getPostList();
+			List<PostEntity> postList;
+			if (key != null && word != null) {
+				postList = postService.searchPostList(key, word);
+			} else {
+				postList = postService.getPostList();
+			}
 
 			List<String> sidos = new ArrayList<>();
-
 			for (PostEntity post : postList) {
 				sidos.add(postService.getSidoName(post.getSidoCode()));
 			}

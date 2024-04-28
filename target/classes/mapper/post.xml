@@ -102,4 +102,11 @@
         WHERE post_id = #{postId}
     </update>
 
+    <select id="searchPostList">
+        SELECT *
+        FROM posting
+        WHERE ${key} LIKE CONCAT('%', #{word}, '%')
+        ORDER BY created_at DESC
+    </select>
+
 </mapper>
