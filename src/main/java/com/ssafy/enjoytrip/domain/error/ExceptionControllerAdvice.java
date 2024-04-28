@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 @ControllerAdvice
 public class ExceptionControllerAdvice {
 
-	// @ExceptionHandler(Exception.class)
+	@ExceptionHandler(Exception.class)
 	public String handleException(Exception ex, Model model) {
 		model.addAttribute("msg", "처리중 에러 발생!!!");
 		return "error/error";
