@@ -80,6 +80,15 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
+	public String getSido(Integer sidoCode) throws Exception {
+		try {
+			return postingMapper.getSido(sidoCode);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
 	public void registComment(PostDto.Comment comment) throws Exception {
 		try {
 			postingMapper.registComment(comment);

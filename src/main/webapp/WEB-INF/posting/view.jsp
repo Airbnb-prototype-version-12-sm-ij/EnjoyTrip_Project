@@ -58,7 +58,7 @@
             <div class="divider mb-3"></div>
             <div class="text-secondary">
 
-                <div>
+                <div id="postImg">
                     <img src="../upload_img/${fileInfos[0].saveFolder}/${fileInfos[0].saveFile}"
                          alt="${fileInfo[0].originalFile}">
                 </div>

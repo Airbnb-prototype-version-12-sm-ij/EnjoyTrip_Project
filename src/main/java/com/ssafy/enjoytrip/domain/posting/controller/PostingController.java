@@ -4,7 +4,6 @@ import static com.ssafy.enjoytrip.domain.posting.dto.PostDto.*;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -185,7 +184,7 @@ public class PostingController {
 
 		try {
 			postService.deletePost(deletePost);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 

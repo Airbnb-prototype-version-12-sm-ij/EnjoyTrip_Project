@@ -142,3 +142,11 @@ div#posting {
     position: absolute;
     top: 10%;
 }
+
+div#postImg {
+    width: 50%;
+}
+
+div#postImg img {
+    max-width: 100%;
+}

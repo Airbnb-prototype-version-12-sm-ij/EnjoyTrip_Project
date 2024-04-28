@@ -31,7 +31,7 @@ public interface PostService {
 	void deletePost(PostDto.DeletePost deletePost) throws Exception;
 
 	// 시도 찾기
-	String getSido(Integer sidoCode) throws IOException;
+	String getSido(Integer sidoCode) throws Exception;
 
 	// 댓글 등록
 	@Transactional
