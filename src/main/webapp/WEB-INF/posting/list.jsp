@@ -67,40 +67,44 @@
                 </form>
             </div>
         </div>
-        <table class="table table-hover">
-            <thead>
-            <tr class="text-center">
-                <th scope="col">글번호</th>
-                <th scope="col">제목</th>
-                <th scope="col">작성자</th>
-                <th scope="col">지역</th>
-                <th scope="col">조회수</th>
-                <th scope="col">작성일</th>
-            </tr>
-            </thead>
-            <tbody>
-            <c:forEach var="post" items="${postList}" varStatus="idx">
+        <div id="listBody">
+            <table class="table table-hover">
+                <thead>
                 <tr class="text-center">
-                    <th scope="row">${post.postId}</th>
-                    <td class="text-start">
-                        <a
-                                href="/posting/${post.postId}"
-                                class="article-title link-dark"
-                                data-no="${post.postId}"
-                                style="text-decoration: none"
-                        >
-                                ${post.title}
-                        </a>
-                    </td>
-                    <td>${post.userId}</td>
-                    <td>${sidos[idx.index]}</td>
-                    <td>${post.hit}</td>
-
-                    <td>${post.createdAt}</td>
+                    <th scope="col">글번호</th>
+                    <th scope="col">제목</th>
+                    <th scope="col">작성자</th>
+                    <th scope="col">지역</th>
+                    <th scope="col">조회수</th>
+                    <th scope="col">작성일</th>
                 </tr>
-            </c:forEach>
-            </tbody>
-        </table>
+                </thead>
+
+                <tbody>
+                <c:forEach var="post" items="${postList}" varStatus="idx">
+                    <tr class="text-center">
+                        <th scope="row">${post.postId}</th>
+                        <td class="text-start">
+                            <a
+                                    href="/posting/${post.postId}"
+                                    class="article-title link-dark"
+                                    data-no="${post.postId}"
+                                    style="text-decoration: none"
+                            >
+                                    ${post.title}
+                            </a>
+                        </td>
+                        <td>${post.userId}</td>
+                        <td>${sidos[idx.index]}</td>
+                        <td>${post.hit}</td>
+
+                        <td>${post.createdAt}</td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+
+            </table>
+        </div>
     </div>
     <div class="row">
         ${navigation.navigator}

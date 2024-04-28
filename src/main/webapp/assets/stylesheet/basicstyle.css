@@ -150,3 +150,15 @@ div#postImg {
 div#postImg img {
     max-width: 100%;
 }
+
+div#listBody {
+    max-height: 497px;
+    overflow-y: auto;
+    display: block;
+}
+
+div#viewBody {
+    max-height: 497px;
+    overflow-y: auto;
+    display: block;
+}
