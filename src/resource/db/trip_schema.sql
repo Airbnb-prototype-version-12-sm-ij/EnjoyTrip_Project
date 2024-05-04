@@ -300,55 +300,58 @@ CREATE TABLE IF NOT EXISTS `enjoytrip`.`post_comments`
 -- -----------------------------------------------------
 -- Table `enjoytrip`.`review`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `enjoytrip`.`review` (
-                                                    `review_id` INT NOT NULL AUTO_INCREMENT,
-                                                    `title` VARCHAR(100) NOT NULL,
-    `content` TEXT NOT NULL,
-    `rating` TINYINT NOT NULL,
-    `user_id` VARCHAR(16) NOT NULL,
-    `content_id` INT NOT NULL,
-    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+CREATE TABLE IF NOT EXISTS `enjoytrip`.`review`
+(
+    `review_id`  INT          NOT NULL AUTO_INCREMENT,
+    `title`      VARCHAR(100) NOT NULL,
+    `content`    TEXT         NOT NULL,
+    `rating`     TINYINT      NOT NULL,
+    `user_id`    VARCHAR(16)  NOT NULL,
+    `content_id` INT          NOT NULL,
+    `created_at` TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`review_id`),
     INDEX `reviews_to_members_user_id_fk_idx` (`user_id` ASC) VISIBLE,
     INDEX `reviews_to_attraction_info_content_id_fk_idx` (`content_id` ASC) VISIBLE,
     CONSTRAINT `reviews_to_members_user_id_fk`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `enjoytrip`.`members` (`user_id`)
-    ON DELETE CASCADE,
+        FOREIGN KEY (`user_id`)
+            REFERENCES `enjoytrip`.`members` (`user_id`)
+            ON DELETE CASCADE,
     CONSTRAINT `reviews_to_attraction_info_content_id_fk`
-    FOREIGN KEY (`content_id`)
-    REFERENCES `enjoytrip`.`attraction_info` (`content_id`)
-    ON DELETE CASCADE,
+        FOREIGN KEY (`content_id`)
+            REFERENCES `enjoytrip`.`attraction_info` (`content_id`)
+            ON DELETE CASCADE,
     CONSTRAINT `rating_check`
-    CHECK (`rating` BETWEEN 1 AND 5)
-    )
+        CHECK (`rating` BETWEEN 1 AND 5)
+)
     ENGINE = InnoDB
     DEFAULT CHARACTER SET = utf8mb4
     COLLATE = utf8mb4_0900_ai_ci;
 
+ALTER TABLE `enjoytrip`.`review`
+    ADD COLUMN `together` ENUM ('비지니스', '커플', '가족', '친구', '단독') NOT NULL AFTER `user_id`;
 
 
 -- -----------------------------------------------------
 -- Table `enjoytrip`.`review_file_info`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `enjoytrip`.`review_file_info` (
-                                                              `id` INT NOT NULL AUTO_INCREMENT,
-                                                              `review_id` INT NOT NULL,
-                                                              `save_folder` VARCHAR(255) NOT NULL,
+CREATE TABLE IF NOT EXISTS `enjoytrip`.`review_file_info`
+(
+    `id`            INT          NOT NULL AUTO_INCREMENT,
+    `review_id`     INT          NOT NULL,
+    `save_folder`   VARCHAR(255) NOT NULL,
     `original_file` VARCHAR(255) NOT NULL,
-    `save_file` VARCHAR(255) NOT NULL,
+    `save_file`     VARCHAR(255) NOT NULL,
     PRIMARY KEY (`id`),
     INDEX `review_file_info_to_review_review_id_fk_idx` (`review_id` ASC) VISIBLE,
     CONSTRAINT `review_file_info_to_review_review_id_fk`
-    FOREIGN KEY (`review_id`)
-    REFERENCES `enjoytrip`.`review` (`review_id`)
-    ON DELETE CASCADE)
+        FOREIGN KEY (`review_id`)
+            REFERENCES `enjoytrip`.`review` (`review_id`)
+            ON DELETE CASCADE
+)
     ENGINE = InnoDB
     AUTO_INCREMENT = 1
     DEFAULT CHARACTER SET = utf8mb4
     COLLATE = utf8mb4_0900_ai_ci;
-
-
 
 
 
