@@ -1,4 +1,4 @@
-package com.ssafy.enjoytrip.domain.attraction.servic;
+package com.ssafy.enjoytrip.domain.attraction.service;
 
 import java.io.IOException;
 import java.util.List;

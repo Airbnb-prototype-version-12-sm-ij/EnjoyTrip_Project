@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.enjoytrip.domain.attraction.dto.AttractionDto;
 import com.ssafy.enjoytrip.domain.attraction.dto.AttractionDto.SearchAttraction;
 import com.ssafy.enjoytrip.domain.attraction.entity.AttractionEntity;
-import com.ssafy.enjoytrip.domain.attraction.servic.AttractionService;
+import com.ssafy.enjoytrip.domain.attraction.service.AttractionService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

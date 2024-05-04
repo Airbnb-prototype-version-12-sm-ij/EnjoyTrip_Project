@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.enjoytrip.domain.member.dto.MemberDto;
 import com.ssafy.enjoytrip.domain.member.entity.MemberEntity;
-import com.ssafy.enjoytrip.domain.member.servic.MemberServiceImpl;
+import com.ssafy.enjoytrip.domain.member.service.MemberServiceImpl;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
