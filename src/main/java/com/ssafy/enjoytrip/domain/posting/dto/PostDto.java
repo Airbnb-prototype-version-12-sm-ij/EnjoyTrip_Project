@@ -1,8 +1,8 @@
 package com.ssafy.enjoytrip.domain.posting.dto;
 
-import jakarta.validation.constraints.NotBlank;
 import java.util.List;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Data;
 
@@ -12,7 +12,6 @@ public class PostDto {
 	@Data
 	@Builder
 	public static class Regist {
-
 
 		private Integer postId;
 		@NotBlank(message = "제목을 입력해주세요.")
@@ -40,16 +39,17 @@ public class PostDto {
 		private Integer gugunCode;
 	}
 
-	// 이미지 파일 관련 DTO
-	@Data
-	@Builder
-	public static class PostImg {
-		private Integer id;
-		private Integer postId;
-		private String saveFolder;
-		private String originalFile;
-		private String saveFile;
-	}
+	// 안쓰는듯...
+	// // 이미지 파일 관련 DTO
+	// @Data
+	// @Builder
+	// public static class PostImg {
+	// 	private Integer id;
+	// 	private Integer postId;
+	// 	private String saveFolder;
+	// 	private String originalFile;
+	// 	private String saveFile;
+	// }
 
 	// 댓글 DTO
 	@Data

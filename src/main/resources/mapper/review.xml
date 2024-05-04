@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.ssafy.enjoytrip.domain.review.mapper.ReviewMapper">
+
+    <!--attraction_info 테이블의 content_id에 대한 리뷰 조회-->
+    <select id="getReviewList">
+        SELECT *
+        FROM review
+        WHERE content_id = #{contentId}
+        ORDER BY created_at DESC
+    </select>
+
+    <!--리뷰 등록-->
+    <insert id="registReview" useGeneratedKeys="true" keyProperty="reviewId">
+        INSERT INTO review (content_id, user_id, title, content, rating)
+        VALUES (#{contentId}, #{userId}, #{title}, #{content}, #{rating})
+    </insert>
+
+    <!--리뷰 등록 후 파일 정보 등록-->
+    <insert id="registerFile">
+        INSERT INTO review_file_info (review_id, save_folder, original_file, save_file)
+        values
+        <foreach collection="fileInfos" item="fileinfo" separator=" , ">
+            (#{reviewId}, #{fileinfo.saveFolder}, #{fileinfo.originalFile}, #{fileinfo.saveFile})
+        </foreach>
+    </insert>
+
+    <!--리뷰의 파일들 불러오기-->
+    <select id="fileInfoList">
+        select save_folder, original_file, save_file
+        from file_info
+        where post_id = #{articleNo}
+    </select>
+
+    <!-- 리뷰 삭제 -->
+    <delete id="deleteReview">
+        DELETE
+        FROM review
+        WHERE review_id = #{reviewId}
+          and user_id = #{userId}
+    </delete>
+
+    <!-- 리뷰 수정 -->
+    <update id="modifyReview">
+        UPDATE review
+        SET title   = #{title},
+            content = #{content},
+            rating  = #{rating}
+        WHERE review_id = #{reviewId}
+          and user_id = #{userId}
+    </update>
+</mapper>

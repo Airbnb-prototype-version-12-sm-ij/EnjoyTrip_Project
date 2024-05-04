@@ -131,6 +131,7 @@ public class PostingController {
 		log.debug("uploadPath : {}, uploadImagePath : {}, uploadFilePath : {}", uploadPath, uploadImagePath,
 			uploadFilePath);
 		log.debug("MultipartFile.isEmpty : {}", files[0].isEmpty());
+
 		if (!files[0].isEmpty()) {
 			//			String realPath = servletContext.getRealPath(UPLOAD_PATH);
 			//			String realPath = servletContext.getRealPath("/resources/img");
