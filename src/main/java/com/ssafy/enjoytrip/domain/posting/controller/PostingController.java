@@ -51,10 +51,11 @@ public class PostingController {
 
 	private final PostService postService;
 
-	@GetMapping("/list")
-	public String list(@RequestParam(required = false) String key,
+	@GetMapping("/")
+	public ResponseEntity<List<PostEntity>> list(@RequestParam(required = false) String key,
 		@RequestParam(required = false) String word,
 		Model model) {
+
 		try {
 			List<PostEntity> postList;
 			if (key != null && word != null) {
@@ -82,10 +83,12 @@ public class PostingController {
 			}
 			model.addAttribute("postList", postList);
 			model.addAttribute("sidos", sidos);
+
+			return new ResponseEntity<>(postList, HttpStatus.OK);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-		return "posting/list";
+
 	}
 
 	@GetMapping("/list/{sidoCode}")
