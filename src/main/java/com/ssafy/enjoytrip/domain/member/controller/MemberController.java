@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,11 +27,17 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("/members")
 @RequiredArgsConstructor
-@CrossOrigin("*")
 public class MemberController {
 
 	private final MemberServiceImpl memberServiceImpl;
 
+	@GetMapping("/ping")
+	public ResponseEntity<?> ping(HttpSession session) {
+		log.info("ping: {}", session.getAttribute("memberDto"));
+		return new ResponseEntity<>(session.getAttribute("memberDto"), HttpStatus.OK);
+	}
+
+	// 로그인
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@Validated @RequestBody MemberDto.Login login,
 		BindingResult bindingResult,
@@ -55,8 +60,8 @@ public class MemberController {
 			if (loginInfo != null) {
 				HttpSession session = request.getSession();
 				session.setAttribute("memberDto", loginInfo);
-				System.out.println(loginInfo.getUserId() + "님 로그인 성공");
-				return new ResponseEntity<>(HttpStatus.OK);
+				log.info("세션에 저장된 memberDto: {}", session.getAttribute("memberDto"));
+				return new ResponseEntity<MemberEntity>(loginInfo, HttpStatus.OK);
 			} else {
 				return new ResponseEntity<>("유저 로그인 정보를 확인하세요", HttpStatus.UNAUTHORIZED);
 			}
@@ -65,6 +70,7 @@ public class MemberController {
 		}
 	}
 
+	// 로그아웃
 	@PostMapping("/logout")
 	public void logout(HttpServletRequest request) {
 		HttpSession session = request.getSession();
