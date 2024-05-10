@@ -70,7 +70,6 @@ public class MemberDto {
 	}
 
 	@Data
-	@Builder
 	public static class ForDelete {
 
 		@NotBlank
