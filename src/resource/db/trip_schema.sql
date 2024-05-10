@@ -25,8 +25,8 @@ USE `enjoytrip`;
 
 Drop TABLE IF EXISTS `enjoytrip`.`file_info`;
 Drop TABLE IF EXISTS `enjoytrip`.`post_comments`;
-Drop TABLE IF EXISTS `enjoytrip`.`sido`;
-Drop TABLE IF EXISTS `enjoytrip`.`gugun`;
+# Drop TABLE IF EXISTS `enjoytrip`.`sido`;
+# Drop TABLE IF EXISTS `enjoytrip`.`gugun`;
 Drop TABLE IF EXISTS `enjoytrip`.`attraction_info`;
 Drop TABLE IF EXISTS `enjoytrip`.`attraction_description`;
 Drop TABLE IF EXISTS `enjoytrip`.`attraction_detail`;

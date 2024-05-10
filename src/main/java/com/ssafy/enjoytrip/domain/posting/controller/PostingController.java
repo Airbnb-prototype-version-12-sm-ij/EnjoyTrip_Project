@@ -21,8 +21,10 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.enjoytrip.domain.member.entity.MemberEntity;
@@ -37,6 +39,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @Slf4j
 @RequiredArgsConstructor
+@RestController
 @RequestMapping("/posting")
 public class PostingController {
 
@@ -105,18 +108,19 @@ public class PostingController {
 		}
 	}
 
-	@GetMapping("/write")
-	public String writeForm() {
-		return "posting/write";
-	}
 
 	@PostMapping("/write")
-	public String write(@Validated PostDto.Regist regist,
+	public ResponseEntity<Void> write(
+		@Validated PostDto.Regist regist,
 		BindingResult bindingResult,
 		Model model,
 		@RequestParam("upfile") MultipartFile[] files,
 		HttpSession session) throws
 		IOException {
+
+		log.info("==============================={}======================================", regist);
+		log.info("==============================={}======================================", ((MemberEntity)session.getAttribute("memberDto")).getUserId());
+
 
 		if (bindingResult.hasErrors()) {
 
@@ -128,8 +132,8 @@ public class PostingController {
 				sb.append(error.getDefaultMessage());
 			}
 			model.addAttribute("errorMsg", sb.toString());
-			return "posting/write";
 		}
+
 
 		log.debug("uploadPath : {}, uploadImagePath : {}, uploadFilePath : {}", uploadPath, uploadImagePath,
 			uploadFilePath);
@@ -167,15 +171,15 @@ public class PostingController {
 			regist.setFileInfos(fileInfos);
 		}
 
+
 		String userId = ((MemberEntity)session.getAttribute("memberDto")).getUserId();
 		regist.setUserId(userId);
 		try {
 			postService.registPost(regist);
+			return ResponseEntity.ok().build();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-
-		return "redirect:/posting/list";
 	}
 
 	// 시도 코드로 구군 데이터 얻기

@@ -12,7 +12,6 @@ public class PostDto {
 	@Data
 	@Builder
 	public static class Regist {
-
 		private Integer postId;
 		@NotBlank(message = "제목을 입력해주세요.")
 		private String title;
