@@ -92,4 +92,5 @@ public class PostDto {
 		private String saveFile;
 
 	}
+
 }

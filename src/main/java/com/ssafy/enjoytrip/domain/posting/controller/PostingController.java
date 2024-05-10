@@ -195,7 +195,7 @@ public class PostingController {
 
 	// 게시글 상세 조회
 	@GetMapping("{postId}")
-	public String view(@PathVariable Integer postId, Model model) {
+	public ResponseEntity<PostEntity> view(@PathVariable Integer postId, Model model) {
 
 		log.info("=====================================================================");
 
@@ -213,12 +213,16 @@ public class PostingController {
 			model.addAttribute("sidoName", sidoName);
 			model.addAttribute("gugunName", gugunName);
 
+			post.setFileInfo(fileInfos);
+			post.setSidoName(sidoName);
+			post.setGugunName(gugunName);
+
 			log.info("post : {}", post);
+			return new ResponseEntity<>(post, HttpStatus.OK);
 
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-		return "posting/view";
 	}
 
 	@PostMapping("/delete/{postId}")
