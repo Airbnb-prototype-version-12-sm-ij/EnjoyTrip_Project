@@ -45,6 +45,9 @@ public interface PostService {
 	// 구군 찾기
 	String getGugunName(Integer sidoCode, Integer gugunCode) throws Exception;
 
+	// 댓글 조회
+	List<PostDto.Comment> getComment(Integer postId) throws Exception;
+
 	// 댓글 등록
 	@Transactional
 	void registComment(PostDto.Comment comment) throws Exception;

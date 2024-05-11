@@ -58,6 +58,7 @@ public class PostDto {
 		private Integer postId;
 		private String userId;
 		private String comment;
+		private String createdAt;
 	}
 
 	// 게시글 삭제 DTO 유저의 id와  게시글 Id로 검사

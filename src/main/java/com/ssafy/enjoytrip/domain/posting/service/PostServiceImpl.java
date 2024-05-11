@@ -22,7 +22,15 @@ public class PostServiceImpl implements PostService {
 	@Override
 	public List<PostEntity> getPostList() throws Exception {
 		try {
-			return postingMapper.getPostList();
+
+			List<PostEntity> postList = postingMapper.getPostList();
+
+			for (PostEntity post : postList) {
+				List<PostDto.FileInfo> fileInfoList = postingMapper.fileInfoList(post.getPostId());
+				post.setFileInfo(fileInfoList);
+			}
+			return postList;
+
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
@@ -113,6 +121,11 @@ public class PostServiceImpl implements PostService {
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@Override
+	public List<PostDto.Comment> getComment(Integer postId) throws Exception {
+		return postingMapper.getComment(postId);
 	}
 
 	@Override

@@ -49,6 +49,9 @@ public interface PostingMapper {
 	// 구군 찾기
 	String getGugunName(Integer sidoCode, Integer gugunCode) throws SQLException;
 
+	//댓글 조회
+	List<PostDto.Comment> getComment(Integer postId) throws SQLException;
+
 	// 댓글 등록
 	@Transactional
 	void registComment(PostDto.Comment comment) throws SQLException;

@@ -89,17 +89,22 @@
           and sido_code = #{sidoCode}
     </select>
 
+    <select id="getComment">
+        SELECT *
+        FROM post_comments
+        WHERE post_id = #{postId}
+    </select>
 
     <!-- 댓글 등록 -->
     <insert id="registComment">
-        INSERT INTO comments (post_id, user_id, comment)
+        INSERT INTO post_comments (post_id, user_id, comment)
         VALUES (#{postId}, #{userId}, #{comment})
     </insert>
 
     <!-- 댓글 삭제 -->
     <delete id="deleteComment">
         DELETE
-        FROM comments
+        FROM post_comments
         WHERE id = #{commentId}
     </delete>
 

@@ -1,7 +1,5 @@
 package com.ssafy.enjoytrip.domain.posting.controller;
 
-import static com.ssafy.enjoytrip.domain.posting.dto.PostDto.*;
-
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -14,13 +12,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -56,8 +55,7 @@ public class PostingController {
 
 	@GetMapping("/")
 	public ResponseEntity<List<PostEntity>> list(@RequestParam(required = false) String key,
-		@RequestParam(required = false) String word,
-		Model model) {
+		@RequestParam(required = false) String word) {
 
 		try {
 			List<PostEntity> postList;
@@ -84,8 +82,6 @@ public class PostingController {
 			for (PostEntity post : postList) {
 				sidos.add(postService.getSidoName(post.getSidoCode()));
 			}
-			model.addAttribute("postList", postList);
-			model.addAttribute("sidos", sidos);
 
 			return new ResponseEntity<>(postList, HttpStatus.OK);
 		} catch (Exception e) {
@@ -108,19 +104,17 @@ public class PostingController {
 		}
 	}
 
-
 	@PostMapping("/write")
 	public ResponseEntity<Void> write(
 		@Validated PostDto.Regist regist,
 		BindingResult bindingResult,
-		Model model,
 		@RequestParam("upfile") MultipartFile[] files,
 		HttpSession session) throws
 		IOException {
 
 		log.info("==============================={}======================================", regist);
-		log.info("==============================={}======================================", ((MemberEntity)session.getAttribute("memberDto")).getUserId());
-
+		log.info("==============================={}======================================",
+			((MemberEntity)session.getAttribute("memberDto")).getUserId());
 
 		if (bindingResult.hasErrors()) {
 
@@ -131,13 +125,7 @@ public class PostingController {
 			for (ObjectError error : bindingResult.getAllErrors()) {
 				sb.append(error.getDefaultMessage());
 			}
-			model.addAttribute("errorMsg", sb.toString());
 		}
-
-
-		log.debug("uploadPath : {}, uploadImagePath : {}, uploadFilePath : {}", uploadPath, uploadImagePath,
-			uploadFilePath);
-		log.debug("MultipartFile.isEmpty : {}", files[0].isEmpty());
 
 		if (!files[0].isEmpty()) {
 			//			String realPath = servletContext.getRealPath(UPLOAD_PATH);
@@ -171,7 +159,6 @@ public class PostingController {
 			regist.setFileInfos(fileInfos);
 		}
 
-
 		String userId = ((MemberEntity)session.getAttribute("memberDto")).getUserId();
 		regist.setUserId(userId);
 		try {
@@ -183,6 +170,7 @@ public class PostingController {
 	}
 
 	// 시도 코드로 구군 데이터 얻기
+	@Deprecated
 	@GetMapping("/getGugun/{sidoCode}")
 	public ResponseEntity<List<PostDto.Gugun>> getGugun(@PathVariable String sidoCode) {
 		try {
@@ -194,8 +182,8 @@ public class PostingController {
 	}
 
 	// 게시글 상세 조회
-	@GetMapping("{postId}")
-	public ResponseEntity<PostEntity> view(@PathVariable Integer postId, Model model) {
+	@GetMapping("/{postId}")
+	public ResponseEntity<PostEntity> view(@PathVariable Integer postId) {
 
 		log.info("=====================================================================");
 
@@ -207,11 +195,6 @@ public class PostingController {
 
 			String sidoName = postService.getSidoName(post.getSidoCode());
 			String gugunName = postService.getGugunName(post.getSidoCode(), post.getGugunCode());
-
-			model.addAttribute("fileInfos", fileInfos);
-			model.addAttribute("post", post);
-			model.addAttribute("sidoName", sidoName);
-			model.addAttribute("gugunName", gugunName);
 
 			post.setFileInfo(fileInfos);
 			post.setSidoName(sidoName);
@@ -225,8 +208,8 @@ public class PostingController {
 		}
 	}
 
-	@PostMapping("/delete/{postId}")
-	public String deletePost(@PathVariable Integer postId, HttpSession session) {
+	@DeleteMapping("{postId}")
+	public ResponseEntity<Void> deletePost(@PathVariable Integer postId, HttpSession session) {
 
 		PostDto.DeletePost deletePost = PostDto.DeletePost.builder()
 			.userId(((MemberEntity)session.getAttribute("memberDto")).getUserId())
@@ -235,43 +218,24 @@ public class PostingController {
 
 		try {
 			postService.deletePost(deletePost);
+			return ResponseEntity.ok().build();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-
-		return "redirect:/posting/list";
 	}
 
 	//수정
-	@GetMapping("/modify/{postId}")
-	public String modifyForm(@PathVariable Integer postId, Model model, HttpSession session) {
-
-		PostEntity post = null;
-
-		try {
-			post = postService.getPost(postId);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-
-		post.setUserId(((MemberEntity)session.getAttribute("memberDto")).getUserId());
-		model.addAttribute("post", post);
-
-		return "/posting/modify";
-	}
-
-	@PostMapping("/modify/{postId}")
-	public String modify(@PathVariable Integer postId,
-		@Validated Update update,
+	@PutMapping("/{postId}")
+	public ResponseEntity<Void> modify(@PathVariable Integer postId,
+		@Validated @RequestBody PostDto.Update update,
 		BindingResult bindingResult,
-		Model model,
 		HttpSession session) {
 
+		log.info("===================================수정이요~~~=====================================");
+		log.info("==================================={}=====================================", update);
+
 		if (bindingResult.hasErrors()) {
-
 			log.info("error : {}", bindingResult.getAllErrors());
-
-			return "posting/modify/" + postId;
 		}
 
 		String userId = ((MemberEntity)session.getAttribute("memberDto")).getUserId();
@@ -280,10 +244,38 @@ public class PostingController {
 
 		try {
 			postService.modifyPost(update);
+			return ResponseEntity.ok().build();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
 
-		return "redirect:/posting/list";
+	@GetMapping("/comment/{postId}")
+	public ResponseEntity<List<PostDto.Comment>> getComment(@PathVariable Integer postId) {
+
+		log.info("===================================댓글 조회=====================================");
+
+		try {
+			List<PostDto.Comment> list = postService.getComment(postId);
+			return new ResponseEntity<>(list, HttpStatus.OK);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@PostMapping("/comment/{postId}")
+	public ResponseEntity<Void> writeComment(@RequestBody PostDto.Comment comment) {
+
+		log.info("============================댓글 작성=====================");
+		log.info("==============================={}==============================", comment);
+
+		try {
+			postService.registComment(comment);
+			return ResponseEntity.ok().build();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+
 	}
 }
