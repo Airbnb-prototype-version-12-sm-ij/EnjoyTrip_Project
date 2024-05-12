@@ -264,9 +264,11 @@ public class PostingController {
 	}
 
 	@PostMapping("/comment/{postId}")
-	public ResponseEntity<Void> writeComment(@RequestBody PostDto.Comment comment) {
+	public ResponseEntity<Void> writeComment(@RequestBody PostDto.Comment comment, HttpSession session) {
 
 		log.info("============================댓글 작성=====================");
+		// comment.setUserId(((MemberEntity)session.getAttribute("memberDto")).getUserId());
+		comment.setUserId("qq221qq");
 		log.info("==============================={}==============================", comment);
 
 		try {
