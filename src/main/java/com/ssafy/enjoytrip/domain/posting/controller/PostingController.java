@@ -267,8 +267,7 @@ public class PostingController {
 	public ResponseEntity<Void> writeComment(@RequestBody PostDto.Comment comment, HttpSession session) {
 
 		log.info("============================댓글 작성=====================");
-		// comment.setUserId(((MemberEntity)session.getAttribute("memberDto")).getUserId());
-		comment.setUserId("qq221qq");
+		comment.setUserId(((MemberEntity)session.getAttribute("memberDto")).getUserId());
 		log.info("==============================={}==============================", comment);
 
 		try {
@@ -278,6 +277,24 @@ public class PostingController {
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
+	}
 
+	@DeleteMapping("/comment/{commentId}")
+	public ResponseEntity<Void> deleteComment(@PathVariable Integer commentId, HttpSession session) {
+
+		PostDto.DeleteComment deleteComment = PostDto.DeleteComment.builder()
+			.userId(((MemberEntity)session.getAttribute("memberDto")).getUserId())
+			.commentId(commentId)
+			.build();
+
+		log.info("============================댓글 삭제=====================");
+		log.info("==============================={}==============================", deleteComment);
+
+		try {
+			postService.deleteComment(deleteComment);
+			return ResponseEntity.ok().build();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 }

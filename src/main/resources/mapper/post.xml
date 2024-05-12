@@ -105,7 +105,8 @@
     <delete id="deleteComment">
         DELETE
         FROM post_comments
-        WHERE id = #{commentId}
+        WHERE comment_id = #{commentId}
+          and user_id = #{userId}
     </delete>
 
     <!--    시도 정보로 구군코드 얻어오기 -->
