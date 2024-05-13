@@ -128,8 +128,6 @@ public class PostingController {
 		}
 
 		if (!files[0].isEmpty()) {
-			//			String realPath = servletContext.getRealPath(UPLOAD_PATH);
-			//			String realPath = servletContext.getRealPath("/resources/img");
 			String today = new SimpleDateFormat("yyMMdd").format(new Date());
 			String saveFolder = uploadPath + File.separator + today;
 			log.debug("저장 폴더 : {}", saveFolder);

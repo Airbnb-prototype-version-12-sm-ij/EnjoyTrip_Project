@@ -1,5 +1,6 @@
 package com.ssafy.enjoytrip.domain.review.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -20,12 +21,31 @@ public class ReviewServiceImpl implements ReviewService {
 
 	@Override
 	public List<ReviewEntity> getReviewList(Integer content_id) throws Exception {
-		return reviewMapper.getReviewList(content_id);
+
+		try {
+			List<ReviewEntity> reviewList = reviewMapper.getReviewList(content_id);
+			for (ReviewEntity review : reviewList) {
+				List<ReviewDto.ReviewFileInfo> fileInfoList = reviewMapper.fileInfoList(review.getReviewId());
+				review.setFileInfo(fileInfoList);
+			}
+			return reviewList;
+
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	@Override
 	public void registReview(ReviewDto.Regist regist) throws Exception {
-		reviewMapper.registReview(regist);
+
+		log.info("============================리뷰 등록 서비스 임플 ======================");
+
+		try {
+			reviewMapper.registReview(regist);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
 
 		List<ReviewDto.ReviewFileInfo> fileInfos = regist.getFileInfos();
 		if (fileInfos != null && !fileInfos.isEmpty()) {

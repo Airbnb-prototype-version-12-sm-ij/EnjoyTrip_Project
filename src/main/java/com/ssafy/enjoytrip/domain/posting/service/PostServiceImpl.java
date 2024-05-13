@@ -22,9 +22,7 @@ public class PostServiceImpl implements PostService {
 	@Override
 	public List<PostEntity> getPostList() throws Exception {
 		try {
-
 			List<PostEntity> postList = postingMapper.getPostList();
-
 			for (PostEntity post : postList) {
 				List<PostDto.FileInfo> fileInfoList = postingMapper.fileInfoList(post.getPostId());
 				post.setFileInfo(fileInfoList);

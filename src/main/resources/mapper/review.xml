@@ -31,8 +31,8 @@
     <!--리뷰의 파일들 불러오기-->
     <select id="fileInfoList">
         select save_folder, original_file, save_file
-        from file_info
-        where post_id = #{articleNo}
+        from review_file_info
+        where review_id = #{reviewId}
     </select>
 
     <!-- 리뷰 삭제 -->

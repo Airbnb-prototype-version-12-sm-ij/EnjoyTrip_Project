@@ -46,11 +46,13 @@ public class ReviewController {
 	private String uploadFilePath;
 
 	@GetMapping("/review/{content_id}")
-	public ResponseEntity<List<ReviewEntity>> getReviewList(@PathVariable Integer content_id) {
-		log.info("getReviewList : {}", content_id);
+	public ResponseEntity<List<ReviewEntity>> getReviewList(@PathVariable("content_id") Integer contentId) {
+
+		log.info("=======================리뷰 조회========================");
+		log.info("getReviewList : {}", contentId);
 
 		try {
-			List<ReviewEntity> reviewList = reviewService.getReviewList(content_id);
+			List<ReviewEntity> reviewList = reviewService.getReviewList(contentId);
 			return new ResponseEntity<>(reviewList, HttpStatus.OK);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
@@ -60,13 +62,13 @@ public class ReviewController {
 	@PostMapping("/review")
 	public ResponseEntity<ReviewEntity> registReview(
 		ReviewDto.Regist regist,
-		@RequestParam("upfile") MultipartFile[] files,
+		@RequestParam(value = "upfile", required = false) MultipartFile[] files,
 		HttpSession session) throws IOException {
 
 		log.info("=======================리뷰 작성========================");
 		log.info("리뷰 정보 : {}", regist);
 
-		if (!files[0].isEmpty()) {
+		if (files != null && !files[0].isEmpty()) {
 			String today = new SimpleDateFormat("yyMMdd").format(new Date());
 			String saveFolder = uploadPath + File.separator + today;
 			log.debug("저장 폴더 : {}", saveFolder);
