@@ -15,8 +15,8 @@
 
     <!--리뷰 등록-->
     <insert id="registReview" useGeneratedKeys="true" keyProperty="reviewId">
-        INSERT INTO review (content_id, user_id, title, content, rating)
-        VALUES (#{contentId}, #{userId}, #{title}, #{content}, #{rating})
+        INSERT INTO review (content_id, user_id, title, content, rating, together)
+        VALUES (#{contentId}, #{userId}, #{title}, #{content}, #{rating}, #{together})
     </insert>
 
     <!--리뷰 등록 후 파일 정보 등록-->

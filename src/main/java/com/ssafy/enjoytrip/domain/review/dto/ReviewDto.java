@@ -15,6 +15,7 @@ public class ReviewDto {
 		private String title;
 		private String content;
 		private Integer rating;
+		private String together;
 		private String userId;
 		private Integer contentId;
 		private List<ReviewFileInfo> fileInfos;

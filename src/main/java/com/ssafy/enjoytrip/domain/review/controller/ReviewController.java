@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ssafy.enjoytrip.domain.member.entity.MemberEntity;
 import com.ssafy.enjoytrip.domain.review.dto.ReviewDto;
 import com.ssafy.enjoytrip.domain.review.entity.ReviewEntity;
 import com.ssafy.enjoytrip.domain.review.service.ReviewService;
@@ -57,9 +58,13 @@ public class ReviewController {
 	}
 
 	@PostMapping("/review")
-	public ResponseEntity<ReviewEntity> registReview(ReviewDto.Regist regist,
+	public ResponseEntity<ReviewEntity> registReview(
+		ReviewDto.Regist regist,
 		@RequestParam("upfile") MultipartFile[] files,
 		HttpSession session) throws IOException {
+
+		log.info("=======================리뷰 작성========================");
+		log.info("리뷰 정보 : {}", regist);
 
 		if (!files[0].isEmpty()) {
 			String today = new SimpleDateFormat("yyMMdd").format(new Date());
@@ -91,9 +96,8 @@ public class ReviewController {
 			regist.setFileInfos(fileInfos);
 		}
 
-		// POSTMAN으로 테스트 하기위해 주석 처리
-		// String userId = ((MemberEntity)session.getAttribute("memberDto")).getUserId();
-		// regist.setUserId(userId);
+		String userId = ((MemberEntity)session.getAttribute("memberDto")).getUserId();
+		regist.setUserId(userId);
 
 		try {
 			reviewService.registReview(regist);
