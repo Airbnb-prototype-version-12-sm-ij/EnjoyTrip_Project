@@ -300,6 +300,7 @@ CREATE TABLE IF NOT EXISTS `enjoytrip`.`post_comments`
 -- -----------------------------------------------------
 -- Table `enjoytrip`.`review`
 -- -----------------------------------------------------
+drop table if exists `enjoytrip`.`review`;
 CREATE TABLE IF NOT EXISTS `enjoytrip`.`review`
 (
     `review_id`  INT          NOT NULL AUTO_INCREMENT,
@@ -328,7 +329,7 @@ CREATE TABLE IF NOT EXISTS `enjoytrip`.`review`
     COLLATE = utf8mb4_0900_ai_ci;
 
 ALTER TABLE `enjoytrip`.`review`
-    ADD COLUMN `together` ENUM ('비지니스', '커플', '가족', '친구', '단독') NOT NULL AFTER `user_id`;
+    ADD COLUMN `together` ENUM ('비지니스', '커플', '가족', '친구', '단독') DEFAULT '단독' AFTER `user_id`;
 
 
 -- -----------------------------------------------------
