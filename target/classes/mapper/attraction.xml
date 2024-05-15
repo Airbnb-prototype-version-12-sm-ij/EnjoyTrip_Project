@@ -25,5 +25,25 @@
         FROM gugun
         WHERE sido_code = #{sido}
     </select>
-    
+
+    <insert id="addWish">
+        INSERT INTO wishlist (user_id, content_id)
+        VALUES (#{userId}, #{contentId})
+    </insert>
+
+    <select id="getWishList">
+        SELECT *
+        FROM wishlist
+        WHERE user_id = #{userId}
+    </select>
+
+    <delete id="deleteWish">
+        DELETE
+        FROM wishlist
+        WHERE user_id = #{userId}
+          AND content_id = #{contentId}
+
+    </delete>
+
+
 </mapper>

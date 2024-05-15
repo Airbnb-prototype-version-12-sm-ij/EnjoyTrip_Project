@@ -43,6 +43,35 @@ public class AttractionServiceImpl implements AttractionService {
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
+	}
 
+	@Override
+	public void addWish(AttractionDto.Wish wish) throws IOException {
+
+		try {
+			attractionMapper.addWish(wish);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
+	public List<AttractionDto.Wish> getWishList(String userId) throws IOException {
+		try {
+			return attractionMapper.getWishList(userId);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
+	public void deleteWish(AttractionDto.Wish wish) throws IOException {
+
+		try {
+			attractionMapper.deleteWish(wish);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }

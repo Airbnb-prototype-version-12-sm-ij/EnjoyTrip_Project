@@ -27,4 +27,10 @@ public class AttractionDto {
 		private Integer sidoCode;
 		private String gugunName;
 	}
+
+	@Data
+	public static class Wish {
+		private String userId;
+		private Integer contentId;
+	}
 }

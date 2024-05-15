@@ -17,4 +17,9 @@ public interface AttractionService {
 	// 시도코드 받아서 구군코드 구하기
 	List<AttractionDto.Gugun> getGugun(Integer sido) throws IOException;
 
+	void addWish(AttractionDto.Wish wish) throws IOException;
+
+	List<AttractionDto.Wish> getWishList(String userId) throws IOException;
+
+	void deleteWish(AttractionDto.Wish wish) throws IOException;
 }

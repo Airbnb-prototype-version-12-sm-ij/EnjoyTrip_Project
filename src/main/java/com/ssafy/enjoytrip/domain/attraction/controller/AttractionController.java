@@ -1,12 +1,17 @@
 package com.ssafy.enjoytrip.domain.attraction.controller;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,7 +19,9 @@ import com.ssafy.enjoytrip.domain.attraction.dto.AttractionDto;
 import com.ssafy.enjoytrip.domain.attraction.dto.AttractionDto.SearchAttraction;
 import com.ssafy.enjoytrip.domain.attraction.entity.AttractionEntity;
 import com.ssafy.enjoytrip.domain.attraction.service.AttractionService;
+import com.ssafy.enjoytrip.domain.member.entity.MemberEntity;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -49,6 +56,7 @@ public class AttractionController {
 		}
 	}
 
+	@Deprecated
 	@GetMapping("/gugun/{sido}")
 	public List<AttractionDto.Gugun> getGugun(@PathVariable Integer sido) {
 		try {
@@ -57,4 +65,57 @@ public class AttractionController {
 			throw new RuntimeException(e);
 		}
 	}
+
+	@PostMapping("/wish")
+	public ResponseEntity<Void> addWish(@RequestBody AttractionDto.Wish wish,
+		HttpSession session) {
+
+		log.info("====================================찜 추가==============================");
+		log.info("===================================={}==============================", wish);
+
+		String userId = ((MemberEntity)session.getAttribute("memberDto")).getUserId();
+		wish.setUserId(userId);
+
+		try {
+			attractionService.addWish(wish);
+			return new ResponseEntity<Void>(HttpStatus.OK);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GetMapping("/wish/{userId}")
+	public ResponseEntity<List<AttractionDto.Wish>> getWishList(@PathVariable String userId) {
+
+		log.info("====================================찜 리스트 조회==============================");
+		log.info("===================================={}==============================", userId);
+
+		List<AttractionDto.Wish> wishList = new ArrayList<>();
+
+		try {
+			wishList = attractionService.getWishList(userId);
+			return ResponseEntity.ok(wishList);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@DeleteMapping("/wish")
+	public ResponseEntity<Void> deleteWish(@RequestBody AttractionDto.Wish wish,
+		HttpSession session) {
+
+		log.info("====================================찜 삭제==============================");
+		log.info("===================================={}==============================", wish);
+
+		String userId = ((MemberEntity)session.getAttribute("memberDto")).getUserId();
+		wish.setUserId(userId);
+
+		try {
+			attractionService.deleteWish(wish);
+			return new ResponseEntity<Void>(HttpStatus.OK);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 }

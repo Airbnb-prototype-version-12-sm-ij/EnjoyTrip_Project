@@ -20,4 +20,9 @@ public interface AttractionMapper {
 	// 시도 코드를 넣어서 구군 정보 얻어오기 ex) 서울 ->  강남구, 강서구, ...
 	List<AttractionDto.Gugun> getGugun(Integer sido) throws SQLException;
 
+	void addWish(AttractionDto.Wish wish) throws SQLException;
+
+	List<AttractionDto.Wish> getWishList(String userId) throws SQLException;
+
+	void deleteWish(AttractionDto.Wish wish) throws SQLException;
 }
