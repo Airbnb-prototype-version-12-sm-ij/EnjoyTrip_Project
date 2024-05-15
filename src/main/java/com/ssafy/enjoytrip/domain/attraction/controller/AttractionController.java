@@ -34,14 +34,20 @@ public class AttractionController {
 	private final AttractionService attractionService;
 
 	@GetMapping("/search")
-	public ResponseEntity<?> searchAttractions(@ModelAttribute SearchAttraction searchAttraction) {
+	public ResponseEntity<?> searchAttractions(@ModelAttribute SearchAttraction searchAttraction,
+		HttpSession session) {
 
 		log.info("searchAttractions: {}", searchAttraction);
 
+		MemberEntity memberDto = ((MemberEntity)session.getAttribute("memberDto"));
+		if (memberDto != null) {
+			searchAttraction.setUserId(memberDto.getUserId());
+		}
 		try {
 			List<AttractionEntity> attractionList = attractionService.loadAttraction(searchAttraction);
 			return new ResponseEntity<List<AttractionEntity>>(attractionList, HttpStatus.OK);
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
 	}
@@ -73,8 +79,12 @@ public class AttractionController {
 		log.info("====================================찜 추가==============================");
 		log.info("===================================={}==============================", wish);
 
-		String userId = ((MemberEntity)session.getAttribute("memberDto")).getUserId();
-		wish.setUserId(userId);
+		MemberEntity memberDto = (MemberEntity)session.getAttribute("memberDto");
+
+		if (memberDto != null) {
+			String userId = memberDto.getUserId();
+			wish.setUserId(userId);
+		}
 
 		try {
 			attractionService.addWish(wish);

@@ -6,12 +6,16 @@
 
     <select id="loadAttraction">
         SELECT *
-        FROM attraction_info ai
-                 inner join attraction_description ades ON ai.content_id = ades.content_id
-        WHERE content_type_id = #{typeCode}
-          AND sido_code = #{sidoCode}
-          AND title LIKE CONCAT('%', #{title}, '%')
+        FROM attraction_description ades
+        INNER JOIN attraction_info ai ON ades.content_id = ai.content_id
+        <if test="userId != null">
+            LEFT JOIN wishlist wl ON ai.content_id = wl.content_id AND wl.user_id = #{userId}
+        </if>
+        WHERE ai.content_type_id = #{typeCode}
+        AND ai.sido_code = #{sidoCode}
+        AND ai.title LIKE CONCAT('%', #{title}, '%')
     </select>
+
 
     <select id="pickAttraction">
         SELECT *

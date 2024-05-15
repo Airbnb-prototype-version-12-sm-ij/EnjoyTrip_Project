@@ -11,7 +11,9 @@ import com.ssafy.enjoytrip.domain.attraction.entity.AttractionEntity;
 import com.ssafy.enjoytrip.domain.attraction.mapper.AttractionMapper;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AttractionServiceImpl implements AttractionService {
@@ -19,10 +21,13 @@ public class AttractionServiceImpl implements AttractionService {
 	private final AttractionMapper attractionMapper;
 
 	@Override
-	public List<AttractionEntity> loadAttraction(AttractionDto.SearchAttraction searchAttraction) throws IOException {
+	public List<AttractionEntity> loadAttraction(AttractionDto.SearchAttraction searchAttraction) throws
+		IOException {
+
 		try {
 			return attractionMapper.loadAttraction(searchAttraction);
 		} catch (SQLException e) {
+			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
 	}

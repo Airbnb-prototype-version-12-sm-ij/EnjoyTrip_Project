@@ -11,6 +11,7 @@ public class AttractionDto {
 		private Integer sidoCode;
 		private Integer typeCode;
 		private String title;
+		private String userId;
 
 		public static SearchAttraction of(Integer sidoCode, Integer typeCode, String title) {
 			return SearchAttraction.builder()

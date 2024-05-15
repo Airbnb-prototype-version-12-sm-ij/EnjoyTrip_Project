@@ -14,6 +14,10 @@ public interface AttractionMapper {
 	// 시, 군, 타입, 검색어 받아서 Attraction 리스트 조회
 	List<AttractionEntity> loadAttraction(AttractionDto.SearchAttraction searchAttraction) throws SQLException;
 
+	// 유저가 있는 경우 조회 (찜 리스트도 같이 불러오기 위해)
+	List<AttractionEntity> loadAttractionWithUser(AttractionDto.SearchAttraction searchAttraction, String userId) throws
+		SQLException;
+
 	// 정보 보기 누르면 해당 관광지의 content_id 받아서 해당 관광지의 모든 정보 받아오기
 	AttractionEntity pickAttraction(Integer content_id) throws SQLException;
 
