@@ -23,4 +23,6 @@ public interface AttractionService {
 	List<AttractionDto.Wish> getWishList(String userId) throws IOException;
 
 	void deleteWish(AttractionDto.Wish wish) throws IOException;
+
+	List<AttractionEntity> getWishListWithUser(String userId) throws IOException;
 }

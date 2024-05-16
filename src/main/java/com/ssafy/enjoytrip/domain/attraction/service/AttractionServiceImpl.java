@@ -79,4 +79,13 @@ public class AttractionServiceImpl implements AttractionService {
 			throw new RuntimeException(e);
 		}
 	}
+
+	@Override
+	public List<AttractionEntity> getWishListWithUser(String userId) throws IOException {
+		try {
+			return attractionMapper.getWishListWithUser(userId);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
 }

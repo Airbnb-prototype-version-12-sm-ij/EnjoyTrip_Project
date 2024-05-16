@@ -29,4 +29,6 @@ public interface AttractionMapper {
 	List<AttractionDto.Wish> getWishList(String userId) throws SQLException;
 
 	void deleteWish(AttractionDto.Wish wish) throws SQLException;
+
+	List<AttractionEntity> getWishListWithUser(String userId) throws SQLException;
 }

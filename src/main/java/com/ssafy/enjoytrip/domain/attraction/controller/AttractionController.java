@@ -52,6 +52,28 @@ public class AttractionController {
 		}
 	}
 
+	// 찜 목록 조회
+	@GetMapping("/wishlist")
+	public ResponseEntity<?> getWishList(HttpSession session) {
+
+		log.info("getWishList: {}", session.getAttribute("memberDto"));
+
+		MemberEntity memberDto = ((MemberEntity)session.getAttribute("memberDto"));
+
+		if (memberDto != null) {
+			try {
+				List<AttractionEntity> wishList = attractionService.getWishListWithUser(memberDto.getUserId());
+				return new ResponseEntity<List<AttractionEntity>>(wishList, HttpStatus.OK);
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new RuntimeException("찜 목록 조회 중 오류가 발생했습니다.");
+			}
+		} else {
+			throw new RuntimeException("로그인이 필요합니다.");
+
+		}
+	}
+
 	@SuppressWarnings("checkstyle:ParameterName")
 	@GetMapping("/{content_id}")
 	public AttractionEntity getAttraction(@PathVariable Integer content_id) {
