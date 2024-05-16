@@ -12,7 +12,8 @@ import com.ssafy.enjoytrip.domain.attraction.entity.AttractionEntity;
 public interface AttractionMapper {
 
 	// 시, 군, 타입, 검색어 받아서 Attraction 리스트 조회
-	List<AttractionEntity> loadAttraction(AttractionDto.SearchAttraction searchAttraction) throws SQLException;
+	List<AttractionEntity> loadAttraction(AttractionDto.SearchAttraction searchAttraction) throws
+		SQLException;
 
 	// 유저가 있는 경우 조회 (찜 리스트도 같이 불러오기 위해)
 	List<AttractionEntity> loadAttractionWithUser(AttractionDto.SearchAttraction searchAttraction, String userId) throws

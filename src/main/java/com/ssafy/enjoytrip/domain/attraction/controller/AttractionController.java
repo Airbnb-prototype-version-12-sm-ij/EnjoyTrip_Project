@@ -45,6 +45,7 @@ public class AttractionController {
 		}
 		try {
 			List<AttractionEntity> attractionList = attractionService.loadAttraction(searchAttraction);
+			log.info("attractionList: {}", attractionList);
 			return new ResponseEntity<List<AttractionEntity>>(attractionList, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();

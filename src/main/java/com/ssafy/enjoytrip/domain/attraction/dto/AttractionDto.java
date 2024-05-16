@@ -12,12 +12,17 @@ public class AttractionDto {
 		private Integer typeCode;
 		private String title;
 		private String userId;
+		private Integer page = 0;
+		private Integer size = 10;
 
-		public static SearchAttraction of(Integer sidoCode, Integer typeCode, String title) {
+		public static SearchAttraction of(Integer sidoCode, Integer typeCode, String title, Integer page,
+			Integer size) {
 			return SearchAttraction.builder()
 				.sidoCode(sidoCode)
 				.typeCode(typeCode)
 				.title(title)
+				.page(page)
+				.size(size)
 				.build();
 		}
 	}

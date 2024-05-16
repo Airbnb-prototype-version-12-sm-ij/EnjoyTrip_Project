@@ -14,6 +14,7 @@
         WHERE ai.content_type_id = #{typeCode}
         AND ai.sido_code = #{sidoCode}
         AND ai.title LIKE CONCAT('%', #{title}, '%')
+        LIMIT #{page}, #{size}
     </select>
 
 
