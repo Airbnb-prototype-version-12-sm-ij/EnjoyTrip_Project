@@ -116,21 +116,21 @@ public class AttractionController {
 		}
 	}
 
-	@GetMapping("/wish/{userId}")
-	public ResponseEntity<List<AttractionDto.Wish>> getWishList(@PathVariable String userId) {
-
-		log.info("====================================찜 리스트 조회==============================");
-		log.info("===================================={}==============================", userId);
-
-		List<AttractionDto.Wish> wishList = new ArrayList<>();
-
-		try {
-			wishList = attractionService.getWishList(userId);
-			return ResponseEntity.ok(wishList);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-	}
+	// @GetMapping("/wish/{userId}")
+	// public ResponseEntity<List<AttractionDto.Wish>> getWishList(@PathVariable String userId) {
+	//
+	// 	log.info("====================================찜 리스트 조회==============================");
+	// 	log.info("===================================={}==============================", userId);
+	//
+	// 	List<AttractionDto.Wish> wishList = new ArrayList<>();
+	//
+	// 	try {
+	// 		wishList = attractionService.getWishList(userId);
+	// 		return ResponseEntity.ok(wishList);
+	// 	} catch (IOException e) {
+	// 		throw new RuntimeException(e);
+	// 	}
+	// }
 
 	@DeleteMapping("/wish")
 	public ResponseEntity<Void> deleteWish(@RequestBody AttractionDto.Wish wish,
@@ -147,6 +147,25 @@ public class AttractionController {
 			return new ResponseEntity<Void>(HttpStatus.OK);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
+		}
+	}
+
+
+	@GetMapping("/wishList")
+	public ResponseEntity<List<AttractionEntity>> getWishListWithUser(HttpSession session) {
+
+		MemberEntity memberDto = ((MemberEntity)session.getAttribute("memberDto"));
+
+		if (memberDto != null) {
+			try {
+				List<AttractionEntity> wishList = attractionService.getWishListWithUser(memberDto.getUserId());
+				return new ResponseEntity<List<AttractionEntity>>(wishList, HttpStatus.OK);
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new RuntimeException("찜 목록 조회 중 오류가 발생했습니다.");
+			}
+		} else {
+			throw new RuntimeException("로그인이 필요합니다.");
 		}
 	}
 
