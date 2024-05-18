@@ -22,7 +22,6 @@ public class MemberDto {
 		private String userId;
 
 		@NotBlank
-		@Pattern(regexp = "^[가-힣]+$")
 		private String userName;
 
 		@NotBlank

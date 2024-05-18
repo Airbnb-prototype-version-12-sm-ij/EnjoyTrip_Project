@@ -51,9 +51,8 @@
 
     <!--  찜 목록 가져오기  -->
     <select id="getWishListWithUser" parameterType="string" resultType="map">
-        SELECT ai.*, ad.*
+        SELECT ai.*
         FROM attraction_info ai
-                 INNER JOIN attraction_description ad ON ai.content_id = ad.content_id
         WHERE ai.content_id IN (SELECT content_id
                                 FROM wishlist
                                 WHERE user_id = #{userId});
