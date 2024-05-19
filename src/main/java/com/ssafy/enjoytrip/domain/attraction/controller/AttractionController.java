@@ -1,7 +1,6 @@
 package com.ssafy.enjoytrip.domain.attraction.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -45,6 +44,10 @@ public class AttractionController {
 		}
 		try {
 			List<AttractionEntity> attractionList = attractionService.loadAttraction(searchAttraction);
+			for (AttractionEntity attraction : attractionList) {
+				attraction.setWishCount(attractionService.getWishCount(attraction.getContentId()));
+				attraction.setReviewCount(attractionService.getReviewCount(attraction.getContentId()));
+			}
 			log.info("attractionList: {}", attractionList);
 			return new ResponseEntity<List<AttractionEntity>>(attractionList, HttpStatus.OK);
 		} catch (Exception e) {
@@ -150,7 +153,6 @@ public class AttractionController {
 			throw new RuntimeException(e);
 		}
 	}
-
 
 	@GetMapping("/wishList")
 	public ResponseEntity<List<AttractionEntity>> getWishListWithUser(HttpSession session) {

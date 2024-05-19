@@ -33,6 +33,17 @@ public class AttractionServiceImpl implements AttractionService {
 	}
 
 	@Override
+	public int getWishCount(Integer content_id) throws SQLException {
+		return attractionMapper.getWishCount(content_id);
+
+	}
+
+	@Override
+	public double getReviewCount(Integer content_id) throws SQLException {
+		return attractionMapper.getReviewCount(content_id);
+	}
+
+	@Override
 	public AttractionEntity pickAttraction(Integer content_id) throws IOException {
 		try {
 			return attractionMapper.pickAttraction(content_id);

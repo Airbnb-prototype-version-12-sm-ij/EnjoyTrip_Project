@@ -22,4 +22,6 @@ public class AttractionEntity {
 	private String mlevel;
 	private String overview;
 	private String wishlistId;
+	private Integer wishCount;
+	private Double reviewCount;
 }

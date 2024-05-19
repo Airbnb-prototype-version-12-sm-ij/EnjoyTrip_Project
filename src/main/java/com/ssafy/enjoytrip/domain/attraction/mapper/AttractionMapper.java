@@ -15,6 +15,12 @@ public interface AttractionMapper {
 	List<AttractionEntity> loadAttraction(AttractionDto.SearchAttraction searchAttraction) throws
 		SQLException;
 
+	// 찜 개수
+	int getWishCount(Integer content_id) throws SQLException;
+
+	// 리뷰 평균
+	double getReviewCount(Integer content_id) throws SQLException;
+
 	// 유저가 있는 경우 조회 (찜 리스트도 같이 불러오기 위해)
 	List<AttractionEntity> loadAttractionWithUser(AttractionDto.SearchAttraction searchAttraction, String userId) throws
 		SQLException;
