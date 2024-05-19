@@ -137,9 +137,12 @@ public class AttractionController {
 
 		log.info("====================================찜 삭제==============================");
 		log.info("===================================={}==============================", wish);
+		MemberEntity memberDto = (MemberEntity)session.getAttribute("memberDto");
 
-		String userId = ((MemberEntity)session.getAttribute("memberDto")).getUserId();
-		wish.setUserId(userId);
+		if (memberDto != null) {
+			String userId = memberDto.getUserId();
+			wish.setUserId(userId);
+		}
 
 		try {
 			attractionService.deleteWish(wish);
