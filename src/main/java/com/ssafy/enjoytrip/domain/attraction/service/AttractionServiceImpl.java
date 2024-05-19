@@ -111,4 +111,13 @@ public class AttractionServiceImpl implements AttractionService {
 			throw new RuntimeException(e);
 		}
 	}
+
+	@Override
+	public List<AttractionEntity> recommandAttractions() throws IOException {
+		try {
+			return attractionMapper.recommandAttractions();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
 }

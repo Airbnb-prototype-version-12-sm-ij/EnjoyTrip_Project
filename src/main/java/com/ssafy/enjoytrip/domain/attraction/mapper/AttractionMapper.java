@@ -41,4 +41,6 @@ public interface AttractionMapper {
 	List<AttractionEntity> getWishListWithUser(String userId) throws SQLException;
 
 	void addViewCount(Integer content_id) throws SQLException;
+
+	List<AttractionEntity> recommandAttractions() throws SQLException;
 }

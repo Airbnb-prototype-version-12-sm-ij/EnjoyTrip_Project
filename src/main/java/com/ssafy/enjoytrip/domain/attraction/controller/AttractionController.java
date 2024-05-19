@@ -56,6 +56,26 @@ public class AttractionController {
 		}
 	}
 
+	// 조회수 높은거 5개 가져옴
+	@GetMapping("/recommand")
+	public ResponseEntity<?> recommandAttractions() {
+		log.info("recommandAttractions");
+
+		try {
+			List<AttractionEntity> attractionList = attractionService.recommandAttractions();
+			log.info("attractionList: {}", attractionList);
+			for (AttractionEntity attraction : attractionList) {
+				attraction.setWishCount(attractionService.getWishCount(attraction.getContentId()));
+				attraction.setReviewCount(attractionService.getReviewCount(attraction.getContentId()));
+			}
+			log.info("attractionList: {}", attractionList);
+			return new ResponseEntity<List<AttractionEntity>>(attractionList, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+	}
+
 	// 찜 목록 조회
 	@GetMapping("/wishlist")
 	public ResponseEntity<?> getWishList(HttpSession session) {

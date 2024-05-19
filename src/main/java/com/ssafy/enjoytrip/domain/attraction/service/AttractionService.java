@@ -34,4 +34,6 @@ public interface AttractionService {
 	List<AttractionEntity> getWishListWithUser(String userId) throws IOException;
 
 	void addViewCount(Integer contentId) throws IOException;
+
+	List<AttractionEntity> recommandAttractions() throws IOException;
 }

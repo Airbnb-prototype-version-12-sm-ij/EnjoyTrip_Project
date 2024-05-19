@@ -76,4 +76,17 @@
         from review
         where content_id = #{contentId}
     </select>
+
+    <!--  상위 5개 가져오기  -->
+    <select id="recommandAttractions">
+        SELECT *
+        FROM attraction_description ades
+        INNER JOIN attraction_info ai ON ades.content_id = ai.content_id
+        <if test="userId != null">
+            LEFT JOIN wishlist wl ON ai.content_id = wl.content_id AND wl.user_id = #{userId}
+        </if>
+        order by readcount desc
+        LIMIT 5
+    </select>
+
 </mapper>

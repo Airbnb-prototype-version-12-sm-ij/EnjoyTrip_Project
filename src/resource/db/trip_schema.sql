@@ -372,13 +372,161 @@ values ('ssafy', '김싸피', 'a477d9bfed77d6d10bcf91408877fec661196de6fa2c513da
        ('joo1798', '주수아', 'a477d9bfed77d6d10bcf91408877fec661196de6fa2c513daa2030b234f927ee', "admin"),
        ('dldlswns', '이인준', 'a477d9bfed77d6d10bcf91408877fec661196de6fa2c513daa2030b234f927ee', "admin");
 
-
+ALTER TABLE attraction_info
+    DROP FOREIGN KEY attraction_to_content_type_id_fk;
 
 insert into posting(title, content, user_id, sido_code, gugun_code)
 values ("광주 무등산", "수박 졸맛탱", "admin", 1, 5);
 
 insert into posting(title, content, user_id, sido_code, gugun_code)
 values ("세종 특별시 살기 좋은 도시", "기모찌", "admin", 1, 8);
+
+INSERT INTO attraction_info (content_id, content_type_id, title, addr1, addr2, zipcode, tel,
+                             first_image, first_image2, readcount, sido_code, gugun_code,
+                             latitude, longitude, mlevel)
+
+-- 서피비치 정보
+VALUES (129999, -- content_id (임의로 설정)
+        12, -- content_type_id (예시로 12: 관광지)
+        '양양 서피비치', -- title
+        '강원도 양양군 현남면 인구리 해변', -- addr1
+        '', -- addr2 (세부 주소가 없는 경우 공백으로 설정)
+        '25042', -- zipcode (양양군 현남면의 우편번호)
+        '', -- tel (예시 전화번호)
+        'https://www.bigtanews.co.kr/data/big/image/2023/07/06/big20230706000015.800x.0.jpg', -- first_image (이미지 URL 예시)
+        '', -- first_image2 (이미지 URL 예시)
+        999999, -- readcount (초기 조회수)
+        32, -- sido_code (강원도의 시도 코드, 예시)
+        7, -- gugun_code (양양군의 구군 코드, 예시)
+        38.027834441415756, -- latitude (실제 위도)
+        128.71728231189653, -- longitude (실제 경도)
+        '6' -- mlevel (예시로 설정)
+       );
+
+INSERT INTO attraction_description (content_id, homepage, overview, telname)
+VALUES (129999, -- content_id (양양 서피비치의 content_id와 동일하게 설정)
+        '', -- homepage (서피비치의 공식 홈페이지 URL)
+        '양양 서피비치는 대한민국 강원도 양양군 현남면에 위치한 인기 있는 서핑 장소입니다. 맑은 바다와 아름다운 해변으로 유명하며, 서핑과 해양 스포츠를 즐길 수 있는 최적의 장소입니다. 매년 많은 서핑 애호가들이 방문하여 다양한 서핑 대회와 이벤트가 개최됩니다. 서핑뿐만 아니라 해변에서의 휴식과 다양한 해양 활동을 즐길 수 있습니다.', -- overview (서피비치에 대한 설명)
+        '' -- telname (전화번호 담당자 이름)
+       );
+
+
+-- 한라산 정보 삽입
+INSERT INTO attraction_info (content_id, content_type_id, title, addr1, addr2, zipcode, tel,
+                             first_image, first_image2, readcount, sido_code, gugun_code,
+                             latitude, longitude, mlevel)
+VALUES (399999, -- content_id (임의로 설정)
+        12, -- content_type_id (관광지)
+        '한라산', -- title
+        '제주특별자치도 서귀포시 한라산로', -- addr1
+        '', -- addr2
+        '63524', -- zipcode
+        '', -- tel
+        'https://api.cdn.visitjeju.net/photomng/imgpath/201911/29/48bdb99e-20ba-4fb6-82f2-6ea79ceefb0d.jpg', -- first_image
+        '', -- first_image2
+        999999, -- readcount
+        39, -- sido_code (제주특별자치도)
+        3, -- gugun_code (서귀포시)
+        33.361424638771474, -- latitude
+        126.52941927591584, -- longitude
+        '6' -- mlevel
+       );
+
+-- 한라산 설명 삽입
+INSERT INTO attraction_description (content_id, homepage, overview, telname)
+VALUES (399999, -- content_id
+        '', -- homepage
+        '한라산은 제주도의 최고봉으로, 대한민국에서 가장 아름다운 자연 경관을 자랑합니다. 화산학적 유산과 다양한 식물, 동물이 서식하고 있으며, 등산으로 유명합니다.', -- overview
+        '' -- telname
+       );
+
+-- 감천 문화 마을 정보 삽입
+INSERT INTO attraction_info (content_id, content_type_id, title, addr1, addr2, zipcode, tel,
+                             first_image, first_image2, readcount, sido_code, gugun_code,
+                             latitude, longitude, mlevel)
+VALUES (124989, -- content_id (임의로 설정)
+        12, -- content_type_id (관광지)
+        '감천문화마을', -- title
+        '부산 사하구 감천동 10-13', -- addr1
+        '', -- addr2
+        '', -- zipcode (우편번호 정보가 없는 경우 빈 문자열로 설정)
+        '051-204-1444', -- tel
+        'https://a.cdn-hotels.com/gdcs/production37/d1169/1dcbfef5-2070-48ce-8d62-3e0fffa21797.jpg?impolicy=fcrop&w=800&h=533&q=medium', -- first_image
+        '', -- first_image2
+        999999, -- readcount
+        6, -- sido_code (부산광역시)
+        10, -- gugun_code (사하구)
+        35.09630012826786, -- latitude (위도)
+        129.00942831915552, -- longitude (경도)
+        '6' -- mlevel
+       );
+
+-- 감천 문화 마을 설명 삽입
+INSERT INTO attraction_description (content_id, homepage, overview, telname)
+VALUES (124989, -- content_id
+        'http://place.map.kakao.com/21362956', -- homepage (카카오맵 페이지)
+        '부산의 사하구 감천동에 위치한 감천문화마을은 예술가들의 작업실과 다양한 예술작품이 있는 아름다운 마을입니다. 전통 가옥과 작은 골목길이 어우러진 곳으로, 많은 관광객들이 찾는 관광 명소입니다.', -- overview
+        '감천문화마을 안내실' -- telname
+       );
+
+-- 석굴암 정보 삽입
+INSERT INTO attraction_info (content_id, content_type_id, title, addr1, addr2, zipcode, tel,
+                             first_image, first_image2, readcount, sido_code, gugun_code,
+                             latitude, longitude, mlevel)
+VALUES (129494, -- content_id (임의로 설정)
+        12, -- content_type_id (관광지)
+        '석굴암', -- title
+        '경북 경주시 진현동 999', -- addr1
+        '', -- addr2
+        '', -- zipcode (우편번호 정보가 없는 경우 빈 문자열로 설정)
+        '054-746-9933', -- tel
+        'https://i.namu.wiki/i/xLSOdP-J_zLPsabiBGRaemNXJGXoFkTnwNLV3UFOup2dxP7J2NtoztrO2l4BTVd-6ElW6yrV4Xv15q5Of3CfV1GLs1Xyra5KKzoOVB92q1FjTJP7T8kOQk5wbsCuFX_5_yGcG4ym5vCQgo3hqgJy0g.webp', -- first_image
+        '', -- first_image2
+        999999, -- readcount
+        35, -- sido_code (경상북도)
+        2, -- gugun_code (경주시)
+        35.79524166200299, -- latitude (위도)
+        129.35052073446747, -- longitude (경도)
+        '6' -- mlevel
+       );
+
+-- 석굴암 설명 삽입
+INSERT INTO attraction_description (content_id, homepage, overview, telname)
+VALUES (129494, -- content_id
+        'http://place.map.kakao.com/8361996', -- homepage (카카오맵 페이지)
+        '경북 경주시에 위치한 석굴암은 한국의 대표적인 사찰로, 고려시대에 지어진 석가탑이 있는 곳으로 유명합니다. 석굴암은 불교 사찰로 유서 깊은 곳으로, 많은 관광객들이 찾는 경주의 대표적인 관광지입니다.', -- overview
+        '석굴암 관리실' -- telname
+       );
+
+
+-- 에버랜드 정보 삽입
+INSERT INTO attraction_info (content_id, content_type_id, title, addr1, addr2, zipcode, tel,
+                             first_image, first_image2, readcount, sido_code, gugun_code,
+                             latitude, longitude, mlevel)
+VALUES (129904, -- content_id (임의로 설정)
+        12, -- content_type_id (관광지)
+        '에버랜드', -- title
+        '경기 용인시 처인구 포곡읍 전대리 310', -- addr1
+        '', -- addr2
+        '', -- zipcode (우편번호 정보가 없는 경우 빈 문자열로 설정)
+        '031-320-5000', -- tel
+        'https://image.kkday.com/v2/image/get/s1.kkday.com/product_36325/20230216025250_CIXCh/jpg', -- first_image
+        '', -- first_image2
+        999999, -- readcount
+        31, -- sido_code (경기도)
+        23, -- gugun_code (용인시 처인구)
+        37.293101115700345, -- latitude (위도)
+        127.20219830178264, -- longitude (경도)
+        '6' -- mlevel
+       );
+
+-- 에버랜드 설명 삽입
+INSERT INTO attraction_description (content_id, homepage, overview, telname)
+VALUES (129904, -- content_id
+        'http://place.map.kakao.com/784414359', -- homepage (카카오맵 페이지)
+        '에버랜드는 대한민국 경기도 용인시에 위치한 대규모 테마파크로, 다양한 놀이시설과 쇼, 이벤트가 개최되는 인기 있는 관광지입니다. 가족이나 친구와 함께 즐길 수 있는 다채로운 놀이 체험과 액티비티를 제공하며, 매년 많은 관광객들이 찾는 곳입니다.', -- overview
+        '에버랜드 관리실' -- telname
+       );
 
 
 SET SQL_MODE = @OLD_SQL_MODE;
