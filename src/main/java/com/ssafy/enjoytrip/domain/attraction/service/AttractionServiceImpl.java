@@ -52,6 +52,7 @@ public class AttractionServiceImpl implements AttractionService {
 		}
 	}
 
+	@Deprecated
 	@Override
 	public List<AttractionDto.Gugun> getGugun(Integer sido) throws IOException {
 		try {
@@ -96,6 +97,17 @@ public class AttractionServiceImpl implements AttractionService {
 		try {
 			return attractionMapper.getWishListWithUser(userId);
 		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
+	public void addViewCount(Integer contentId) throws IOException {
+
+		try {
+			attractionMapper.addViewCount(contentId);
+		} catch (SQLException e) {
+			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
 	}

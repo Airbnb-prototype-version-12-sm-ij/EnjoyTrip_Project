@@ -32,4 +32,6 @@ public interface AttractionService {
 	void deleteWish(AttractionDto.Wish wish) throws IOException;
 
 	List<AttractionEntity> getWishListWithUser(String userId) throws IOException;
+
+	void addViewCount(Integer contentId) throws IOException;
 }

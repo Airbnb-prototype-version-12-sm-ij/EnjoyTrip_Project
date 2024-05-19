@@ -142,9 +142,12 @@ public class AttractionController {
 
 		log.info("====================================찜 삭제==============================");
 		log.info("===================================={}==============================", wish);
+		MemberEntity memberDto = (MemberEntity)session.getAttribute("memberDto");
 
-		String userId = ((MemberEntity)session.getAttribute("memberDto")).getUserId();
-		wish.setUserId(userId);
+		if (memberDto != null) {
+			String userId = memberDto.getUserId();
+			wish.setUserId(userId);
+		}
 
 		try {
 			attractionService.deleteWish(wish);
@@ -169,6 +172,21 @@ public class AttractionController {
 			}
 		} else {
 			throw new RuntimeException("로그인이 필요합니다.");
+		}
+	}
+
+	// 조회수 증가
+	@PostMapping("/addViewCount/{contentId}")
+	public ResponseEntity<Void> addViewCount(@PathVariable("contentId") Integer contentId) {
+
+		log.info("===========================조회수 증가=======================================");
+
+		try {
+			attractionService.addViewCount(contentId);
+			return new ResponseEntity<Void>(HttpStatus.OK);
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 	}
 

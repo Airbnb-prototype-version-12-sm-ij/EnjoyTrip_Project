@@ -29,6 +29,7 @@ public interface AttractionMapper {
 	AttractionEntity pickAttraction(Integer content_id) throws SQLException;
 
 	// 시도 코드를 넣어서 구군 정보 얻어오기 ex) 서울 ->  강남구, 강서구, ...
+	@Deprecated
 	List<AttractionDto.Gugun> getGugun(Integer sido) throws SQLException;
 
 	void addWish(AttractionDto.Wish wish) throws SQLException;
@@ -38,4 +39,6 @@ public interface AttractionMapper {
 	void deleteWish(AttractionDto.Wish wish) throws SQLException;
 
 	List<AttractionEntity> getWishListWithUser(String userId) throws SQLException;
+
+	void addViewCount(Integer content_id) throws SQLException;
 }
