@@ -58,4 +58,9 @@
                                 WHERE user_id = #{userId});
     </select>
 
+    <update id="addViewCount">
+        UPDATE attraction_info
+        SET readcount = readcount + 1
+        WHERE content_id = #{contentId}
+    </update>
 </mapper>

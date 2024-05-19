@@ -1,7 +1,6 @@
 package com.ssafy.enjoytrip.domain.attraction.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -45,7 +44,6 @@ public class AttractionController {
 		}
 		try {
 			List<AttractionEntity> attractionList = attractionService.loadAttraction(searchAttraction);
-			log.info("attractionList: {}", attractionList);
 			return new ResponseEntity<List<AttractionEntity>>(attractionList, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -151,7 +149,6 @@ public class AttractionController {
 		}
 	}
 
-
 	@GetMapping("/wishList")
 	public ResponseEntity<List<AttractionEntity>> getWishListWithUser(HttpSession session) {
 
@@ -167,6 +164,21 @@ public class AttractionController {
 			}
 		} else {
 			throw new RuntimeException("로그인이 필요합니다.");
+		}
+	}
+
+	// 조회수 증가
+	@PostMapping("/addViewCount/{contentId}")
+	public ResponseEntity<Void> addViewCount(@PathVariable("contentId") Integer contentId) {
+
+		log.info("===========================조회수 증가=======================================");
+
+		try {
+			attractionService.addViewCount(contentId);
+			return new ResponseEntity<Void>(HttpStatus.OK);
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 	}
 
