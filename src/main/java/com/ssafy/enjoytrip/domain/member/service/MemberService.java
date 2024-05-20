@@ -1,10 +1,14 @@
 package com.ssafy.enjoytrip.domain.member.service;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import com.ssafy.enjoytrip.domain.member.dto.MemberDto;
 import com.ssafy.enjoytrip.domain.member.entity.MemberEntity;
+
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 
 public interface MemberService {
 
@@ -27,4 +31,12 @@ public interface MemberService {
 	public MemberEntity pickMember(String userId) throws IOException;
 
 	public MemberEntity findMember(MemberDto.Find find) throws IOException;
+
+
+	// 임시 비밀번호 발송
+	public void sendSimpleMessage(MemberDto.Find find) throws Exception;
+
+	// 이메일 메시지 생성
+	public MimeMessage createMessage(MemberEntity member) throws MessagingException, UnsupportedEncodingException;
+
 }

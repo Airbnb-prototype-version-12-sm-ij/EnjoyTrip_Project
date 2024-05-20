@@ -13,6 +13,8 @@ public class MemberEntity {
 
 	private String userPassword;
 
+	private String userEmail;
+
 	@NotBlank
 	@Pattern(regexp = "^(default|admin)$")
 	private String grade;

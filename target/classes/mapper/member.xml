@@ -14,8 +14,8 @@
     </select>
 
     <insert id="addMember">
-        insert into members (user_id, user_name, user_password)
-        values (#{userId}, #{userName}, #{userPassword})
+        insert into members (user_id, user_name, user_password, user_email)
+        values (#{userId}, #{userName}, #{userPassword}, #{userEmail})
     </insert>
 
     <select id="loadMember">
@@ -38,12 +38,21 @@
         WHERE user_id = #{userId}
     </delete>
 
-    <!-- 특정 회원 정보 -->
+    <!-- 아이디 이메일 정보 확인 -->
+    <select id="MemberForChangePwd">
+        SELECT *
+        FROM members
+        WHERE user_id = #{userId} and user_email = #{userEmail}
+    </select>
+
+
+     <!-- 특정 회원 정보 -->
     <select id="pickMember">
         SELECT *
         FROM members
         WHERE user_id = #{userId}
     </select>
+
 
     <select id="findMember">
         SELECT *

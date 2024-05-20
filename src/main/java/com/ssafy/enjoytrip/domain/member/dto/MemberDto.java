@@ -27,10 +27,12 @@ public class MemberDto {
 		@NotBlank
 		@Pattern(regexp = "^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{3,15}$")
 		private String userPassword;
+		private String email;
 
 		public static Info of(MemberEntity memberEntity) {
 			return Info.builder().userId(memberEntity.getUserId()).userName(memberEntity.getUserName())
-				.userPassword(memberEntity.getUserPassword()).build();
+				.userPassword(memberEntity.getUserPassword())
+				.email(memberEntity.getUserEmail()).build();
 		}
 	}
 
@@ -48,16 +50,17 @@ public class MemberDto {
 	}
 
 	@Data
-	@Builder
 	public static class Find {
 
 		@NotBlank
 		@Pattern(regexp = "^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{5,20}$")
 		private String userId;
 
-		@NotBlank
-		@Pattern(regexp = "^[가-힣]+$")
-		private String userName;
+		// @NotBlank
+		// @Pattern(regexp = "^[가-힣]+$")
+		// private String userName;
+
+		private String userEmail;
 	}
 
 	@Data

@@ -36,7 +36,6 @@ public class AttractionController {
 	public ResponseEntity<?> searchAttractions(@ModelAttribute SearchAttraction searchAttraction,
 		HttpSession session) {
 
-		log.info("searchAttractions: {}", searchAttraction);
 
 		MemberEntity memberDto = ((MemberEntity)session.getAttribute("memberDto"));
 		if (memberDto != null) {
@@ -48,7 +47,6 @@ public class AttractionController {
 				attraction.setWishCount(attractionService.getWishCount(attraction.getContentId()));
 				attraction.setReviewCount(attractionService.getReviewCount(attraction.getContentId()));
 			}
-			log.info("attractionList: {}", attractionList);
 			return new ResponseEntity<List<AttractionEntity>>(attractionList, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -63,12 +61,10 @@ public class AttractionController {
 
 		try {
 			List<AttractionEntity> attractionList = attractionService.recommandAttractions();
-			log.info("attractionList: {}", attractionList);
 			for (AttractionEntity attraction : attractionList) {
 				attraction.setWishCount(attractionService.getWishCount(attraction.getContentId()));
 				attraction.setReviewCount(attractionService.getReviewCount(attraction.getContentId()));
 			}
-			log.info("attractionList: {}", attractionList);
 			return new ResponseEntity<List<AttractionEntity>>(attractionList, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();

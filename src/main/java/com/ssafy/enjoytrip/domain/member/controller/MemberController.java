@@ -42,7 +42,9 @@ public class MemberController {
 	public ResponseEntity<?> login(@Validated @RequestBody MemberDto.Login login,
 		BindingResult bindingResult,
 		HttpServletRequest request) {
+
 		log.info("--------------------MemberController --- login: {}----------------------", login);
+
 
 		// errors 의 메세지만 출력
 		for (ObjectError error : bindingResult.getAllErrors()) {
@@ -189,32 +191,45 @@ public class MemberController {
 		}
 	}
 
+	// @Deprecated
+	// @PostMapping("/find")
+	// public ResponseEntity<?> findMember2(@Validated @RequestBody MemberDto.Info info, BindingResult bindingResult) {
+	//
+	// 	if (bindingResult.hasErrors()) {
+	// 		System.out.println(bindingResult.getAllErrors());
+	// 		return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
+	// 	}
+	//
+	// 	MemberDto.Find find = MemberDto.Find.builder().userId(info.getUserId()).userName(info.getUserName()).build();
+	//
+	// 	try {
+	//
+	// 		MemberEntity member = memberServiceImpl.findMember(find);
+	// 		log.info("findMember: {}", member);
+	//
+	// 		if (member != null) {
+	// 			member.setUserPassword(info.getUserPassword());
+	// 			memberServiceImpl.modifyMember(MemberDto.Info.of(member));
+	// 			return new ResponseEntity<MemberEntity>(member, HttpStatus.OK);
+	// 		} else {
+	// 			return new ResponseEntity<MemberEntity>(member, HttpStatus.UNAUTHORIZED);
+	// 		}
+	// 	} catch (IOException e) {
+	// 		throw new RuntimeException(e);
+	// 	}
+// }
+
 	@PostMapping("/find")
-	public ResponseEntity<?> findMember(@Validated @RequestBody MemberDto.Info info, BindingResult bindingResult) {
+	public ResponseEntity<?> findMember(@RequestBody MemberDto.Find find) {
 
-		if (bindingResult.hasErrors()) {
-			System.out.println(bindingResult.getAllErrors());
-			return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
-		}
-
-		MemberDto.Find find = MemberDto.Find.builder().userId(info.getUserId()).userName(info.getUserName()).build();
+		log.info("===========findMember: {}", find);
 
 		try {
-
-			MemberEntity member = memberServiceImpl.findMember(find);
-			log.info("findMember: {}", member);
-
-			if (member != null) {
-				member.setUserPassword(info.getUserPassword());
-				memberServiceImpl.modifyMember(MemberDto.Info.of(member));
-				return new ResponseEntity<MemberEntity>(member, HttpStatus.OK);
-			} else {
-				return new ResponseEntity<MemberEntity>(member, HttpStatus.UNAUTHORIZED);
-			}
-		} catch (IOException e) {
+			memberServiceImpl.sendSimpleMessage(find);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
-
 	}
-
 }
