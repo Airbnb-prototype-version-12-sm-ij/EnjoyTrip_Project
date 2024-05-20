@@ -34,7 +34,10 @@ public class MemberController {
 	@GetMapping("/ping")
 	public ResponseEntity<?> ping(HttpSession session) {
 		log.info("ping: {}", session.getAttribute("memberDto"));
-		return new ResponseEntity<>(session.getAttribute("memberDto"), HttpStatus.OK);
+		if (session.getAttribute("memberDto") == null) {
+			return new ResponseEntity<>("로그인이 필요합니다", HttpStatus.UNAUTHORIZED);
+		}
+		return ResponseEntity.ok().body(session.getAttribute("memberDto"));
 	}
 
 	// 로그인
@@ -44,7 +47,6 @@ public class MemberController {
 		HttpServletRequest request) {
 
 		log.info("--------------------MemberController --- login: {}----------------------", login);
-
 
 		// errors 의 메세지만 출력
 		for (ObjectError error : bindingResult.getAllErrors()) {
@@ -220,7 +222,7 @@ public class MemberController {
 	// 	} catch (IOException e) {
 	// 		throw new RuntimeException(e);
 	// 	}
-// }
+	// }
 
 	@PostMapping("/find")
 	public ResponseEntity<?> findMember(@RequestBody MemberDto.Find find) {
