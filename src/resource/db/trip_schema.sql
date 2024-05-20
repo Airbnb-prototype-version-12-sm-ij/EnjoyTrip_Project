@@ -498,7 +498,7 @@ VALUES (129494, -- content_id (임의로 설정)
 -- 석굴암 설명 삽입
 INSERT INTO attraction_description (content_id, homepage, overview, telname)
 VALUES (129494, -- content_id
-        'http://place.map.kakao.com/8361996', -- homepage (카카오맵 페이지)
+        '', -- homepage (카카오맵 페이지)
         '경북 경주시에 위치한 석굴암은 한국의 대표적인 사찰로, 고려시대에 지어진 석가탑이 있는 곳으로 유명합니다. 석굴암은 불교 사찰로 유서 깊은 곳으로, 많은 관광객들이 찾는 경주의 대표적인 관광지입니다.', -- overview
         '석굴암 관리실' -- telname
        );
