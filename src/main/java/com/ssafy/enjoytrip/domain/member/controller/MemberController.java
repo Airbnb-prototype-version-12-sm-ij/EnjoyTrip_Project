@@ -85,7 +85,8 @@ public class MemberController {
 	}
 
 	@PostMapping("/join")
-	public void join(@Validated @RequestBody MemberDto.Info info, BindingResult bindingResult) {
+	public ResponseEntity<Void> join(@Validated @RequestBody MemberDto.Info info, BindingResult bindingResult) {
+
 		log.info("--------------------MemberController --- join: {}----------------------", info);
 
 		// errors 의 메세지만 출력
@@ -100,7 +101,9 @@ public class MemberController {
 
 		try {
 			memberServiceImpl.addMember(info);
+			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (IOException e) {
+			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
 	}

@@ -82,6 +82,7 @@ public class MemberServiceImpl implements MemberService {
 		try {
 			memberMapper.addMember(info);
 		} catch (SQLException e) {
+			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
 	}

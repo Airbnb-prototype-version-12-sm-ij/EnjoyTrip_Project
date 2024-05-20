@@ -27,12 +27,12 @@ public class MemberDto {
 		@NotBlank
 		@Pattern(regexp = "^(?=.*[a-z])(?=.*[0-9])[a-z0-9]{3,15}$")
 		private String userPassword;
-		private String email;
+		private String userEmail;
 
 		public static Info of(MemberEntity memberEntity) {
 			return Info.builder().userId(memberEntity.getUserId()).userName(memberEntity.getUserName())
 				.userPassword(memberEntity.getUserPassword())
-				.email(memberEntity.getUserEmail()).build();
+				.userEmail(memberEntity.getUserEmail()).build();
 		}
 	}
 
