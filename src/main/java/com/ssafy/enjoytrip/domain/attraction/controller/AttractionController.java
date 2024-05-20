@@ -69,7 +69,7 @@ public class AttractionController {
 				attraction.setReviewCount(attractionService.getReviewCount(attraction.getContentId()));
 			}
 			log.info("attractionList: {}", attractionList);
-			return new ResponseEntity<List<AttractionEntity>>(attractionList, HttpStatus.OK);
+			return ResponseEntity.ok().body(attractionList);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
