@@ -36,4 +36,5 @@ public interface MemberMapper {
 	// 회원id, 와 이름으로 회원 찾기
 	MemberEntity findMember(MemberDto.Find find) throws SQLException;
 
+	MemberEntity MemberForChangePwd(MemberDto.Find find) throws SQLException;
 }

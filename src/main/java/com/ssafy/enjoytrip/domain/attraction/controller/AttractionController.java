@@ -63,7 +63,6 @@ public class AttractionController {
 
 		try {
 			List<AttractionEntity> attractionList = attractionService.recommandAttractions();
-			log.info("attractionList: {}", attractionList);
 			for (AttractionEntity attraction : attractionList) {
 				attraction.setWishCount(attractionService.getWishCount(attraction.getContentId()));
 				attraction.setReviewCount(attractionService.getReviewCount(attraction.getContentId()));

@@ -167,6 +167,11 @@ CREATE TABLE IF NOT EXISTS `enjoytrip`.`members`
     COLLATE = utf8mb4_0900_ai_ci;
 
 
+ALTER TABLE `enjoytrip`.`members`
+    ADD COLUMN `email` VARCHAR(255) NOT NULL AFTER `user_password`;
+
+ALTER TABLE `enjoytrip`.`members`
+    CHANGE COLUMN `email` `user_email` VARCHAR(255) NOT NULL;
 
 -- -----------------------------------------------------
 -- Table `enjoytrip`.`posting`
