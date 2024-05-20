@@ -114,11 +114,10 @@ public class AttractionController {
 	}
 
 	@PostMapping("/wish")
-	public ResponseEntity<Void> addWish(@RequestBody AttractionDto.Wish wish,
+	public ResponseEntity<?> addWish(@RequestBody AttractionDto.Wish wish,
 		HttpSession session) {
 
 		log.info("====================================찜 추가==============================");
-		log.info("===================================={}==============================", wish);
 
 		MemberEntity memberDto = (MemberEntity)session.getAttribute("memberDto");
 
@@ -126,12 +125,12 @@ public class AttractionController {
 			String userId = memberDto.getUserId();
 			wish.setUserId(userId);
 		}
-
+		log.info("===================================={}==============================", wish);
 		try {
 			attractionService.addWish(wish);
 			return new ResponseEntity<Void>(HttpStatus.OK);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("찜은 5개까지만 가능합니다.");
 		}
 	}
 
@@ -155,15 +154,14 @@ public class AttractionController {
 	public ResponseEntity<Void> deleteWish(@RequestBody AttractionDto.Wish wish,
 		HttpSession session) {
 
-		log.info("====================================찜 삭제==============================");
-		log.info("===================================={}==============================", wish);
 		MemberEntity memberDto = (MemberEntity)session.getAttribute("memberDto");
 
 		if (memberDto != null) {
 			String userId = memberDto.getUserId();
 			wish.setUserId(userId);
 		}
-
+		log.info("====================================찜 삭제==============================");
+		log.info("===================================={}==============================", wish);
 		try {
 			attractionService.deleteWish(wish);
 			return new ResponseEntity<Void>(HttpStatus.OK);
