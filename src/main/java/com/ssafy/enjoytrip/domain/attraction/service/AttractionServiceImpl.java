@@ -66,6 +66,11 @@ public class AttractionServiceImpl implements AttractionService {
 	public void addWish(AttractionDto.Wish wish) throws IOException {
 
 		try {
+			List<AttractionDto.Wish> wishList = attractionMapper.getWishList(wish.getUserId());
+			System.out.println(wishList.size());
+			if (wishList.size() >= 5) {
+				throw new RuntimeException("찜은 5개까지만 가능합니다.");
+			}
 			attractionMapper.addWish(wish);
 		} catch (SQLException e) {
 			e.printStackTrace();
