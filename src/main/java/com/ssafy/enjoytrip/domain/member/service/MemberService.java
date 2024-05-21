@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.ssafy.enjoytrip.domain.member.dto.MemberDto;
 import com.ssafy.enjoytrip.domain.member.entity.MemberEntity;
 
@@ -32,11 +34,11 @@ public interface MemberService {
 
 	public MemberEntity findMember(MemberDto.Find find) throws IOException;
 
-
 	// 임시 비밀번호 발송
 	public void sendSimpleMessage(MemberDto.Find find) throws Exception;
 
 	// 이메일 메시지 생성
+	@Transactional
 	public MimeMessage createMessage(MemberEntity member) throws MessagingException, UnsupportedEncodingException;
 
 }

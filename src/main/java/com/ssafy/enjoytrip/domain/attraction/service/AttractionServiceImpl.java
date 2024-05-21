@@ -24,6 +24,8 @@ public class AttractionServiceImpl implements AttractionService {
 	public List<AttractionEntity> loadAttraction(AttractionDto.SearchAttraction searchAttraction) throws
 		IOException {
 
+		log.info("==============={}================", searchAttraction);
+
 		try {
 			return attractionMapper.loadAttraction(searchAttraction);
 		} catch (SQLException e) {
