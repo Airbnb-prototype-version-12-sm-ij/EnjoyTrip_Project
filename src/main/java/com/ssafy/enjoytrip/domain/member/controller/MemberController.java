@@ -87,7 +87,7 @@ public class MemberController {
 	}
 
 	@PostMapping("/join")
-	public ResponseEntity<Void> join(@Validated @RequestBody MemberDto.Info info, BindingResult bindingResult) {
+	public ResponseEntity<?> join(@Validated @RequestBody MemberDto.Info info, BindingResult bindingResult) {
 
 		log.info("--------------------MemberController --- join: {}----------------------", info);
 
@@ -98,12 +98,12 @@ public class MemberController {
 
 		if (bindingResult.hasErrors()) {
 			System.out.println(bindingResult.getAllErrors());
-			throw new RuntimeException("회원가입 정보를 확인하세요");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("회원 정보를 올바르게 입력해주세요");
 		}
 
 		try {
 			memberServiceImpl.addMember(info);
-			return new ResponseEntity<>(HttpStatus.OK);
+			return ResponseEntity.ok().body("회원가입 성공");
 		} catch (IOException e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
