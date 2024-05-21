@@ -34,7 +34,10 @@ public class MemberController {
 	@GetMapping("/ping")
 	public ResponseEntity<?> ping(HttpSession session) {
 		log.info("ping: {}", session.getAttribute("memberDto"));
-		return new ResponseEntity<>(session.getAttribute("memberDto"), HttpStatus.OK);
+		if (session.getAttribute("memberDto") == null) {
+			return new ResponseEntity<>("로그인이 필요합니다", HttpStatus.UNAUTHORIZED);
+		}
+		return ResponseEntity.ok().body(session.getAttribute("memberDto"));
 	}
 
 	// 로그인
@@ -44,7 +47,6 @@ public class MemberController {
 		HttpServletRequest request) {
 
 		log.info("--------------------MemberController --- login: {}----------------------", login);
-
 
 		// errors 의 메세지만 출력
 		for (ObjectError error : bindingResult.getAllErrors()) {
@@ -85,7 +87,7 @@ public class MemberController {
 	}
 
 	@PostMapping("/join")
-	public ResponseEntity<Void> join(@Validated @RequestBody MemberDto.Info info, BindingResult bindingResult) {
+	public ResponseEntity<?> join(@Validated @RequestBody MemberDto.Info info, BindingResult bindingResult) {
 
 		log.info("--------------------MemberController --- join: {}----------------------", info);
 
@@ -96,12 +98,12 @@ public class MemberController {
 
 		if (bindingResult.hasErrors()) {
 			System.out.println(bindingResult.getAllErrors());
-			throw new RuntimeException("회원가입 정보를 확인하세요");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("회원 정보를 올바르게 입력해주세요");
 		}
 
 		try {
 			memberServiceImpl.addMember(info);
-			return new ResponseEntity<>(HttpStatus.OK);
+			return ResponseEntity.ok().body("회원가입 성공");
 		} catch (IOException e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
@@ -220,7 +222,7 @@ public class MemberController {
 	// 	} catch (IOException e) {
 	// 		throw new RuntimeException(e);
 	// 	}
-// }
+	// }
 
 	@PostMapping("/find")
 	public ResponseEntity<?> findMember(@RequestBody MemberDto.Find find) {
