@@ -31,6 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 public class AttractionController {
 
 	private final AttractionService attractionService;
+	private final HttpSession httpSession;
 
 	@GetMapping("/search")
 	public ResponseEntity<?> searchAttractions(@ModelAttribute SearchAttraction searchAttraction,
@@ -55,11 +56,14 @@ public class AttractionController {
 
 	// 조회수 높은거 5개 가져옴
 	@GetMapping("/recommand")
-	public ResponseEntity<?> recommandAttractions() {
+	public ResponseEntity<?> recommandAttractions(HttpSession session) {
+
 		log.info("recommandAttractions");
 
+		MemberEntity memberDto = ((MemberEntity)session.getAttribute("memberDto"));
+
 		try {
-			List<AttractionEntity> attractionList = attractionService.recommandAttractions();
+			List<AttractionEntity> attractionList = attractionService.recommandAttractions(memberDto.getUserId());
 			for (AttractionEntity attraction : attractionList) {
 				attraction.setWishCount(attractionService.getWishCount(attraction.getContentId()));
 				attraction.setReviewCount(attractionService.getReviewCount(attraction.getContentId()));

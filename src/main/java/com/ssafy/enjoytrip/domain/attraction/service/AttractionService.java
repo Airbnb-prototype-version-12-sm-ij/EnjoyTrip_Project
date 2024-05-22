@@ -35,5 +35,5 @@ public interface AttractionService {
 
 	void addViewCount(Integer contentId) throws IOException;
 
-	List<AttractionEntity> recommandAttractions() throws IOException;
+	List<AttractionEntity> recommandAttractions(String userId) throws IOException;
 }

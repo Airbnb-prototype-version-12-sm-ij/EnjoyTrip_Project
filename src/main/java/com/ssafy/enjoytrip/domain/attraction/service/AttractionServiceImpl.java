@@ -120,9 +120,9 @@ public class AttractionServiceImpl implements AttractionService {
 	}
 
 	@Override
-	public List<AttractionEntity> recommandAttractions() throws IOException {
+	public List<AttractionEntity> recommandAttractions(String userId) throws IOException {
 		try {
-			return attractionMapper.recommandAttractions();
+			return attractionMapper.recommandAttractions(userId);
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
