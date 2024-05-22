@@ -10,21 +10,21 @@
         INNER JOIN attraction_info ai ON ades.content_id = ai.content_id
         <if test="userId != null">
             LEFT JOIN wishlist wl ON ai.content_id = wl.content_id AND wl.user_id = #{userId}
-            <where>
-                <if test="typeCode != 0">
-                    ai.content_type_id = #{typeCode}
-                </if>
-                <if test="sidoCode != 0">
-                    <choose>
-                        <when test="typeCode != 0">
-                            AND
-                        </when>
-                    </choose>
-                    ai.sido_code = #{sidoCode}
-                </if>
-                AND ai.title LIKE CONCAT('%', #{title}, '%')
-            </where>
         </if>
+        <where>
+            <if test="typeCode != 0">
+                ai.content_type_id = #{typeCode}
+            </if>
+            <if test="sidoCode != 0">
+                <choose>
+                    <when test="typeCode != 0">
+                        AND
+                    </when>
+                </choose>
+                ai.sido_code = #{sidoCode}
+            </if>
+            AND ai.title LIKE CONCAT('%', #{title}, '%')
+        </where>
         LIMIT #{page}, #{size}
     </select>
 

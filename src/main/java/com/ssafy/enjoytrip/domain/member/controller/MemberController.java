@@ -91,6 +91,14 @@ public class MemberController {
 
 		log.info("--------------------MemberController --- join: {}----------------------", info);
 
+		try {
+			if (memberServiceImpl.pickMember(info.getUserId()) != null) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("이미 존재하는 아이디입니다");
+			}
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+
 		// errors 의 메세지만 출력
 		for (ObjectError error : bindingResult.getAllErrors()) {
 			log.info("Error: {}", error.getDefaultMessage());
