@@ -62,16 +62,20 @@ public class AttractionController {
 
 		MemberEntity memberDto = ((MemberEntity)session.getAttribute("memberDto"));
 
-		try {
-			List<AttractionEntity> attractionList = attractionService.recommandAttractions(memberDto.getUserId());
-			for (AttractionEntity attraction : attractionList) {
-				attraction.setWishCount(attractionService.getWishCount(attraction.getContentId()));
-				attraction.setReviewCount(attractionService.getReviewCount(attraction.getContentId()));
+		if (memberDto != null) {
+			try {
+				List<AttractionEntity> attractionList = attractionService.recommandAttractions(memberDto.getUserId());
+				for (AttractionEntity attraction : attractionList) {
+					attraction.setWishCount(attractionService.getWishCount(attraction.getContentId()));
+					attraction.setReviewCount(attractionService.getReviewCount(attraction.getContentId()));
+				}
+				return ResponseEntity.ok().body(attractionList);
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new RuntimeException(e);
 			}
-			return ResponseEntity.ok().body(attractionList);
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
+		} else {
+			throw new RuntimeException("로그인이 필요합니다.");
 		}
 	}
 
