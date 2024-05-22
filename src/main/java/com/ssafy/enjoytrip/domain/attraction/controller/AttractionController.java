@@ -62,9 +62,11 @@ public class AttractionController {
 
 		MemberEntity memberDto = ((MemberEntity)session.getAttribute("memberDto"));
 
-		List<AttractionEntity> attractionList;
 		try {
-			List<AttractionEntity> attractionList = attractionService.recommandAttractions(memberDto.getUserId());
+			List<AttractionEntity> attractionList = attractionService.recommandAttractions(null);
+			if (memberDto != null){
+				attractionList = attractionService.recommandAttractions(memberDto.getUserId());
+			}
 			for (AttractionEntity attraction : attractionList) {
 				attraction.setWishCount(attractionService.getWishCount(attraction.getContentId()));
 				attraction.setReviewCount(attractionService.getReviewCount(attraction.getContentId()));
@@ -74,7 +76,6 @@ public class AttractionController {
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
-
 	}
 
 	// 찜 목록 조회
